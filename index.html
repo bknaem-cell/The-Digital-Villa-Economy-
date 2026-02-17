@@ -3,52 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Digital Villa Economy</title>
+    <title>দ্য ডিজিটাল ভিলা ইকোনমি</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: white; margin: 0; padding: 20px; text-align: center; }
-        .app-container { max-width: 400px; margin: auto; background: #1e293b; border-radius: 20px; padding: 20px; border: 2px solid #38bdf8; box-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
-        .header { font-size: 22px; font-weight: bold; color: #38bdf8; margin-bottom: 20px; }
-        .profile-card { background: #334155; padding: 15px; border-radius: 15px; text-align: left; margin-bottom: 20px; }
-        .user-name { font-size: 18px; font-weight: bold; }
-        .user-info { color: #94a3b8; font-size: 14px; margin-top: 5px; }
-        .stats { display: flex; justify-content: space-between; margin-top: 15px; background: #0f172a; padding: 10px; border-radius: 10px; }
-        .stat-box { text-align: center; }
-        .stat-val { display: block; font-size: 18px; font-weight: bold; color: #fbbf24; }
-        .stat-label { font-size: 10px; color: #94a3b8; }
-        .mission-btn { background: #38bdf8; color: #0f172a; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
-        .withdraw-btn { background: #22c55e; color: white; border: none; padding: 10px; width: 100%; border-radius: 10px; margin-top: 10px; cursor: pointer; }
+        body { 
+            background-color: black; 
+            color: white; 
+            text-align: center; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            padding-top: 100px;
+        }
+        .container {
+            border: 2px solid #28a745;
+            padding: 30px;
+            display: inline-block;
+            border-radius: 15px;
+            background-color: #1a1a1a;
+        }
+        h1 { color: #28a745; }
+        input { 
+            padding: 12px; 
+            font-size: 18px; 
+            border-radius: 5px; 
+            border: none;
+            width: 200px;
+            margin-bottom: 20px;
+        }
+        button { 
+            padding: 12px 30px; 
+            font-size: 18px; 
+            background-color: #28a745; 
+            color: white; 
+            border: none; 
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background-color: #218838; }
     </style>
 </head>
 <body>
-
-    <div class="app-container">
-        <div class="header">ডিজিটাল ভিলা ইকোনমি</div>
-        
-        <div class="profile-card">
-            <div class="user-name">নাঈম ইব্রাহিম</div>
-            <div class="user-info">ইউজার কোড: NAIM18-001</div>
-            
-            <div class="stats">
-                <div class="stat-box">
-                    <span class="stat-val">৳ ৫০০</span>
-                    <span class="stat-label">আজকের আয়</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-val">১২</span>
-                    <span class="stat-label">মোট মিশন</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-val">৳ ৫০০০</span>
-                    <span class="stat-label">লাইফটাইম আয়</span>
-                </div>
-            </div>
-        </div>
-
-        <button class="mission-btn">🚀 নিরাপদ কাজ শুরু করুন</button>
-        <button class="withdraw-btn">💰 টাকা তুলুন (নগদ/বিকাশ)</button>
-        
-        <p style="font-size: 12px; color: #64748b; margin-top: 20px;">আপনার সকল তথ্য ও আয় আজীবনের জন্য সংরক্ষিত।</p>
+    <div class="container">
+        <h1>নাঈম ইব্রাহিম</h1>
+        <h3>দ্য ডিজিটাল ভিলা ইকোনমি</h3>
+        <p>আপনার সিক্রেট কোডটি দিন</p>
+        <input type="password" id="secretCode" placeholder="কোড এখানে লিখুন">
+        <br>
+        <button onclick="verifyCode()">প্রবেশ করুন</button>
     </div>
 
+    <script>
+        function verifyCode() {
+            var code = document.getElementById("secretCode").value;
+            if (code === "নাঈম ১৮") {
+                alert("স্বাগতম নাঈম ইব্রাহিম! আপনার মিশনের প্রথম ধাপ সফল হয়েছে।");
+                // এখানে পরবর্তীতে আপনার ভিলার ভেতরের অংশ যোগ করা হবে
+            } else {
+                alert("ভুল কোড! সঠিক সিক্রেট কোডটি দিন।");
+            }
+        }
+    </script>
 </body>
 </html>
