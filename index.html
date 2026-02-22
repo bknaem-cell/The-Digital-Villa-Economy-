@@ -1,23 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
-    <title>The Digital Villa - Entry Gate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TDV - The Digital Villa Economy</title>
+    <style>
+        body { background-color: #0d1117; color: gold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; }
+        .gate-container { border: 2px solid gold; padding: 50px; margin: 10% auto; width: 300px; border-radius: 15px; box-shadow: 0 0 20px gold; }
+        .logo { font-size: 40px; font-weight: bold; margin-bottom: 20px; text-shadow: 2px 2px 5px red; }
+        input { padding: 10px; width: 80%; margin-bottom: 20px; border-radius: 5px; border: 1px solid gold; background: transparent; color: white; text-align: center; }
+        button { padding: 10px 30px; background: gold; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
+        button:hover { background: #ffcc00; box-shadow: 0 0 10px white; }
+    </style>
 </head>
 <body>
-    <h1>স্বাগতম, নাঈম ইব্রাহিম!</h1>
-    <p>এটি একটি হালাল ও নিরাপদ সিস্টেম। প্রবেশ করতে সিক্রেট কোড দিন:</p>
-    
-    <input type="password" id="secretCode" placeholder="আপনার সিক্রেট কোড লিখুন">
-    <button onclick="checkCode()">প্রবেশ করুন</button>
+    <div class="gate-container">
+        <div class="logo">TDV</div>
+        <h3>সিক্রেট গেট (Gate A-1)</h3>
+        <p>প্রবেশপত্র কোড দিন</p>
+        <input type="password" id="pinCode" placeholder="PIN লিখুন (নাঈম ১৮)">
+        <br>
+        <button onclick="verifyGate()">OK</button>
+    </div>
 
     <script>
-        function checkCode() {
-            var code = document.getElementById("secretCode").value;
-            if (code === "নাঈম ১৮") {
-                alert("সঠিক কোড! সিস্টেমে স্বাগতম।");
-                // এখানে অ্যাপের মূল পেজে যাওয়ার লিঙ্ক থাকবে
+        function verifyGate() {
+            const pin = document.getElementById('pinCode').value;
+            if (pin === "নাঈম ১৮") {
+                alert("সফলভাবে প্রবেশ করেছেন! মিশন ১ শুরু হচ্ছে...");
+                // এখানে আপনার মিশনের ড্যাশবোর্ড লোড হবে
             } else {
-                alert("ভুল কোড! দয়া করে সঠিক কোডটি দিন।");
+                alert("ভুল কোড! আপনি প্রবেশ করতে পারবেন না।");
             }
         }
     </script>
