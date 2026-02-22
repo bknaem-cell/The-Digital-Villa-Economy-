@@ -2,73 +2,43 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
-    <title>The Digital Villa Economy - TDV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>TDV Master System</title>
     <style>
-        /* মোবাইল পাতালি বা Landscape করার জন্য */
-        body { 
-            margin: 0; padding: 0; background-color: #050a10; 
-            color: #ffd700; font-family: 'Arial', sans-serif;
-            overflow: hidden; display: flex; justify-content: center; align-items: center;
-            height: 100vh; width: 100vw;
-        }
-
-        /* ধাপ ১: লোডিং স্ক্রিন */
-        #loading-screen { text-align: center; }
-        .loader { border: 5px solid #1a1a1a; border-top: 5px solid gold; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 10px auto; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* ধাপ ২: সিক্রেট গেট (Gate A-1) */
-        #gate-screen { display: none; text-align: center; border: 2px solid gold; padding: 30px; border-radius: 20px; box-shadow: 0 0 30px #ff0000; background: rgba(0,0,0,0.8); }
-        .logo-tdv { font-size: 50px; font-weight: bold; text-shadow: 0 0 15px gold; margin-bottom: 10px; }
-        input { padding: 12px; width: 250px; border-radius: 10px; border: 1px solid gold; background: #222; color: white; text-align: center; font-size: 18px; }
-        button { padding: 12px 40px; background: linear-gradient(to right, #ffd700, #ff8c00); border: none; font-weight: bold; border-radius: 10px; cursor: pointer; margin-top: 15px; }
-
-        /* ধাপ ৩: সাইন আপ/ড্যাশবোর্ড (LoVee System) */
-        #dashboard-screen { display: none; text-align: center; width: 90%; height: 80%; border: 3px double gold; padding: 20px; }
+        body { margin: 0; background: #000; color: #d4af37; font-family: 'Arial', sans-serif; height: 100vh; width: 100vw; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .box { background: rgba(0, 0, 0, 0.8); border: 2px solid #d4af37; padding: 30px; border-radius: 20px; text-align: center; box-shadow: 0 0 30px #d4af37; width: 80%; }
+        input { background: #111; border: 2px solid #d4af37; color: #fff; padding: 15px; width: 80%; border-radius: 10px; font-size: 1.2rem; text-align: center; margin-top: 10px; }
+        button { background: #d4af37; border: none; padding: 15px 40px; border-radius: 10px; font-weight: bold; cursor: pointer; margin-top: 20px; font-size: 1.1rem; }
+        #screen2, #screen3 { display: none; }
     </style>
 </head>
 <body>
 
-    <div id="loading-screen">
-        <div class="logo-tdv">TDV</div>
-        <div class="loader"></div>
-        <p>মিশন লোড হচ্ছে... (100X Power)</p>
+    <div id="screen1" class="box">
+        <h1>TDV LOADING...</h1>
+        <p>সিস্টেম প্রস্তুত হচ্ছে</p>
     </div>
 
-    <div id="gate-screen">
-        <div class="logo-tdv">GATE A-1</div>
-        <p>আপনার সিক্রেট কোড দিন</p>
-        <input type="password" id="secretPin" placeholder="PIN লিখুন">
+    <div id="screen2" class="box">
+        <h2>প্রবেশপত্র যাচাই</h2>
+        <input type="password" id="pin" placeholder="সিক্রেট কোড দিন">
         <br>
-        <button onclick="checkGate()">পাসওয়ার্ড যাচাই করুন</button>
+        <button onclick="verify()">প্রবেশ করুন</button>
     </div>
 
-    <div id="dashboard-screen">
-        <h2 style="color: red;">LoVee Economy Dashboard</h2>
-        <p>স্বাগতম নাঈম ইব্রাহিম! আপনার মিশন ৩ শুরু করুন।</p>
-        <div style="display: flex; justify-content: space-around;">
-            <div style="border: 1px solid gold; padding: 10px;">NJ Gold: 0.00</div>
-            <div style="border: 1px solid gold; padding: 10px;">Status: Halal</div>
-        </div>
-        <button onclick="alert('মিশন ৩ এক্টিভেটেড!')">সাইন আপ সম্পন্ন করুন</button>
+    <div id="screen3" class="box">
+        <h1>LoVee Economy</h1>
+        <p>স্বাগতম নাঈম ইব্রাহিম</p>
+        <button onclick="alert('সফল')">মিশন ১: শুরু</button>
     </div>
 
     <script>
-        // ৩ ধাপের কন্ট্রোল
-        setTimeout(() => {
-            document.getElementById('loading-screen').style.display = 'none';
-            document.getElementById('gate-screen').style.display = 'block';
-        }, 3000); // ৩ সেকেন্ড পর গেট আসবে
-
-        function checkGate() {
-            let pin = document.getElementById('secretPin').value;
-            if (pin === "নাঈম ১৮") {
-                document.getElementById('gate-screen').style.display = 'none';
-                document.getElementById('dashboard-screen').style.display = 'block';
-            } else {
-                alert("ভুল কোড! সঠিক পিন দিন।");
-            }
+        setTimeout(() => { document.getElementById('screen1').style.display='none'; document.getElementById('screen2').style.display='block'; }, 2000);
+        function verify() {
+            if(document.getElementById('pin').value === "নাঈম ১৮") {
+                document.getElementById('screen2').style.display='none';
+                document.getElementById('screen3').style.display='block';
+            } else { alert("ভুল কোড!"); }
         }
     </script>
 </body>
