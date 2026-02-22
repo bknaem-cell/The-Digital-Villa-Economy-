@@ -2,35 +2,72 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDV - The Digital Villa Economy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
+    <title>The Digital Villa Economy - TDV</title>
     <style>
-        body { background-color: #0d1117; color: gold; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; }
-        .gate-container { border: 2px solid gold; padding: 50px; margin: 10% auto; width: 300px; border-radius: 15px; box-shadow: 0 0 20px gold; }
-        .logo { font-size: 40px; font-weight: bold; margin-bottom: 20px; text-shadow: 2px 2px 5px red; }
-        input { padding: 10px; width: 80%; margin-bottom: 20px; border-radius: 5px; border: 1px solid gold; background: transparent; color: white; text-align: center; }
-        button { padding: 10px 30px; background: gold; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
-        button:hover { background: #ffcc00; box-shadow: 0 0 10px white; }
+        /* মোবাইল পাতালি বা Landscape করার জন্য */
+        body { 
+            margin: 0; padding: 0; background-color: #050a10; 
+            color: #ffd700; font-family: 'Arial', sans-serif;
+            overflow: hidden; display: flex; justify-content: center; align-items: center;
+            height: 100vh; width: 100vw;
+        }
+
+        /* ধাপ ১: লোডিং স্ক্রিন */
+        #loading-screen { text-align: center; }
+        .loader { border: 5px solid #1a1a1a; border-top: 5px solid gold; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 10px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* ধাপ ২: সিক্রেট গেট (Gate A-1) */
+        #gate-screen { display: none; text-align: center; border: 2px solid gold; padding: 30px; border-radius: 20px; box-shadow: 0 0 30px #ff0000; background: rgba(0,0,0,0.8); }
+        .logo-tdv { font-size: 50px; font-weight: bold; text-shadow: 0 0 15px gold; margin-bottom: 10px; }
+        input { padding: 12px; width: 250px; border-radius: 10px; border: 1px solid gold; background: #222; color: white; text-align: center; font-size: 18px; }
+        button { padding: 12px 40px; background: linear-gradient(to right, #ffd700, #ff8c00); border: none; font-weight: bold; border-radius: 10px; cursor: pointer; margin-top: 15px; }
+
+        /* ধাপ ৩: সাইন আপ/ড্যাশবোর্ড (LoVee System) */
+        #dashboard-screen { display: none; text-align: center; width: 90%; height: 80%; border: 3px double gold; padding: 20px; }
     </style>
 </head>
 <body>
-    <div class="gate-container">
-        <div class="logo">TDV</div>
-        <h3>সিক্রেট গেট (Gate A-1)</h3>
-        <p>প্রবেশপত্র কোড দিন</p>
-        <input type="password" id="pinCode" placeholder="PIN লিখুন (নাঈম ১৮)">
+
+    <div id="loading-screen">
+        <div class="logo-tdv">TDV</div>
+        <div class="loader"></div>
+        <p>মিশন লোড হচ্ছে... (100X Power)</p>
+    </div>
+
+    <div id="gate-screen">
+        <div class="logo-tdv">GATE A-1</div>
+        <p>আপনার সিক্রেট কোড দিন</p>
+        <input type="password" id="secretPin" placeholder="PIN লিখুন">
         <br>
-        <button onclick="verifyGate()">OK</button>
+        <button onclick="checkGate()">পাসওয়ার্ড যাচাই করুন</button>
+    </div>
+
+    <div id="dashboard-screen">
+        <h2 style="color: red;">LoVee Economy Dashboard</h2>
+        <p>স্বাগতম নাঈম ইব্রাহিম! আপনার মিশন ৩ শুরু করুন।</p>
+        <div style="display: flex; justify-content: space-around;">
+            <div style="border: 1px solid gold; padding: 10px;">NJ Gold: 0.00</div>
+            <div style="border: 1px solid gold; padding: 10px;">Status: Halal</div>
+        </div>
+        <button onclick="alert('মিশন ৩ এক্টিভেটেড!')">সাইন আপ সম্পন্ন করুন</button>
     </div>
 
     <script>
-        function verifyGate() {
-            const pin = document.getElementById('pinCode').value;
+        // ৩ ধাপের কন্ট্রোল
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('gate-screen').style.display = 'block';
+        }, 3000); // ৩ সেকেন্ড পর গেট আসবে
+
+        function checkGate() {
+            let pin = document.getElementById('secretPin').value;
             if (pin === "নাঈম ১৮") {
-                alert("সফলভাবে প্রবেশ করেছেন! মিশন ১ শুরু হচ্ছে...");
-                // এখানে আপনার মিশনের ড্যাশবোর্ড লোড হবে
+                document.getElementById('gate-screen').style.display = 'none';
+                document.getElementById('dashboard-screen').style.display = 'block';
             } else {
-                alert("ভুল কোড! আপনি প্রবেশ করতে পারবেন না।");
+                alert("ভুল কোড! সঠিক পিন দিন।");
             }
         }
     </script>
