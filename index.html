@@ -1,64 +1,23 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>দ্য ডিজিটাল ভিলা ইকোনমি</title>
-    <style>
-        body { 
-            background-color: black; 
-            color: white; 
-            text-align: center; 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            padding-top: 100px;
-        }
-        .container {
-            border: 2px solid #28a745;
-            padding: 30px;
-            display: inline-block;
-            border-radius: 15px;
-            background-color: #1a1a1a;
-        }
-        h1 { color: #28a745; }
-        input { 
-            padding: 12px; 
-            font-size: 18px; 
-            border-radius: 5px; 
-            border: none;
-            width: 200px;
-            margin-bottom: 20px;
-        }
-        button { 
-            padding: 12px 30px; 
-            font-size: 18px; 
-            background-color: #28a745; 
-            color: white; 
-            border: none; 
-            border-radius: 5px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover { background-color: #218838; }
-    </style>
+    <title>The Digital Villa - Entry Gate</title>
 </head>
 <body>
-    <div class="container">
-        <h1>নাঈম ইব্রাহিম</h1>
-        <h3>দ্য ডিজিটাল ভিলা ইকোনমি</h3>
-        <p>আপনার সিক্রেট কোডটি দিন</p>
-        <input type="password" id="secretCode" placeholder="কোড এখানে লিখুন">
-        <br>
-        <button onclick="verifyCode()">প্রবেশ করুন</button>
-    </div>
+    <h1>স্বাগতম, নাঈম ইব্রাহিম!</h1>
+    <p>এটি একটি হালাল ও নিরাপদ সিস্টেম। প্রবেশ করতে সিক্রেট কোড দিন:</p>
+    
+    <input type="password" id="secretCode" placeholder="আপনার সিক্রেট কোড লিখুন">
+    <button onclick="checkCode()">প্রবেশ করুন</button>
 
     <script>
-        function verifyCode() {
+        function checkCode() {
             var code = document.getElementById("secretCode").value;
             if (code === "নাঈম ১৮") {
-                alert("স্বাগতম নাঈম ইব্রাহিম! আপনার মিশনের প্রথম ধাপ সফল হয়েছে।");
-                // এখানে পরবর্তীতে আপনার ভিলার ভেতরের অংশ যোগ করা হবে
+                alert("সঠিক কোড! সিস্টেমে স্বাগতম।");
+                // এখানে অ্যাপের মূল পেজে যাওয়ার লিঙ্ক থাকবে
             } else {
-                alert("ভুল কোড! সঠিক সিক্রেট কোডটি দিন।");
+                alert("ভুল কোড! দয়া করে সঠিক কোডটি দিন।");
             }
         }
     </script>
