@@ -1,1 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Digital Villa Economy</title>
+    <style>
+        /* ফোন পাতালি করার এবং ডিজাইন সেট করার কোড */
+        body { 
+            background-color: #000; color: #ffd700; 
+            font-family: sans-serif; margin: 0; padding: 0;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh; overflow: hidden;
+        }
+        .screen {
+            border: 4px solid #ffd700; width: 95%; height: 90%;
+            display: flex; flex-direction: column; position: relative;
+        }
+        .header { background: #222; padding: 10px; border-bottom: 2px solid #ffd700; }
+        .main-content { flex-grow: 1; display: flex; justify-content: space-around; align-items: center; }
+        .btn { 
+            background: #ffd700; color: #000; padding: 20px; 
+            font-weight: bold; border: none; border-radius: 10px; cursor: pointer;
+        }
+        .footer { padding: 5px; font-size: 12px; }
+    </style>
+</head>
+<body onclick="openFullscreen();">
 
+    <div class="screen">
+        <div class="header">
+            <strong>The Digital Villa Economy</strong> | এডমিন: নাঈম ইব্রাহিম
+        </div>
+
+        <div class="main-content">
+            <button class="btn" onclick="alert('মিশন ১: কৃষি উন্নয়ন শুরু')">১০ কিলো স্কয়ার ম্যাপ</button>
+            <button class="btn" onclick="alert('টোকেন: ০')">ইকোনমি স্ট্যাটাস</button>
+            <button class="btn" onclick="alert('হালাল বাজার লোড হচ্ছে...')">মার্কেটপ্লেস</button>
+        </div>
+
+        <div class="footer">
+            মোড: ল্যান্ডস্কেপ | স্ট্যাটাস: অনলাইন
+        </div>
+    </div>
+
+    <script>
+        function openFullscreen() {
+            var elem = document.documentElement;
+            if (elem.requestFullscreen) { elem.requestFullscreen(); }
+            screen.orientation.lock('landscape').catch(e => {});
+        }
+    </script>
+</body>
+</html>
