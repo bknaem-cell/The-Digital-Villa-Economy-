@@ -3,80 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>নাঈম ১৮ - ডিজিটাল গ্লোব ম্যাপ</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <title>ডিজিটাল ভিলা ইকোনমি - মিশন ১</title>
     <style>
-        body { margin: 0; padding: 0; background: #000; color: #00ff41; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
-        
-        /* ম্যাপটিকে গোল বা গ্লোব লুক দেওয়ার জন্য */
-        #map-container {
-            width: 100vw; height: 100vh;
-            display: flex; align-items: center; justify-content: center;
-            background: radial-gradient(circle, #001a05 0%, #000 70%);
-        }
-
-        #map { 
-            width: 95vw; height: 80vh; 
-            border-radius: 30px; /* কিছুটা গোল ভাব */
-            border: 2px solid #00ff41;
-            box-shadow: 0 0 30px rgba(0, 255, 65, 0.4);
-        }
-
-        .top-ui { 
-            position: fixed; top: 10px; width: 100%; z-index: 1000;
-            text-align: center; text-shadow: 0 0 10px #00ff41;
-        }
-
-        /* ডিজিটাল রাস্তা ও বর্ডার হাইলাইট */
-        .leaflet-tile { filter: brightness(0.6) invert(1) contrast(3) hue-rotate(100deg) saturate(2); }
-
-        .btn-claim {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            z-index: 1000; background: #00ff41; color: #000; padding: 15px 30px;
-            border: none; border-radius: 50px; cursor: pointer; font-weight: bold;
-            box-shadow: 0 0 20px #00ff41; transition: 0.3s;
-        }
-        
-        /* ফোন বাঁকা করলে ম্যাপ অ্যাডজাস্ট হবে */
-        @media (orientation: landscape) { #map { height: 70vh; width: 80vw; } }
+        body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: white; text-align: center; padding: 20px; }
+        .card { background: #333; padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; box-shadow: 0 0 20px #28a745; }
+        input { width: 80%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
+        button { background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        #status { margin-top: 20px; color: #00ff41; font-weight: bold; }
     </style>
 </head>
-<body onload="initDigitalMap()">
+<body>
 
-    <div class="top-ui">
-        <h2 style="margin:0;">নাঈম ইব্রাহিম মিশন (১০ কিলো স্কয়ার)</h2>
-        <p style="font-size: 12px; color: #fff;">ডিজিটাল সিটি রোডম্যাপ লোড হচ্ছে...</p>
+    <h1>The Digital Villa Economy</h1>
+    <div class="card">
+        <h3>সিস্টেমে আপনার নাম লিখুন</h3>
+        <input type="text" id="userName" placeholder="আপনার নাম লিখুন">
+        <button onclick="registerUser()">সাইন-আপ করুন</button>
+        <p id="status"></p>
     </div>
 
-    <div id="map-container">
-        <div id="map"></div>
-    </div>
-
-    <button class="btn-claim" onclick="claimPlot()">🏠 এই আধুনিক শহরের অংশ হোন</button>
-
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        let map;
-        function initDigitalMap() {
-            // ম্যাপের সেটিংস
-            map = L.map('map', {
-                attributionControl: false,
-                zoomControl: false
-            }).setView([23.8103, 90.4125], 14);
+        // এটি আমাদের ডাটাবেজ হিসেবে কাজ করবে (আপাতত ব্রাউজার মেমোরিতে)
+        let userCount = localStorage.getItem('userCount') || 0;
 
-            // শুধু ডিজিটাল রাস্তা এবং ডার্ক থিম লেয়ার
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-                maxZoom: 20
-            }).addTo(map);
-
-            // গ্লোবাল ডাইরেক্ট ম্যাপ ফিল্টার অ্যাপ্লাই হয়েছে CSS-এ
-        }
-
-        function claimPlot() {
-            let name = prompt("আপনার নাম ও প্রজেক্টের নাম লিখুন:");
-            if(name) {
-                alert("স্বাগতম " + name + "! ডিজিটাল সিটির ম্যাপে আপনার প্রোফাইল যুক্ত হচ্ছে।");
+        function registerUser() {
+            let name = document.getElementById('userName').value;
+            if (name === "") {
+                alert("দয়া করে নাম লিখুন!");
+                return;
             }
+            userCount++;
+            localStorage.setItem('userCount', userCount);
+            
+            document.getElementById('status').innerText = 
+                `অভিনন্দন ${name}! আপনি সফলভাবে যোগ দিয়েছেন। আপনার বাড়ির নম্বর: ${userCount}`;
+            
+            // ৩ দিন পর বাড়ির ডিজাইন অপশন খোলার জন্য প্রম্পট
+            setTimeout(() => {
+                alert("আপনার রেজিস্ট্রেশন সফল। ৩-১০ দিন পর আপনার বাড়ির ডিজাইন অপশনটি খুলবে।");
+            }, 1000);
         }
     </script>
 </body>
