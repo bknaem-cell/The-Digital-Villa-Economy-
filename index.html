@@ -3,45 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ডিজিটাল ভিলা ইকোনমি - মিশন ১</title>
+    <title>ডিজিটাল ভিলা - ডিজিটাল পাড়া</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
-        body { font-family: Arial, sans-serif; background-color: #1a1a1a; color: white; text-align: center; padding: 20px; }
-        .card { background: #333; padding: 20px; border-radius: 15px; max-width: 400px; margin: auto; box-shadow: 0 0 20px #28a745; }
-        input { width: 80%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none; }
-        button { background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        #status { margin-top: 20px; color: #00ff41; font-weight: bold; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Arial', sans-serif; background-color: #1a1a1a; color: white; overflow-x: hidden; }
+        
+        #registration-ui { padding: 40px 20px; text-align: center; }
+        .card { background: #333; padding: 30px; border-radius: 20px; max-width: 450px; margin: auto; box-shadow: 0 0 25px #28a745; border: 1px solid #444; }
+        
+        input { width: 90%; padding: 15px; margin: 15px 0; border-radius: 10px; border: none; font-size: 16px; }
+        button { background: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 90%; font-size: 16px; }
+        
+        #map-container { display: none; width: 100vw; height: 100vh; position: relative; }
+        #map { width: 100%; height: 100%; }
+        
+        .map-overlay { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 30px; border: 1px solid #28a745; font-size: 14px; text-align: center; min-width: 250px; }
     </style>
 </head>
 <body>
 
-    <h1>The Digital Villa Economy</h1>
-    <div class="card">
-        <h3>সিস্টেমে আপনার নাম লিখুন</h3>
-        <input type="text" id="userName" placeholder="আপনার নাম লিখুন">
-        <button onclick="registerUser()">সাইন-আপ করুন</button>
-        <p id="status"></p>
+    <div id="registration-ui">
+        <h1 style="margin-bottom: 20px;">The Digital Villa Economy</h1>
+        <div class="card">
+            <h3 id="ui-title">ডিজিটাল পাড়ায় যোগ দিন</h3>
+            <input type="text" id="userName" placeholder="আপনার নাম লিখুন">
+            <button onclick="joinNeighborhood()">সিস্টেমে প্রবেশ করুন</button>
+        </div>
     </div>
 
-    <script>
-        // এটি আমাদের ডাটাবেজ হিসেবে কাজ করবে (আপাতত ব্রাউজার মেমোরিতে)
-        let userCount = localStorage.getItem('userCount') || 0;
+    <div id="map-container">
+        <div class="map-overlay">
+            <span id="welcome-msg"></span><br>
+            <small style="color: #ffc107;">● ৩ দিন পর ঘরবাড়ি নির্মাণের অনুমতি পাবেন</small>
+        </div>
+        <div id="map"></div>
+    </div>
 
-        function registerUser() {
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        let map;
+        let center = [23.8103, 90.4125]; // আপনার মেইন সেন্টার
+
+        function joinNeighborhood() {
             let name = document.getElementById('userName').value;
-            if (name === "") {
-                alert("দয়া করে নাম লিখুন!");
-                return;
-            }
-            userCount++;
-            localStorage.setItem('userCount', userCount);
-            
-            document.getElementById('status').innerText = 
-                `অভিনন্দন ${name}! আপনি সফলভাবে যোগ দিয়েছেন। আপনার বাড়ির নম্বর: ${userCount}`;
-            
-            // ৩ দিন পর বাড়ির ডিজাইন অপশন খোলার জন্য প্রম্পট
-            setTimeout(() => {
-                alert("আপনার রেজিস্ট্রেশন সফল। ৩-১০ দিন পর আপনার বাড়ির ডিজাইন অপশনটি খুলবে।");
-            }, 1000);
+            if (name === "") { alert("নাম লিখুন!"); return; }
+
+            // UI পরিবর্তন
+            document.getElementById('registration-ui').style.display = 'none';
+            document.getElementById('map-container').style.display = 'block';
+            document.getElementById('welcome-msg').innerText = `স্বাগতম, ${name}! (সিরিয়াল: ১)`;
+
+            // ম্যাপ লোড করা
+            initMap(name);
+        }
+
+        function initMap(userName) {
+            map = L.map('map', { zoomControl: false }).setView(center, 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+            // অ্যাডমিন লোকেশন (আপনি)
+            L.marker(center).addTo(map)
+                .bindPopup("<b>প্রধান কেন্দ্র (নাঈম ইব্রাহিম)</b>").openPopup();
+
+            // ইউজারের ডামি লোকেশন (ডিজিটাল পাড়ার অংশ হিসেবে)
+            let userLoc = [23.8120, 90.4150];
+            L.marker(userLoc).addTo(map)
+                .bindPopup(`<b>${userName}-এর পরিকল্পিত বাড়ি</b><br>স্থিতি: অপেক্ষমান (৩ দিন)`);
+
+            // ম্যাপে ক্লিক করলে মেসেজ
+            map.on('click', function() {
+                alert("আপনার জমি নির্বাচনের ধাপটি ৩ দিন পর সক্রিয় হবে। এখন শুধু পাড়াটি ঘুরে দেখুন।");
+            });
         }
     </script>
 </body>
