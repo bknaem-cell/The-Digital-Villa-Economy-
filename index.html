@@ -2,168 +2,127 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TdV - The Digital Villa Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
+    <title>TdV - The Digital Villa</title>
     <style>
-        :root {
-            --bg-color: #f0f2f5;
-            --panel-color: #ffffff;
-            --accent-color: #2c3e50;
-            --text-color: #333;
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            font-family: 'Arial', sans-serif; overflow: hidden;
+            background-color: #1a1a1a; color: white;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        /* ধাপ ১: লোগো স্ক্রিন */
+        #splash-screen {
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; height: 100vh; background: #000;
+        }
+        .logo-diamond {
+            width: 150px; height: 150px; background: #3498db;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            display: flex; justify-content: center; align-items: center;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+        /* ধাপ ২: সাইন আপ স্ক্রিন */
+        #signup-screen {
+            display: none; flex-direction: column; justify-content: center;
+            align-items: center; height: 100vh; background: #2c3e50;
+        }
+        .input-group { margin: 10px; }
+        input { padding: 10px; border-radius: 5px; border: none; }
+
+        /* ধাপ ৩: মেইন ড্যাশবোর্ড (ল্যান্ডস্কেপ) */
+        #main-dashboard {
+            display: none; height: 100vh;
+            grid-template-columns: 150px 1fr 200px;
+            grid-template-rows: 60px 1fr 80px;
+            gap: 10px; padding: 10px; box-sizing: border-box;
         }
 
-        /* মেইন ড্যাশবোর্ড কন্টেইনার */
-        .dashboard {
-            width: 900px;
-            height: 600px;
-            border: 5px solid #333;
-            border-radius: 20px;
-            display: grid;
-            grid-template-columns: 200px 1fr 200px;
-            grid-template-rows: 80px 1fr 100px;
-            gap: 10px;
-            padding: 15px;
-            background: #fff;
-            position: relative;
+        .side-panel { grid-row: 1 / 4; display: flex; flex-direction: column; gap: 10px; }
+        .main-view { 
+            grid-column: 2; background: #333; border-radius: 15px; 
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid #555; position: relative;
         }
-
-        /* ম্যাপ সেকশন (আপনার লাল দাগ দেওয়া অংশ) */
-        .world-map {
-            grid-column: 2;
-            background: #e1e1e1;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 2px dashed #999;
+        .world-map-small {
+            position: absolute; top: 10px; left: 10px;
+            width: 80px; height: 80px; background: #222;
+            border-radius: 50%; border: 1px solid cyan;
         }
-
-        /* প্রোফাইল ও ব্যালেন্স (ডান পাশে) */
-        .profile-panel {
-            grid-column: 3;
-            grid-row: 1 / 3;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .user-box, .balance-box {
-            background: var(--accent-color);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        /* ভয়েস কমান্ড প্যানেল (নিচে ডান পাশে) */
-        .voice-command {
-            grid-column: 2 / 4;
-            grid-row: 3;
-            background: #f9f9f9;
-            border: 2px solid #ddd;
-            border-radius: 15px;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .mic-icon {
-            font-size: 30px;
-            cursor: pointer;
-        }
-
-        .text-display {
-            flex-grow: 1;
-            height: 40px;
-            background: #fff;
-            border: 1px solid #ccc;
-            padding: 5px 10px;
-            border-radius: 5px;
-            overflow-y: auto;
-        }
-
-        /* বাম পাশের মেনু বাটন (১১, ১২, ১৩) */
-        .side-menu {
-            grid-column: 1;
-            grid-row: 1 / 4;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        .right-panel { display: flex; flex-direction: column; gap: 10px; }
+        .bottom-bar { 
+            grid-column: 2 / 4; background: rgba(0,0,0,0.5); 
+            border-radius: 10px; display: flex; align-items: center; padding: 0 20px;
         }
 
         .btn {
-            background: #eee;
-            border: 2px solid #333;
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
+            background: #444; border: 1px solid #777; padding: 10px;
+            text-align: center; border-radius: 8px; cursor: pointer;
         }
-
-        .btn:hover { background: #ddd; }
-
+        .btn:hover { background: #666; }
     </style>
 </head>
 <body>
 
-<div class="dashboard">
-    <div class="side-menu">
-        <div class="btn">১১: আমার এলাকা</div>
-        <div class="btn">১২: বাজার সদাই</div>
-        <div class="btn">১৩: কুরিয়ার</div>
-        <div class="btn">১৪: আইডিয়া ভল্ট</div>
+    <div id="splash-screen">
+        <div class="logo-diamond"><h1>TdV</h1></div>
+        <p>The Digital Villa-তে স্বাগতম...</p>
     </div>
 
-    <div class="world-map">
-        <h3 id="date-display">১৯:০২:২০২৬</h3>
-        <div style="font-size: 50px;">🌍</div>
-        <p>১০ কিলো স্কয়ার প্রজেক্ট ভিউ</p>
+    <div id="signup-screen">
+        <h2>ইউজার রেজিস্ট্রেশন (SUP)</h2>
+        <div class="input-group"><input type="text" id="username" placeholder="আপনার নাম (Naim)"></div>
+        <div class="input-group"><input type="password" id="userpin" placeholder="৪ সংখ্যার পিন সেট করুন"></div>
+        <button class="btn" onclick="goToDashboard()">OK (প্রবেশ করুন)</button>
     </div>
 
-    <div class="profile-panel">
-        <div class="user-box">
-            <strong>নাঈম ইব্রাহিম</strong><br>
-            ID: TdV-18
+    <div id="main-dashboard">
+        <div class="side-panel">
+            <div class="btn">মিশন ১</div>
+            <div class="btn">বাজার সদাই</div>
+            <div class="btn">কুরিয়ার</div>
+            <div class="btn">আইডিয়া ভল্ট</div>
+            <div class="btn">হিসাব</div>
         </div>
-        <div class="balance-box">
-            ব্যালেন্স: ০০ টাকা
+
+        <div class="main-view">
+            <div class="world-map-small"><center>🌍</center></div>
+            <div style="text-align: center;">
+                <h3>১০ কিলো স্কয়ার ভিউ</h3>
+                <p>১৯:০২:২০২৬</p>
+            </div>
+        </div>
+
+        <div class="right-panel">
+            <div class="btn" style="background: #27ae60;">নাঈম ইব্রাহিম</div>
+            <div class="btn">ব্যালেন্স: ০০ টোকেন</div>
+            <div class="btn">সেটিংস</div>
+        </div>
+
+        <div class="bottom-bar">
+            <span style="font-size: 24px; margin-right: 15px;">🎙️</span>
+            <div id="voice-text">ভয়েস কমান্ড: শুনছি নাঈম বাদশা...</div>
         </div>
     </div>
 
-    <div class="voice-command">
-        <div class="mic-icon" onclick="startVoice()">🎙️</div>
-        <div class="text-display" id="output-text">ভয়েস কমান্ড দিন অথবা এখানে আপডেট পড়ুন...</div>
-        <div class="btn" style="padding: 5px 10px;">OK</div>
-    </div>
-</div>
-
-<script>
-    // ভয়েস কমান্ড সিমুলেশন
-    function startVoice() {
-        const output = document.getElementById('output-text');
-        output.innerText = "শুনছি... (বলুন: আজকের মিশন কী?)";
-        
-        // ২০২৬ সালের আধুনিক ভয়েস সিন্থেসিস সিমুলেশন
+    <script>
+        // অটোমেশন স্ক্রিপ্ট
         setTimeout(() => {
-            output.innerText = "নাঈম ইব্রাহিম, আজকের কৃষি মিশন সফলভাবে চলছে।";
-            speak("নাঈম ইব্রাহিম, আজকের কৃষি মিশন সফলভাবে চলছে।");
-        }, 2000);
-    }
+            document.getElementById('splash-screen').style.display = 'none';
+            document.getElementById('signup-screen').style.display = 'flex';
+        }, 3000); // ৩ সেকেন্ড পর লোগো চলে যাবে
 
-    function speak(text) {
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'bn-BD';
+        function goToDashboard() {
+            const name = document.getElementById('username').value;
+            if(name) {
+                document.getElementById('signup-screen').style.display = 'none';
+                document.getElementById('main-dashboard').style.display = 'grid';
+            } else {
+                alert("অনুগ্রহ করে নাম লিখুন");
+            }
+        }
+    </script>
+</body>
+</html>
