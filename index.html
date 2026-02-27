@@ -3,79 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ডিজিটাল ভিলা - ডিজিটাল পাড়া</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <title>TdV - The Digital Villa Dashboard</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Arial', sans-serif; background-color: #1a1a1a; color: white; overflow-x: hidden; }
-        
-        #registration-ui { padding: 40px 20px; text-align: center; }
-        .card { background: #333; padding: 30px; border-radius: 20px; max-width: 450px; margin: auto; box-shadow: 0 0 25px #28a745; border: 1px solid #444; }
-        
-        input { width: 90%; padding: 15px; margin: 15px 0; border-radius: 10px; border: none; font-size: 16px; }
-        button { background: #28a745; color: white; padding: 15px 30px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; width: 90%; font-size: 16px; }
-        
-        #map-container { display: none; width: 100vw; height: 100vh; position: relative; }
-        #map { width: 100%; height: 100%; }
-        
-        .map-overlay { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(0,0,0,0.8); padding: 10px 20px; border-radius: 30px; border: 1px solid #28a745; font-size: 14px; text-align: center; min-width: 250px; }
+        :root {
+            --bg-color: #f0f2f5;
+            --panel-color: #ffffff;
+            --accent-color: #2c3e50;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* মেইন ড্যাশবোর্ড কন্টেইনার */
+        .dashboard {
+            width: 900px;
+            height: 600px;
+            border: 5px solid #333;
+            border-radius: 20px;
+            display: grid;
+            grid-template-columns: 200px 1fr 200px;
+            grid-template-rows: 80px 1fr 100px;
+            gap: 10px;
+            padding: 15px;
+            background: #fff;
+            position: relative;
+        }
+
+        /* ম্যাপ সেকশন (আপনার লাল দাগ দেওয়া অংশ) */
+        .world-map {
+            grid-column: 2;
+            background: #e1e1e1;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #999;
+        }
+
+        /* প্রোফাইল ও ব্যালেন্স (ডান পাশে) */
+        .profile-panel {
+            grid-column: 3;
+            grid-row: 1 / 3;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .user-box, .balance-box {
+            background: var(--accent-color);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        /* ভয়েস কমান্ড প্যানেল (নিচে ডান পাশে) */
+        .voice-command {
+            grid-column: 2 / 4;
+            grid-row: 3;
+            background: #f9f9f9;
+            border: 2px solid #ddd;
+            border-radius: 15px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .mic-icon {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        .text-display {
+            flex-grow: 1;
+            height: 40px;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            overflow-y: auto;
+        }
+
+        /* বাম পাশের মেনু বাটন (১১, ১২, ১৩) */
+        .side-menu {
+            grid-column: 1;
+            grid-row: 1 / 4;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            background: #eee;
+            border: 2px solid #333;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover { background: #ddd; }
+
     </style>
 </head>
 <body>
 
-    <div id="registration-ui">
-        <h1 style="margin-bottom: 20px;">The Digital Villa Economy</h1>
-        <div class="card">
-            <h3 id="ui-title">ডিজিটাল পাড়ায় যোগ দিন</h3>
-            <input type="text" id="userName" placeholder="আপনার নাম লিখুন">
-            <button onclick="joinNeighborhood()">সিস্টেমে প্রবেশ করুন</button>
+<div class="dashboard">
+    <div class="side-menu">
+        <div class="btn">১১: আমার এলাকা</div>
+        <div class="btn">১২: বাজার সদাই</div>
+        <div class="btn">১৩: কুরিয়ার</div>
+        <div class="btn">১৪: আইডিয়া ভল্ট</div>
+    </div>
+
+    <div class="world-map">
+        <h3 id="date-display">১৯:০২:২০২৬</h3>
+        <div style="font-size: 50px;">🌍</div>
+        <p>১০ কিলো স্কয়ার প্রজেক্ট ভিউ</p>
+    </div>
+
+    <div class="profile-panel">
+        <div class="user-box">
+            <strong>নাঈম ইব্রাহিম</strong><br>
+            ID: TdV-18
+        </div>
+        <div class="balance-box">
+            ব্যালেন্স: ০০ টাকা
         </div>
     </div>
 
-    <div id="map-container">
-        <div class="map-overlay">
-            <span id="welcome-msg"></span><br>
-            <small style="color: #ffc107;">● ৩ দিন পর ঘরবাড়ি নির্মাণের অনুমতি পাবেন</small>
-        </div>
-        <div id="map"></div>
+    <div class="voice-command">
+        <div class="mic-icon" onclick="startVoice()">🎙️</div>
+        <div class="text-display" id="output-text">ভয়েস কমান্ড দিন অথবা এখানে আপডেট পড়ুন...</div>
+        <div class="btn" style="padding: 5px 10px;">OK</div>
     </div>
+</div>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        let map;
-        let center = [23.8103, 90.4125]; // আপনার মেইন সেন্টার
+<script>
+    // ভয়েস কমান্ড সিমুলেশন
+    function startVoice() {
+        const output = document.getElementById('output-text');
+        output.innerText = "শুনছি... (বলুন: আজকের মিশন কী?)";
+        
+        // ২০২৬ সালের আধুনিক ভয়েস সিন্থেসিস সিমুলেশন
+        setTimeout(() => {
+            output.innerText = "নাঈম ইব্রাহিম, আজকের কৃষি মিশন সফলভাবে চলছে।";
+            speak("নাঈম ইব্রাহিম, আজকের কৃষি মিশন সফলভাবে চলছে।");
+        }, 2000);
+    }
 
-        function joinNeighborhood() {
-            let name = document.getElementById('userName').value;
-            if (name === "") { alert("নাম লিখুন!"); return; }
-
-            // UI পরিবর্তন
-            document.getElementById('registration-ui').style.display = 'none';
-            document.getElementById('map-container').style.display = 'block';
-            document.getElementById('welcome-msg').innerText = `স্বাগতম, ${name}! (সিরিয়াল: ১)`;
-
-            // ম্যাপ লোড করা
-            initMap(name);
-        }
-
-        function initMap(userName) {
-            map = L.map('map', { zoomControl: false }).setView(center, 15);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-            // অ্যাডমিন লোকেশন (আপনি)
-            L.marker(center).addTo(map)
-                .bindPopup("<b>প্রধান কেন্দ্র (নাঈম ইব্রাহিম)</b>").openPopup();
-
-            // ইউজারের ডামি লোকেশন (ডিজিটাল পাড়ার অংশ হিসেবে)
-            let userLoc = [23.8120, 90.4150];
-            L.marker(userLoc).addTo(map)
-                .bindPopup(`<b>${userName}-এর পরিকল্পিত বাড়ি</b><br>স্থিতি: অপেক্ষমান (৩ দিন)`);
-
-            // ম্যাপে ক্লিক করলে মেসেজ
-            map.on('click', function() {
-                alert("আপনার জমি নির্বাচনের ধাপটি ৩ দিন পর সক্রিয় হবে। এখন শুধু পাড়াটি ঘুরে দেখুন।");
-            });
-        }
-    </script>
-</body>
-</html>
+    function speak(text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'bn-BD';
