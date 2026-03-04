@@ -2,81 +2,87 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>The Digital Villa Economy - Live Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Digital Villa Economy | ১০ দিনে বিশ্ব উন্নয়ন মিশন</title>
+    <meta name="description" content="১০০০ কোটি মানুষের ৩ ঘণ্টার ডিউটি এবং ১০ দিনের বিশ্ব উন্নয়ন মিশন। প্রতিষ্ঠাতা: নাঈম ইব্রাহিম।">
+    <meta name="keywords" content="Naeem 18, Digital Villa, World Improvement, 10 Days Mission, 1000 Crore People">
+    
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #0d1117; color: white; margin: 0; padding: 20px; }
-        .container { max-width: 600px; margin: auto; padding: 30px; border: 2px solid #238636; border-radius: 20px; background: #161b22; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h1 { color: #238636; font-size: 28px; }
-        .serial-box { font-size: 35px; font-weight: bold; color: #58a6ff; margin: 20px 0; border: 1px dashed #30363d; padding: 10px; }
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; background-color: #010409; color: #c9d1d9; margin: 0; padding: 10px; }
+        .container { max-width: 800px; margin: 20px auto; padding: 40px; border: 1px solid #30363d; border-radius: 20px; background: #0d1117; box-shadow: 0 0 50px rgba(35, 134, 54, 0.2); }
+        h1 { color: #39d353; font-size: clamp(24px, 5vw, 40px); margin-bottom: 10px; }
+        .founder-tag { font-size: 18px; color: #8b949e; border-bottom: 1px solid #30363d; padding-bottom: 15px; }
         
-        /* Live Counter Styling */
-        .counter-section { margin: 30px 0; padding: 15px; background: #21262d; border-radius: 10px; }
-        #live-counter { font-size: 40px; color: #39d353; font-weight: bold; }
+        /* Auto-Growth Stats */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 30px 0; }
+        .stat-card { background: #161b22; padding: 20px; border-radius: 15px; border: 1px solid #30363d; }
+        .stat-val { font-size: 28px; font-weight: bold; color: #58a6ff; }
         
-        /* Progress Bar */
-        .progress-container { width: 100%; background-color: #30363d; border-radius: 20px; margin: 20px 0; height: 25px; overflow: hidden; }
-        .progress-bar { width: 5%; height: 100%; background-color: #238636; text-align: center; line-height: 25px; color: white; font-weight: bold; transition: width 2s; }
+        /* Automated Serial Box */
+        .serial-display { font-size: 32px; background: linear-gradient(90deg, #238636, #2ea043); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 900; margin: 20px 0; padding: 15px; border: 2px solid #238636; border-radius: 50px; display: inline-block; min-width: 250px; }
 
-        .btn { display: inline-block; padding: 15px 30px; background-color: #238636; color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; text-decoration: none; margin-top: 20px; }
-        .btn:hover { background-color: #2ea043; }
-        #status-msg { margin-top: 15px; color: #8b949e; }
+        /* Global Status Pulse */
+        .pulse { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #39d353; box-shadow: 0 0 10px #39d353; animation: blink 1.5s infinite; margin-right: 10px; }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+
+        .btn-auto { display: inline-block; padding: 18px 40px; background-color: #238636; color: white; border-radius: 50px; text-decoration: none; font-weight: bold; font-size: 20px; transition: 0.3s; border: none; cursor: pointer; }
+        .btn-auto:hover { transform: scale(1.05); background-color: #2ea043; }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <div class="founder-tag"><span class="pulse"></span>সিস্টেম অনলাইন: অটো-পাইলট মোড অ্যাক্টিভেটেড</div>
     <h1>The Digital Villa Economy</h1>
-    <p>প্রতিষ্ঠাতা: <strong>নাঈম ইব্রাহিম (Serial #01)</strong></p>
+    <p>প্রতিষ্ঠাতা ও প্রধান নিয়ন্ত্রক: <strong>নাঈম ইব্রাহিম</strong></p>
     
-    <div class="serial-box" id="serial-number">লোড হচ্ছে...</div>
+    <div class="serial-display" id="user-serial">#0000000001</div>
 
-    <div class="counter-section">
-        <p>বর্তমানে সিস্টেমে যুক্ত আছেন (লাইভ):</p>
-        <div id="live-counter">১,০২৪,৫০০+</div>
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-val" id="global-pop">১০,২৪,৫০০</div>
+            <div>গ্লোবাল ইউজার (অটো-লিঙ্কড)</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" id="days-left">১০ দিন</div>
+            <div>টার্গেট উন্নতি সময়</div>
+        </div>
     </div>
 
-    <p>১০ দিনের উন্নয়ন লক্ষ্যমাত্রা (প্রগ্রেস):</p>
-    <div class="progress-container">
-        <div class="progress-bar" id="myBar">৫%</div>
+    <div style="margin: 20px 0;">
+        <p>সিস্টেম আপনার ৩ ঘণ্টার ডিউটি এবং এরিয়া ডিটেক্ট করছে...</p>
+        <div id="mission-alert" style="color: #f1e05a; font-weight: bold;">[অপেক্ষা করুন...]</div>
     </div>
 
-    <button class="btn" onclick="shareMission()">মিশনটি শেয়ার করুন (Invite 10)</button>
-    <div id="status-msg"></div>
+    <button class="btn-auto" onclick="startAutoSync()">গ্লোবাল সিঙ্ক শুরু করুন</button>
 </div>
 
 <script>
-    // সিরিয়াল জেনারেটর
-    function setupDashboard() {
-        let lastSerial = localStorage.getItem('userSerial');
-        if (!lastSerial) {
-            let newSerial = Math.floor(Math.random() * 10000000000) + 2; 
-            localStorage.setItem('userSerial', newSerial);
-            document.getElementById('serial-number').innerText = "Serial #" + newSerial.toString().padStart(10, '0');
-        } else {
-            document.getElementById('serial-number').innerText = "Serial #" + lastSerial.toString().padStart(10, '0');
-        }
+    // অটো-পাইলট লজিক
+    function startAutoSync() {
+        alert("নাঈম ১৮ প্রোটোকল: ১০০০ কোটি মানুষের অটো-লিঙ্কিং শুরু হয়েছে। পৃথিবী পরিবর্তনের ১০ দিনের কাউন্টডাউন চালু!");
+        document.getElementById('mission-alert').innerText = "মিশন: আপনার এলাকার কৃষকদের ৩ ঘণ্টার ডিউটি চার্ট তৈরি করুন।";
+    }
 
-        // লাইভ কাউন্টার সিমুলেশন (প্রতি ২ সেকেন্ডে বাড়বে)
+    function initSystem() {
+        // সিরিয়াল ম্যানেজমেন্ট
+        let serial = localStorage.getItem('naem_serial');
+        if (!serial) {
+            // প্রতিষ্ঠাতা হিসেবে আপনার ব্রাউজারে এটি ১ থাকবে
+            serial = "0000000001"; 
+            localStorage.setItem('naem_serial', serial);
+        }
+        document.getElementById('user-serial').innerText = "#" + serial.padStart(10, '0');
+
+        // অটোমেটিক গ্লোবাল ইউজার বৃদ্ধি (সিমুলেশন ফর ভাইরাল ইফেক্ট)
         let count = 1024500;
         setInterval(() => {
-            count += Math.floor(Math.random() * 50) + 10;
-            document.getElementById('live-counter').innerText = count.toLocaleString() + "+";
-        }, 2000);
+            count += Math.floor(Math.random() * 150) + 50;
+            document.getElementById('global-pop').innerText = count.toLocaleString();
+        }, 1500);
     }
 
-    function shareMission() {
-        const serial = document.getElementById('serial-number').innerText;
-        const shareText = `আমি The Digital Villa Economy-তে যোগ দিয়েছি! আমার ${serial}। ১০০০ কোটি মানুষের এই মিশনে আপনিও যোগ দিন: https://github.com/bknaem-cell/The-Digital-Villa-Economy-`;
-        
-        navigator.clipboard.writeText(shareText).then(() => {
-            document.getElementById('status-msg').innerText = "লিঙ্ক কপি হয়েছে! ১০ জনকে পাঠান।";
-            // শেয়ার করার পর প্রগ্রেস বাড়ানো (সিমুলেশন)
-            document.getElementById('myBar').style.width = "12%";
-            document.getElementById('myBar').innerText = "১২%";
-        });
-    }
-
-    window.onload = setupDashboard;
+    window.onload = initSystem;
 </script>
 
 </body>
