@@ -77,4 +77,85 @@
             display: block;
         }
 
-        .btn-
+        .btn-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            color: #aaa;
+        }
+
+        /* ক্যাটাগরি ভিত্তিক আলাদা ডিজাইন (ছোট বাটন) */
+        .work-btn { border-bottom: 2px solid #00e5ff; } /* কাজের জন্য নীল */
+        .personal-btn { border-bottom: 2px solid #ff0077; } /* ব্যক্তিগত কেনাকাটার জন্য গোলাপি */
+        .agri-btn { border-bottom: 2px solid #00ff88; } /* কৃষির জন্য সবুজ */
+
+        /* ফুলস্ক্রিন প্রম্পট টেক্সট */
+        .fullscreen-hint {
+            position: fixed;
+            bottom: 20px;
+            font-size: 10px;
+            color: #444;
+        }
+    </style>
+</head>
+<body onclick="toggleFullScreen()">
+
+    <div class="profile-hub">
+        <div class="profile-name">NAEEM IBRAHIM</div>
+        <div class="status-badge">System Active : Protected</div>
+        <div style="font-size: 10px; color: #555; margin-top: 10px;">১০ কিলো স্কয়ার ইকোনমি</div>
+    </div>
+
+    <div class="button-container">
+        <div class="nav-btn work-btn">
+            <span class="btn-icon">🏗️</span>
+            <span class="btn-label">CONSTRUCTION</span>
+        </div>
+        <div class="nav-btn work-btn">
+            <span class="btn-icon">🎯</span>
+            <span class="btn-label">MISSION 1</span>
+        </div>
+        <div class="nav-btn work-btn">
+            <span class="btn-icon">🛡️</span>
+            <span class="btn-label">SECURITY</span>
+        </div>
+
+        <div class="nav-btn personal-btn">
+            <span class="btn-icon">👕</span>
+            <span class="btn-label">APPAREL</span>
+        </div>
+        <div class="nav-btn personal-btn">
+            <span class="btn-icon">👞</span>
+            <span class="btn-label">FOOTWEAR</span>
+        </div>
+        <div class="nav-btn personal-btn">
+            <span class="btn-icon">🛒</span>
+            <span class="btn-label">MARKET</span>
+        </div>
+
+        <div class="nav-btn agri-btn">
+            <span class="btn-icon">🌱</span>
+            <span class="btn-label">AGRICULTURE</span>
+        </div>
+        <div class="nav-btn agri-btn">
+            <span class="btn-icon">🪙</span>
+            <span class="btn-label">TOKEN HUB</span>
+        </div>
+        <div class="nav-btn agri-btn">
+            <span class="btn-icon">🌐</span>
+            <span class="btn-label">GLOBAL MAP</span>
+        </div>
+    </div>
+
+    <div class="fullscreen-hint">Tap anywhere for Full-Screen Mode</div>
+
+    <script>
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(e => {
+                    console.log(`Error attempting to enable full-screen mode: ${e.message}`);
+                });
+            }
+        }
+    </script>
+</body>
+</html>
