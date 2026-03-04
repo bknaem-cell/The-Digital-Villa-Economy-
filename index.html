@@ -2,47 +2,84 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>নাঈম ১৮ - ডিজিটাল ভিলা ইকোনমি</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
+    <title>NAEEM 18 - GLOBAL CONTROL</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0d1117; color: #c9d1d9; text-align: center; padding: 20px; }
-        .dashboard { border: 2px solid #58a6ff; border-radius: 15px; padding: 20px; max-width: 400px; margin: auto; background: #161b22; box-shadow: 0 0 20px rgba(88, 166, 255, 0.2); }
-        h1 { color: #58a6ff; font-size: 24px; }
-        .info { text-align: left; margin-bottom: 20px; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
-        .token-box { background: #238636; color: white; padding: 15px; border-radius: 10px; font-weight: bold; font-size: 20px; margin-top: 10px; }
-        .package { color: #ffa657; font-weight: bold; margin-top: 15px; }
-        .inventory { display: flex; justify-content: space-between; background: #21262d; padding: 10px; margin: 5px 0; border-radius: 5px; }
+        /* ফিউচারিস্টিক ডিজাইন থিম */
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; font-family: 'Segoe UI', sans-serif; overflow: hidden; color: #00d4ff; }
+        
+        /* ৩ সেকেন্ডের ব্ল্যাক লোডিং পেজ */
+        #loading-screen {
+            position: fixed; width: 100%; height: 100%; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .logo-text { font-size: 30px; letter-spacing: 5px; animation: pulse 1.5s infinite; color: #fff; }
+        
+        /* ম্যাপ ব্যাকগ্রাউন্ড ও মেইন ড্যাশবোর্ড */
+        #main-system { display: none; width: 100vw; height: 100vh; background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_x-v_n7_7_7_7_7_7_7_7_7_7_7_7_7') no-repeat center; background-size: cover; position: relative; }
+        .overlay { position: absolute; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(3px); }
+
+        /* গোল চ্যাপ্টা বাটন স্টাইল */
+        .orb-button {
+            position: absolute; width: 80px; height: 45px; border-radius: 50% / 20%; 
+            background: rgba(0, 212, 255, 0.1); border: 2px solid #00d4ff;
+            box-shadow: 0 0 15px #00d4ff; cursor: pointer; display: flex; justify-content: center; align-items: center;
+            font-size: 10px; font-weight: bold; transition: 0.3s; z-index: 10;
+        }
+        .orb-button:hover { background: #00d4ff; color: #000; transform: scale(1.1); }
+
+        /* বাটনের পজিশন (ক্যামেরার উপরে ও সাইডে) */
+        .btn-top-1 { top: 10px; left: 30%; } .btn-top-2 { top: 10px; left: 50%; } .btn-top-3 { top: 10px; left: 70%; }
+        .btn-left-1 { left: 15px; top: 20%; } .btn-left-2 { left: 15px; top: 40%; } .btn-left-3 { left: 15px; top: 60%; }
+        .btn-right-1 { right: 15px; top: 20%; } .btn-right-2 { right: 15px; top: 40%; } .btn-right-3 { right: 15px; top: 60%; }
+
+        /* সেন্ট্রাল লোগো ও সিকিউরিটি */
+        .center-node {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 250px; height: 250px; border: 1px dashed #00d4ff; border-radius: 50%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .lock-status { font-size: 14px; margin-top: 10px; color: #238636; }
+
+        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
-    <div class="dashboard">
-        <h1>নাঈম ১৮ - মাস্টার প্যানেল</h1>
-        
-        <div class="info">
-            <p><strong>নাম:</strong> নাঈম ইব্রাহিম</p>
-            <p><strong>কোড:</strong> ৯১৮ / নাঈম ১৮</p>
-            <p><strong>অবস্থান:</strong> একদন্ত, পাবনা</p>
-        </div>
-
-        <div class="token-box">
-            আপনার আজকের টোকেন: ১০০০ 💎
-        </div>
-
-        <div class="package">
-            📦 ৭ দিনের বাজার প্যাকেজ আসতে দেরি: ২ দিন
-        </div>
-
-        <h3>🏠 ঘরের ইনভেন্টরি (হিসাব):</h3>
-        <div class="inventory"><span>চাল:</span> <span>৫ কেজি</span></div>
-        <div class="inventory"><span>তেল:</span> <span>২ লিটার</span></div>
-        <div class="inventory"><span>স্যান্ডেল:</span> <span>১ জোড়া</span></div>
-        <div class="inventory"><span>শার্ট:</span> <span>৩ টি</span></div>
-
-        <p style="font-size: 12px; color: #8b949e; margin-top: 20px;">
-            "৩ ঘণ্টা কাজ = নিশ্চিন্ত জীবন" - কোটি গুণ আধুনিক পৃথিবী।
-        </p>
+    <div id="loading-screen">
+        <div class="logo-text">NAEEM 18</div>
+        <p style="color: #58a6ff;">SYSTEM INITIALIZING...</p>
     </div>
 
+    <div id="main-system">
+        <div class="overlay"></div>
+
+        <div class="orb-button btn-top-1">AGRICULTURE</div>
+        <div class="orb-button btn-top-2">CONSTRUCTION</div>
+        <div class="orb-button btn-top-3">GLOBAL MAP</div>
+
+        <div class="orb-button btn-left-1">MISSION 1</div>
+        <div class="orb-button btn-left-2">3HR WORK</div>
+        <div class="orb-button btn-left-3">TOKEN HUB</div>
+
+        <div class="orb-button btn-right-1">SECURITY</div>
+        <div class="orb-button btn-right-2">INV_STOCK</div>
+        <div class="orb-button btn-right-3">VIRTUAL ROOM</div>
+
+        <div class="center-node">
+            <h2 style="margin:0;">NAEEM IBRAHIM</h2>
+            <div style="font-size: 40px;">🔒</div>
+            <div class="lock-status">SYSTEM ACTIVE: PROTECTED</div>
+            <p style="font-size: 10px;">১০ কিলো স্কয়ার ইকোনমি</p>
+        </div>
+    </div>
+
+    <script>
+        // ৩ সেকেন্ড পর লোডিং পেজ সরে গিয়ে মেইন সিস্টেম আসবে
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-system').style.display = 'block';
+        }, 3000);
+    </script>
 </body>
 </html>
