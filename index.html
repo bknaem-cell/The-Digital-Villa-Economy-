@@ -2,122 +2,129 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Naeem Ibrahim - Project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Digital Villa - Naeem Ibrahim</title>
     <style>
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            background-color: #000;
-            color: #fff;
-            font-family: sans-serif;
+        body, html { margin: 0; padding: 0; background: #000; color: #fff; font-family: 'Segoe UI', sans-serif; overflow: hidden; height: 100vh; width: 100vw; }
+
+        /* লোডিং স্ক্রিন ও পার্টিকেল ইফেক্ট */
+        #loading-screen {
+            position: fixed; width: 100%; height: 100%; background: #000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10000;
+        }
+        
+        .pulse-point {
+            width: 10px; height: 10px; background: #fff; border-radius: 50%;
+            box-shadow: 0 0 20px #fff, 0 0 40px #00e5ff, 0 0 80px #00e5ff;
+            animation: expand 2s infinite ease-out;
+        }
+
+        @keyframes expand {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(50); opacity: 0; }
+        }
+
+        .loading-text { margin-top: 30px; font-size: 18px; letter-spacing: 3px; color: #fff; text-transform: uppercase; }
+        .connected-msg { font-size: 12px; color: #00e5ff; margin-top: 10px; font-weight: bold; }
+
+        /* মেইন ইন্টারফেস */
+        #main-ui { display: none; height: 100vh; width: 100vw; padding: 20px; box-sizing: border-box; }
+        
+        .header { margin-bottom: 20px; }
+        .profile-title { font-size: 24px; color: #00e5ff; text-shadow: 0 0 10px #00e5ff; }
+
+        /* অ্যাডাপ্টিভ গ্রিড (ল্যান্ডস্কেপ ও পোর্ট্রেট দুইটির জন্যই) */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* আপনার পছন্দের চ্যাপ্টা গোল বাটন */
+        .oval-btn {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid #333;
+            padding: 15px 10px;
+            border-radius: 60px; /* চ্যাপ্টা গোল (Pill Shape) */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-            overflow: hidden;
+            transition: 0.3s;
+            cursor: pointer;
         }
 
-        /* প্রোফাইল সেকশন */
-        .profile {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .profile h1 {
-            color: #00e5ff;
-            font-size: 22px;
-            letter-spacing: 1px;
-            margin: 5px 0;
-        }
-        .status {
-            font-size: 12px;
-            color: #00ff88;
-            border: 1px solid #00ff88;
-            padding: 3px 12px;
-            border-radius: 15px;
-        }
-
-        /* বাটন গ্রিড - ছোট ও সুন্দর */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            width: 95%;
-            max-width: 360px;
-        }
-
-        .btn {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 10px;
-            padding: 15px 5px;
-            text-align: center;
-            transition: 0.2s;
-        }
-
-        .btn:active {
-            background: #222;
-            border-color: #00e5ff;
+        .oval-btn:active {
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
             transform: scale(0.95);
         }
 
-        .icon { font-size: 20px; display: block; margin-bottom: 5px; }
-        .label { font-size: 9px; color: #ccc; text-transform: uppercase; }
+        .icon { font-size: 20px; margin-bottom: 5px; }
+        .label { font-size: 10px; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* ক্যাটাগরি কালার */
-        .work { border-bottom: 2px solid #00e5ff; }
-        .shop { border-bottom: 2px solid #ff0077; }
-        .agri { border-bottom: 2px solid #00ff88; }
-
-        /* ফুলস্ক্রিন বাটন */
-        #fs-btn {
-            position: fixed;
-            bottom: 20px;
-            background: rgba(0, 229, 255, 0.2);
-            color: #00e5ff;
-            border: 1px solid #00e5ff;
-            padding: 8px 20px;
-            border-radius: 5px;
-            font-size: 12px;
+        /* ফুল স্ক্রিন বাটন */
+        #fs-trigger {
+            position: fixed; bottom: 20px; right: 20px;
+            background: #111; border: 1px solid #00e5ff; color: #00e5ff;
+            padding: 10px 15px; border-radius: 5px; font-size: 10px; z-index: 10001;
         }
     </style>
 </head>
-<body>
+<body onclick="startApp()">
 
-    <div class="profile">
-        <h1>NAEEM IBRAHIM</h1>
-        <span class="status">SYSTEM ACTIVE: PROTECTED</span>
-        <p style="font-size: 10px; color: #666;">১০ কিলো স্কয়ার ইকোনমি</p>
+    <div id="loading-screen">
+        <div class="pulse-point"></div>
+        <div class="loading-text">NAEEM IBRAHIM</div>
+        <div class="connected-msg" id="status-msg">INITIALIZING SYSTEM...</div>
+        <div style="margin-top: 20px; font-size: 20px;"><span id="percent">0</span>%</div>
     </div>
 
-    <div class="grid">
-        <div class="btn work"><span class="icon">🏗️</span><span class="label">Work</span></div>
-        <div class="btn work"><span class="icon">🎯</span><span class="label">Mission</span></div>
-        <div class="btn work"><span class="icon">🛡️</span><span class="label">Security</span></div>
-        
-        <div class="btn shop"><span class="icon">👕</span><span class="label">Apparel</span></div>
-        <div class="btn shop"><span class="icon">👞</span><span class="label">Footwear</span></div>
-        <div class="btn shop"><span class="icon">🛒</span><span class="label">Market</span></div>
+    <div id="main-ui">
+        <div class="header">
+            <div class="profile-title">DIGITAL VILLA</div>
+            <div style="font-size: 10px; color: #00ff88;">STATUS: CONNECTED</div>
+        </div>
 
-        <div class="btn agri"><span class="icon">🌱</span><span class="label">Agri</span></div>
-        <div class="btn agri"><span class="icon">🪙</span><span class="label">Tokens</span></div>
-        <div class="btn agri"><span class="icon">🌐</span><span class="label">Map</span></div>
+        <div class="btn-grid">
+            <div class="oval-btn"><span class="icon">🏗️</span><span class="label">Work</span></div>
+            <div class="oval-btn"><span class="icon">🎯</span><span class="label">Mission</span></div>
+            <div class="oval-btn"><span class="icon">🛡️</span><span class="label">Security</span></div>
+            <div class="oval-btn"><span class="icon">👕</span><span class="label">Apparel</span></div>
+            <div class="oval-btn"><span class="icon">👞</span><span class="label">Footwear</span></div>
+            <div class="oval-btn"><span class="icon">🛒</span><span class="label">Market</span></div>
+            <div class="oval-btn"><span class="icon">🌱</span><span class="label">Agri</span></div>
+            <div class="oval-btn"><span class="icon">🪙</span><span class="label">Tokens</span></div>
+            <div class="oval-btn"><span class="icon">🌐</span><span class="label">Map</span></div>
+        </div>
     </div>
 
-    <button id="fs-btn" onclick="goFull()">Go Full Screen</button>
+    <button id="fs-trigger">ENTER FULLSCREEN</button>
 
     <script>
-        function goFull() {
-            let elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if (elem.webkitRequestFullscreen) { /* Safari */
-                elem.webkitRequestFullscreen();
-            } else if (elem.msRequestFullscreen) { /* IE11 */
-                elem.msRequestFullscreen();
-            }
-            document.getElementById('fs-btn').style.display = 'none';
+        function startApp() {
+            // ফুলস্ক্রিন রিকোয়েস্ট
+            let doc = document.documentElement;
+            if (doc.requestFullscreen) doc.requestFullscreen();
+            document.getElementById('fs-trigger').style.display = 'none';
+
+            // লোডিং অ্যানিমেশন শুরু
+            let width = 0;
+            let statusText = document.getElementById("status-msg");
+            let id = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(id);
+                    document.getElementById("loading-screen").style.display = "none";
+                    document.getElementById("main-ui").style.display = "block";
+                } else {
+                    width++;
+                    document.getElementById("percent").innerHTML = width;
+                    if(width == 50) statusText.innerHTML = "CONNECTED TO DIGITAL VILLA";
+                    if(width == 80) statusText.innerHTML = "LOADING INTERFACE...";
+                }
+            }, 40); 
         }
     </script>
 </body>
