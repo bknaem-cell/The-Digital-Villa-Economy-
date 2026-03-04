@@ -2,84 +2,105 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
-    <title>NAEEM 18 - GLOBAL CONTROL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NAEEM 18 - MASTER CONTROL</title>
     <style>
-        /* ফিউচারিস্টিক ডিজাইন থিম */
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #000; font-family: 'Segoe UI', sans-serif; overflow: hidden; color: #00d4ff; }
-        
-        /* ৩ সেকেন্ডের ব্ল্যাক লোডিং পেজ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; height: 100%; background: #000; overflow: hidden; font-family: 'Segoe UI', sans-serif; }
+
+        /* ১. লোডিং পেজ ও লোডিং বক্স */
         #loading-screen {
             position: fixed; width: 100%; height: 100%; background: #000; z-index: 9999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
-        .logo-text { font-size: 30px; letter-spacing: 5px; animation: pulse 1.5s infinite; color: #fff; }
-        
-        /* ম্যাপ ব্যাকগ্রাউন্ড ও মেইন ড্যাশবোর্ড */
-        #main-system { display: none; width: 100vw; height: 100vh; background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_x-v_n7_7_7_7_7_7_7_7_7_7_7_7_7') no-repeat center; background-size: cover; position: relative; }
-        .overlay { position: absolute; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(3px); }
-
-        /* গোল চ্যাপ্টা বাটন স্টাইল */
-        .orb-button {
-            position: absolute; width: 80px; height: 45px; border-radius: 50% / 20%; 
-            background: rgba(0, 212, 255, 0.1); border: 2px solid #00d4ff;
-            box-shadow: 0 0 15px #00d4ff; cursor: pointer; display: flex; justify-content: center; align-items: center;
-            font-size: 10px; font-weight: bold; transition: 0.3s; z-index: 10;
+        .loader-box {
+            width: 200px; height: 4px; background: #1a1a1a; border-radius: 10px; margin-top: 20px; overflow: hidden;
         }
-        .orb-button:hover { background: #00d4ff; color: #000; transform: scale(1.1); }
-
-        /* বাটনের পজিশন (ক্যামেরার উপরে ও সাইডে) */
-        .btn-top-1 { top: 10px; left: 30%; } .btn-top-2 { top: 10px; left: 50%; } .btn-top-3 { top: 10px; left: 70%; }
-        .btn-left-1 { left: 15px; top: 20%; } .btn-left-2 { left: 15px; top: 40%; } .btn-left-3 { left: 15px; top: 60%; }
-        .btn-right-1 { right: 15px; top: 20%; } .btn-right-2 { right: 15px; top: 40%; } .btn-right-3 { right: 15px; top: 60%; }
-
-        /* সেন্ট্রাল লোগো ও সিকিউরিটি */
-        .center-node {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 250px; height: 250px; border: 1px dashed #00d4ff; border-radius: 50%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        .loader-fill {
+            width: 0%; height: 100%; background: linear-gradient(90deg, #00d4ff, #0055ff);
+            animation: loading 3s linear forwards;
         }
-        .lock-status { font-size: 14px; margin-top: 10px; color: #238636; }
+        @keyframes loading { to { width: 100%; } }
 
-        @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        /* ২. মেইন ইন্টারফেস (ল্যান্ডস্কেপ ফোকাস) */
+        #main-system {
+            display: none; width: 100vw; height: 100vh;
+            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000') no-repeat center;
+            background-size: cover; position: relative;
+        }
+        .overlay { position: absolute; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(2px); }
+
+        /* ৩. ডানদিকের ছোট গোল চ্যাপ্টা বাটন */
+        .button-container {
+            position: absolute; right: 10px; top: 5%; height: 90%;
+            display: flex; flex-direction: column; justify-content: space-around; align-items: flex-end;
+            z-index: 100;
+        }
+        .orb-btn {
+            width: 65px; height: 35px; border-radius: 50% / 25%;
+            background: rgba(0, 212, 255, 0.1); border: 1.5px solid #00d4ff;
+            color: #00d4ff; font-size: 9px; font-weight: bold;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.5); cursor: pointer;
+            transition: 0.2s; text-transform: uppercase;
+        }
+        .orb-btn:active { transform: scale(0.9); background: #00d4ff; color: #000; }
+
+        /* সেন্ট্রাল প্রোফাইল */
+        .profile-hub {
+            position: absolute; left: 5%; top: 50%; transform: translateY(-50%);
+            border-left: 3px solid #00d4ff; padding-left: 20px;
+        }
+        .id-badge { font-size: 24px; color: #fff; letter-spacing: 2px; }
+        .status-light { width: 10px; height: 10px; background: #238636; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px #238636; }
+
     </style>
 </head>
 <body>
 
     <div id="loading-screen">
-        <div class="logo-text">NAEEM 18</div>
-        <p style="color: #58a6ff;">SYSTEM INITIALIZING...</p>
+        <h1 style="color: #fff; letter-spacing: 10px; font-size: 1.5rem;">NAEEM 18</h1>
+        <div class="loader-box">
+            <div class="loader-fill"></div>
+        </div>
+        <p style="color: #00d4ff; margin-top: 10px; font-size: 12px;">INITIALIZING SECURE LINK...</p>
     </div>
 
     <div id="main-system">
         <div class="overlay"></div>
 
-        <div class="orb-button btn-top-1">AGRICULTURE</div>
-        <div class="orb-button btn-top-2">CONSTRUCTION</div>
-        <div class="orb-button btn-top-3">GLOBAL MAP</div>
+        <div class="button-container">
+            <div class="orb-btn">Agri</div>
+            <div class="orb-btn">Build</div>
+            <div class="orb-btn">Map</div>
+            <div class="orb-btn">Token</div>
+            <div class="orb-btn">3HR</div>
+            <div class="orb-btn">Hub</div>
+            <div class="orb-btn">Stock</div>
+            <div class="orb-btn">Safety</div>
+        </div>
 
-        <div class="orb-button btn-left-1">MISSION 1</div>
-        <div class="orb-button btn-left-2">3HR WORK</div>
-        <div class="orb-button btn-left-3">TOKEN HUB</div>
-
-        <div class="orb-button btn-right-1">SECURITY</div>
-        <div class="orb-button btn-right-2">INV_STOCK</div>
-        <div class="orb-button btn-right-3">VIRTUAL ROOM</div>
-
-        <div class="center-node">
-            <h2 style="margin:0;">NAEEM IBRAHIM</h2>
-            <div style="font-size: 40px;">🔒</div>
-            <div class="lock-status">SYSTEM ACTIVE: PROTECTED</div>
-            <p style="font-size: 10px;">১০ কিলো স্কয়ার ইকোনমি</p>
+        <div class="profile-hub">
+            <div class="id-badge">নাঈম ইব্রাহিম</div>
+            <p style="color: #00d4ff;">ID: 918 | <span class="status-light"></span> ACTIVE</p>
+            <div style="margin-top: 20px; font-size: 30px;">💎 1,000</div>
+            <p style="font-size: 10px; color: #8b949e;">গ্লোবাল ভিলা ইকোনমি</p>
         </div>
     </div>
 
     <script>
-        // ৩ সেকেন্ড পর লোডিং পেজ সরে গিয়ে মেইন সিস্টেম আসবে
+        // ৩ সেকেন্ডের লোডিং শেষে মেইন স্ক্রিন
         setTimeout(() => {
             document.getElementById('loading-screen').style.display = 'none';
             document.getElementById('main-system').style.display = 'block';
         }, 3000);
+
+        // অটো ল্যান্ডস্কেপ অ্যালার্ট (যদি ইউজার পোর্ট্রেট মোডে থাকে)
+        window.addEventListener("orientationchange", function() {
+            if(window.orientation == 0) {
+                alert("সেরা অভিজ্ঞতার জন্য ফোনটি আড়াআড়ি (Landscape) ধরুন।");
+            }
+        });
     </script>
 </body>
 </html>
