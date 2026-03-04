@@ -2,33 +2,59 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAEEM 18 - Digital Villa Economy</title>
+    <title>The Digital Villa Economy - Serial 01</title>
     <style>
-        body { background-color: #0d1117; color: #58a6ff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; padding: 50px; }
-        .lobby { border: 2px solid #238636; padding: 30px; border-radius: 15px; background: #161b22; box-shadow: 0 0 20px rgba(35, 134, 54, 0.5); }
-        h1 { color: #ffffff; text-shadow: 2px 2px #238636; }
-        .btn { background-color: #238636; color: white; padding: 15px 30px; border: none; border-radius: 5px; cursor: pointer; font-size: 18px; margin: 10px; }
-        .btn:hover { background-color: #2ea043; }
-        .input-box { padding: 10px; width: 80%; margin: 10px; border-radius: 5px; border: 1px solid #30363d; background: #0d1117; color: white; }
+        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f8ff; }
+        .container { margin-top: 50px; padding: 20px; border: 2px solid #007bff; display: inline-block; border-radius: 15px; background: white; }
+        .serial-box { font-size: 30px; font-weight: bold; color: #d9534f; margin: 20px 0; }
+        .btn { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
+        .mission-text { color: #555; font-size: 18px; margin-bottom: 20px; }
     </style>
 </head>
 <body>
-    <div class="lobby">
-        <h1>WELCOME TO NAEEM 18 LOBBY</h1>
-        <p>১০০০ কোটি বছরের নিরাপত্তার ডিজিটাল ভিলা ইকোনমিতে আপনাকে স্বাগতম।</p>
-        
-        <div id="sign-up">
-            <input type="text" class="input-box" placeholder="আপনার নাম লিখুন">
-            <input type="text" class="input-box" placeholder="আপনার এলাকা">
-            <br>
-            <button class="btn" onclick="alert('আপনার সিরিয়াল নাম্বার ১-এর পরে প্রসেসিং হচ্ছে...')">SIGN UP / প্রবেশ করুন</button>
-        </div>
 
-        <div style="margin-top: 30px;">
-            <button class="btn" style="background-color: #8957e5;">GET ENTRY PASS</button>
-            <button class="btn" style="background-color: #d29922;">DAILY MISSION</button>
-        </div>
-    </div>
+<div class="container">
+    <h1>The Digital Villa Economy</h1>
+    <p class="mission-text">১০০০ কোটি মানুষের ১০ দিনের বিশ্ব উন্নয়ন মিশন</p>
+    
+    <div class="mission-text">আপনার ইউনিক গ্লোবাল সিরিয়াল নম্বর:</div>
+    <div id="serial-number" class="serial-box">লোড হচ্ছে...</div>
+
+    <p>আপনার সিরিয়ালটি <strong>Active</strong> করতে ১০ জনকে যুক্ত করুন।</p>
+    
+    <button class="btn" onclick="shareMission()">মিশনটি শেয়ার করুন (Invite 10)</button>
+    <br><br>
+    <div id="status-msg" style="color: blue;"></div>
+</div>
+
+<script>
+    // সিরিয়াল জেনারেটর লজিক (The Viral Trigger)
+    function generateSerial() {
+        let lastSerial = localStorage.getItem('userSerial');
+        
+        if (!lastSerial) {
+            // যদি নতুন ইউজার হয়, তবে একটি ডাইনামিক নম্বর জেনারেট হবে
+            // প্রতিষ্ঠাতা নাঈম ইব্রাহিমের জন্য সিরিয়াল ০১ নির্দিষ্ট করা আছে
+            let newSerial = Math.floor(Math.random() * 10000000000) + 2; 
+            localStorage.setItem('userSerial', newSerial);
+            document.getElementById('serial-number').innerText = "#" + newSerial.toString().padStart(10, '0');
+        } else {
+            document.getElementById('serial-number').innerText = "#" + lastSerial.toString().padStart(10, '0');
+        }
+    }
+
+    function shareMission() {
+        const serial = document.getElementById('serial-number').innerText;
+        const shareText = `আমি The Digital Villa Economy-তে যোগ দিয়েছি! আমার সিরিয়াল ${serial}। ১০০০ কোটি মানুষের এই মিশনে আপনিও যোগ দিন: https://github.com/bknaem-cell/The-Digital-Villa-Economy-`;
+        
+        navigator.clipboard.writeText(shareText).then(() => {
+            document.getElementById('status-msg').innerText = "লিঙ্ক কপি হয়েছে! এখন ১০ জনকে পাঠান।";
+        });
+    }
+
+    // পেজ লোড হলে সিরিয়াল দেখাবে
+    window.onload = generateSerial;
+</script>
+
 </body>
 </html>
