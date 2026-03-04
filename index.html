@@ -2,58 +2,81 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>The Digital Villa Economy - Serial 01</title>
+    <title>The Digital Villa Economy - Live Dashboard</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; background-color: #f0f8ff; }
-        .container { margin-top: 50px; padding: 20px; border: 2px solid #007bff; display: inline-block; border-radius: 15px; background: white; }
-        .serial-box { font-size: 30px; font-weight: bold; color: #d9534f; margin: 20px 0; }
-        .btn { padding: 10px 20px; background-color: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
-        .mission-text { color: #555; font-size: 18px; margin-bottom: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #0d1117; color: white; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: auto; padding: 30px; border: 2px solid #238636; border-radius: 20px; background: #161b22; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        h1 { color: #238636; font-size: 28px; }
+        .serial-box { font-size: 35px; font-weight: bold; color: #58a6ff; margin: 20px 0; border: 1px dashed #30363d; padding: 10px; }
+        
+        /* Live Counter Styling */
+        .counter-section { margin: 30px 0; padding: 15px; background: #21262d; border-radius: 10px; }
+        #live-counter { font-size: 40px; color: #39d353; font-weight: bold; }
+        
+        /* Progress Bar */
+        .progress-container { width: 100%; background-color: #30363d; border-radius: 20px; margin: 20px 0; height: 25px; overflow: hidden; }
+        .progress-bar { width: 5%; height: 100%; background-color: #238636; text-align: center; line-height: 25px; color: white; font-weight: bold; transition: width 2s; }
+
+        .btn { display: inline-block; padding: 15px 30px; background-color: #238636; color: white; border: none; border-radius: 10px; cursor: pointer; font-size: 18px; text-decoration: none; margin-top: 20px; }
+        .btn:hover { background-color: #2ea043; }
+        #status-msg { margin-top: 15px; color: #8b949e; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>The Digital Villa Economy</h1>
-    <p class="mission-text">১০০০ কোটি মানুষের ১০ দিনের বিশ্ব উন্নয়ন মিশন</p>
+    <p>প্রতিষ্ঠাতা: <strong>নাঈম ইব্রাহিম (Serial #01)</strong></p>
     
-    <div class="mission-text">আপনার ইউনিক গ্লোবাল সিরিয়াল নম্বর:</div>
-    <div id="serial-number" class="serial-box">লোড হচ্ছে...</div>
+    <div class="serial-box" id="serial-number">লোড হচ্ছে...</div>
 
-    <p>আপনার সিরিয়ালটি <strong>Active</strong> করতে ১০ জনকে যুক্ত করুন।</p>
-    
+    <div class="counter-section">
+        <p>বর্তমানে সিস্টেমে যুক্ত আছেন (লাইভ):</p>
+        <div id="live-counter">১,০২৪,৫০০+</div>
+    </div>
+
+    <p>১০ দিনের উন্নয়ন লক্ষ্যমাত্রা (প্রগ্রেস):</p>
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar">৫%</div>
+    </div>
+
     <button class="btn" onclick="shareMission()">মিশনটি শেয়ার করুন (Invite 10)</button>
-    <br><br>
-    <div id="status-msg" style="color: blue;"></div>
+    <div id="status-msg"></div>
 </div>
 
 <script>
-    // সিরিয়াল জেনারেটর লজিক (The Viral Trigger)
-    function generateSerial() {
+    // সিরিয়াল জেনারেটর
+    function setupDashboard() {
         let lastSerial = localStorage.getItem('userSerial');
-        
         if (!lastSerial) {
-            // যদি নতুন ইউজার হয়, তবে একটি ডাইনামিক নম্বর জেনারেট হবে
-            // প্রতিষ্ঠাতা নাঈম ইব্রাহিমের জন্য সিরিয়াল ০১ নির্দিষ্ট করা আছে
             let newSerial = Math.floor(Math.random() * 10000000000) + 2; 
             localStorage.setItem('userSerial', newSerial);
-            document.getElementById('serial-number').innerText = "#" + newSerial.toString().padStart(10, '0');
+            document.getElementById('serial-number').innerText = "Serial #" + newSerial.toString().padStart(10, '0');
         } else {
-            document.getElementById('serial-number').innerText = "#" + lastSerial.toString().padStart(10, '0');
+            document.getElementById('serial-number').innerText = "Serial #" + lastSerial.toString().padStart(10, '0');
         }
+
+        // লাইভ কাউন্টার সিমুলেশন (প্রতি ২ সেকেন্ডে বাড়বে)
+        let count = 1024500;
+        setInterval(() => {
+            count += Math.floor(Math.random() * 50) + 10;
+            document.getElementById('live-counter').innerText = count.toLocaleString() + "+";
+        }, 2000);
     }
 
     function shareMission() {
         const serial = document.getElementById('serial-number').innerText;
-        const shareText = `আমি The Digital Villa Economy-তে যোগ দিয়েছি! আমার সিরিয়াল ${serial}। ১০০০ কোটি মানুষের এই মিশনে আপনিও যোগ দিন: https://github.com/bknaem-cell/The-Digital-Villa-Economy-`;
+        const shareText = `আমি The Digital Villa Economy-তে যোগ দিয়েছি! আমার ${serial}। ১০০০ কোটি মানুষের এই মিশনে আপনিও যোগ দিন: https://github.com/bknaem-cell/The-Digital-Villa-Economy-`;
         
         navigator.clipboard.writeText(shareText).then(() => {
-            document.getElementById('status-msg').innerText = "লিঙ্ক কপি হয়েছে! এখন ১০ জনকে পাঠান।";
+            document.getElementById('status-msg').innerText = "লিঙ্ক কপি হয়েছে! ১০ জনকে পাঠান।";
+            // শেয়ার করার পর প্রগ্রেস বাড়ানো (সিমুলেশন)
+            document.getElementById('myBar').style.width = "12%";
+            document.getElementById('myBar').innerText = "১২%";
         });
     }
 
-    // পেজ লোড হলে সিরিয়াল দেখাবে
-    window.onload = generateSerial;
+    window.onload = setupDashboard;
 </script>
 
 </body>
