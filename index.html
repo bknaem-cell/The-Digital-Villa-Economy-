@@ -1,90 +1,131 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naeem 18 - Global Control System</title>
+    <title>TDV Control Panel</title>
     <style>
-        body { margin: 0; background: #000; color: #0f0; font-family: 'Segoe UI', Arial, sans-serif; overflow-x: hidden; }
-        
-        /* লোডিং স্ক্রিন */
-        #loading-screen { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle, #001f3f, #000); position: fixed; width: 100%; z-index: 999; }
-        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #00ff00; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        :root {
+            --neon-cyan: #00f2ff;
+            --neon-green: #39ff14;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+        }
 
-        /* মেইন ড্যাশবোর্ড গ্রিড */
-        #main-dashboard { display: none; padding: 10px; display: grid; grid-template-columns: 250px 1fr 250px; gap: 10px; height: 100vh; }
-        .panel { border: 1px solid #0f0; padding: 15px; background: rgba(0, 255, 0, 0.05); border-radius: 10px; overflow-y: auto; }
-        
-        /* ইলন মাস্ক/কোম্পানি ভিউ */
-        .investor-view { border-color: gold; color: gold; font-size: 12px; }
-        
-        /* বাটন স্টাইল */
-        button { width: 100%; padding: 10px; margin: 5px 0; background: #0f0; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .bkash-btn { background: #e2136e; color: white; }
-        .nagad-btn { background: #f47920; color: white; }
-        .back-btn { background: #ff0000; color: white; padding: 20px; font-size: 18px; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 200px; }
+        body {
+            background: #050a10;
+            color: white;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
 
-        h3 { border-bottom: 1px solid #0f0; padding-bottom: 5px; font-size: 16px; }
+        /* সিকিউরিটি স্ক্রিন */
+        #login-screen {
+            text-align: center;
+            backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        input {
+            background: transparent;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        /* কন্ট্রোল প্যানেল (শুরুতে লুকানো থাকবে) */
+        #dashboard {
+            display: none;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .id-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1.5px solid rgba(0, 242, 255, 0.5);
+            border-radius: 20px;
+            padding: 20px;
+            position: relative;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+        }
+
+        .id-card h2 {
+            color: var(--neon-cyan);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 18px;
+        }
+
+        .avatar-box {
+            width: 120px;
+            height: 120px;
+            margin: 15px auto;
+            border: 2px solid var(--neon-green);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(57, 255, 20, 0.05);
+            box-shadow: inset 0 0 15px var(--neon-green);
+        }
+
+        .status-light {
+            width: 10px;
+            height: 10px;
+            background: var(--neon-green);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--neon-green);
+        }
     </style>
 </head>
 <body>
 
-    <div id="loading-screen">
-        <div class="loader"></div>
-        <h2 style="color: #0f0;">নাঈম ১৮ সিস্টেম চালু হচ্ছে...</h2>
-        <p>১০০০ কোটি বছরের মিশনের তথ্য লোড হচ্ছে</p>
+    <div id="login-screen">
+        <h3>অ্যাক্সেস কোড দিন</h3>
+        <input type="password" id="access-code" placeholder="কোড লিখুন...">
+        <br><br>
+        <button onclick="checkCode()" style="background: var(--neon-cyan); border:none; padding:10px 20px; cursor:pointer; border-radius:5px;">প্রবেশ করুন</button>
     </div>
 
-    <div id="main-dashboard" style="display: none;">
-        
-        <div class="panel">
-            <h3>👤 অমর প্রোফাইল</h3>
-            <p>নাম: নাঈম ইব্রাহিম</p>
-            <p>র‍্যাঙ্ক: #১ (ফাউন্ডার)</p>
-            <hr>
-            <h3>🏠 আমার সম্পদ</h3>
-            <button onclick="alert('জমি: নগর চাচকিয়া, ৫৬৭ দাগ')">📁 জমি-জমা</button>
-            <button onclick="alert('পোশাক: ৩টি নতুন সেট প্রস্তুত')">📁 জামা-কাপড়</button>
-            <button onclick="alert('পরিবার: ৪ জন সদস্য কানেক্টেড')">📁 ফ্যামিলি ফাইল</button>
-        </div>
-
-        <div class="panel" style="background: rgba(0,0,0,0.8);">
-            <h2 style="text-align:center;">১০ কিলো স্কয়ার লাইভ</h2>
-            <div style="height: 200px; background: #002200; border: 2px dashed #0f0; display: flex; align-items: center; justify-content: center;">
-                [ একদন্ত - নগর চাচকিয়া ম্যাপ ]
+    <div id="dashboard">
+        <div class="id-card">
+            <div style="text-align: right;"><span class="status-light"></span> Active</div>
+            <h2>Global Biometric ID</h2>
+            <div class="avatar-box">
+                <span style="font-size: 50px;">👤</span>
             </div>
-            <h3>⏱️ ডিউটি ট্র্যাকার (বাস্তব সময়)</h3>
-            <p>আজকের কাজ: ১২ ঘণ্টা (গোল্ডেন ভ্যালু)</p>
-            <div id="logs" style="font-size: 12px; color: #888; height: 100px; overflow-y: scroll;">
-                > সিস্টেম অনলাইন... <br> > টোকেন মাইনিং শুরু হয়েছে...
-            </div>
+            <h1 style="font-size: 22px; margin: 10px 0;">Naim Ibrahim</h1>
+            <p style="color: var(--neon-green); font-size: 14px;">Authorized User</p>
+            <hr style="border: 0.5px solid var(--neon-cyan); opacity: 0.3;">
+            <p style="font-size: 12px; opacity: 0.7;">Digital Villa Economy Project</p>
         </div>
-
-        <div class="panel investor-view">
-            <h3>🚀 ইনভেস্টর পোর্টাল (Elon Musk View)</h3>
-            <p>গ্লোবাল ইউজার: ১০০০ কোটি (টার্গেট)</p>
-            <p>সিস্টেম ভ্যালু: আনলিমিটেড</p>
-            <button onclick="alert('কোম্পানি লেনদেন বাধ্যতামূলক করা হয়েছে।')">💼 কোম্পানি এক্সেস</button>
-            <hr>
-            <h3 style="color: #0f0;">💰 ওয়ালেট (বিকাশ/নগদ)</h3>
-            <p>ব্যালেন্স: ৫০০০ টোকেন</p>
-            <button class="bkash-btn">বিকাশ উত্তোলন</button>
-            <button class="nagad-btn">নগদ উত্তোলন</button>
-        </div>
-
-        <button class="back-btn" onclick="location.reload()">🔙 ব্যাক বাটন</button>
     </div>
 
     <script>
-        // লোডিং শেষ করে ড্যাশবোর্ড দেখানো
-        setTimeout(() => {
-            document.getElementById('loading-screen').style.display = 'none';
-            document.getElementById('main-dashboard').style.display = 'grid';
-        }, 3000); // ৩ সেকেন্ড লোডিং
-
-        // ভয়েস কমান্ড সিমুলেশন
-        console.log("নাঈম ১৮ সিস্টেম আপনার কথা শোনার জন্য প্রস্তুত...");
+        function checkCode() {
+            const code = document.getElementById('access-code').value;
+            // আপনার দেওয়া সিক্রেট কোড চেক করা হচ্ছে
+            if (code === "নাঈম ১৮" || code === "918") {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                alert("ভুল কোড! আবার চেষ্টা করুন।");
+            }
+        }
     </script>
 </body>
 </html>
