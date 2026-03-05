@@ -2,72 +2,89 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>ডিজিটাল ভিলা ইকোনমি - মাস্টার কন্ট্রোল</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naeem 18 - Global Control System</title>
     <style>
-        body { background-color: #010816; color: white; font-family: sans-serif; margin: 0; padding: 10px; box-sizing: border-box; }
-        .grid-container { display: grid; grid-template-columns: 320px 1fr 320px; gap: 10px; height: 95vh; }
-        .panel { background: rgba(0, 20, 40, 0.6); border: 1.5px solid #00d2ff; border-radius: 10px; padding: 10px; position: relative; box-shadow: 0 0 15px rgba(0,210,255,0.2); }
+        body { margin: 0; background: #000; color: #0f0; font-family: 'Segoe UI', Arial, sans-serif; overflow-x: hidden; }
         
-        /* গ্লোবাল আইডি কার্ড সেকশন */
-        .id-card { border: 2px solid #FFD700; border-radius: 15px; padding: 15px; background: rgba(0,0,0,0.4); text-align: center; }
-        .id-photo { width: 100px; height: 120px; border: 2px solid #fff; margin: 0 auto 10px; border-radius: 5px; background: #222; font-size: 3rem; }
+        /* লোডিং স্ক্রিন */
+        #loading-screen { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background: radial-gradient(circle, #001f3f, #000); position: fixed; width: 100%; z-index: 999; }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #00ff00; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* মাঝখানের গোল ম্যাপ */
-        .central-hub { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .circular-map { width: 380px; height: 380px; border-radius: 50%; border: 10px solid #39FF14; box-shadow: 0 0 40px #39FF14; position: relative; animation: rotateMap 60s linear infinite; }
-        .map-label { background: #00d2ff; color: black; padding: 5px 20px; border-radius: 20px; font-weight: bold; position: absolute; top: 10px; }
-
+        /* মেইন ড্যাশবোর্ড গ্রিড */
+        #main-dashboard { display: none; padding: 10px; display: grid; grid-template-columns: 250px 1fr 250px; gap: 10px; height: 100vh; }
+        .panel { border: 1px solid #0f0; padding: 15px; background: rgba(0, 255, 0, 0.05); border-radius: 10px; overflow-y: auto; }
+        
+        /* ইলন মাস্ক/কোম্পানি ভিউ */
+        .investor-view { border-color: gold; color: gold; font-size: 12px; }
+        
         /* বাটন স্টাইল */
-        .btn-action { width: 100%; padding: 10px; margin: 5px 0; background: rgba(0,210,255,0.1); border: 1px solid #00d2ff; color: #00d2ff; border-radius: 5px; cursor: pointer; font-weight: bold; }
-        .btn-action:hover { background: #00d2ff; color: black; box-shadow: 0 0 15px #fff; }
+        button { width: 100%; padding: 10px; margin: 5px 0; background: #0f0; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .bkash-btn { background: #e2136e; color: white; }
+        .nagad-btn { background: #f47920; color: white; }
+        .back-btn { background: #ff0000; color: white; padding: 20px; font-size: 18px; position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 200px; }
 
-        @keyframes rotateMap { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        h3 { border-bottom: 1px solid #0f0; padding-bottom: 5px; font-size: 16px; }
     </style>
 </head>
 <body>
-    <h2 style="text-align: center; color: #00d2ff; text-shadow: 0 0 10px #00d2ff;">ডিজিটাল ভিলা ইকোনমি</h2>
-    <div class="grid-container">
+
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <h2 style="color: #0f0;">নাঈম ১৮ সিস্টেম চালু হচ্ছে...</h2>
+        <p>১০০০ কোটি বছরের মিশনের তথ্য লোড হচ্ছে</p>
+    </div>
+
+    <div id="main-dashboard" style="display: none;">
         
         <div class="panel">
-            <div class="id-card">
-                <div class="id-photo">👤</div>
-                <div style="font-size: 1.2rem; color: #FFD700; font-weight: bold;">Naeem Ibrahim</div>
-                <div style="font-size: 0.8rem; color: #ccc;">ID: 2190-781A-2022</div>
-                <p style="color: #39FF14; font-size: 0.9rem;">বায়োমেট্রিক নিরাপত্তা সক্রিয়</p>
+            <h3>👤 অমর প্রোফাইল</h3>
+            <p>নাম: নাঈম ইব্রাহিম</p>
+            <p>র‍্যাঙ্ক: #১ (ফাউন্ডার)</p>
+            <hr>
+            <h3>🏠 আমার সম্পদ</h3>
+            <button onclick="alert('জমি: নগর চাচকিয়া, ৫৬৭ দাগ')">📁 জমি-জমা</button>
+            <button onclick="alert('পোশাক: ৩টি নতুন সেট প্রস্তুত')">📁 জামা-কাপড়</button>
+            <button onclick="alert('পরিবার: ৪ জন সদস্য কানেক্টেড')">📁 ফ্যামিলি ফাইল</button>
+        </div>
+
+        <div class="panel" style="background: rgba(0,0,0,0.8);">
+            <h2 style="text-align:center;">১০ কিলো স্কয়ার লাইভ</h2>
+            <div style="height: 200px; background: #002200; border: 2px dashed #0f0; display: flex; align-items: center; justify-content: center;">
+                [ একদন্ত - নগর চাচকিয়া ম্যাপ ]
             </div>
-            <div style="margin-top: 20px; border-top: 1px solid #444; padding-top: 10px;">
-                <div style="color: #00d2ff;">আর্টুন কন্ট্রোল</div>
-                <div style="height: 100px; background: rgba(255,255,255,0.05); margin-top: 5px;"></div>
+            <h3>⏱️ ডিউটি ট্র্যাকার (বাস্তব সময়)</h3>
+            <p>আজকের কাজ: ১২ ঘণ্টা (গোল্ডেন ভ্যালু)</p>
+            <div id="logs" style="font-size: 12px; color: #888; height: 100px; overflow-y: scroll;">
+                > সিস্টেম অনলাইন... <br> > টোকেন মাইনিং শুরু হয়েছে...
             </div>
         </div>
 
-        <div class="panel central-hub">
-            <div class="map-label">১০ কিলো স্কয়ার</div>
-            <div class="circular-map">
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-360deg); color: #39FF14; font-weight: bold;">LIVE SYSTEM</div>
-            </div>
-            <div style="margin-top: 20px; display: flex; gap: 10px;">
-                <button class="btn-action" style="width: 100px;">১০ কিবার</button>
-                <button class="btn-action" style="width: 100px;">১০ কিলো</button>
-            </div>
+        <div class="panel investor-view">
+            <h3>🚀 ইনভেস্টর পোর্টাল (Elon Musk View)</h3>
+            <p>গ্লোবাল ইউজার: ১০০০ কোটি (টার্গেট)</p>
+            <p>সিস্টেম ভ্যালু: আনলিমিটেড</p>
+            <button onclick="alert('কোম্পানি লেনদেন বাধ্যতামূলক করা হয়েছে।')">💼 কোম্পানি এক্সেস</button>
+            <hr>
+            <h3 style="color: #0f0;">💰 ওয়ালেট (বিকাশ/নগদ)</h3>
+            <p>ব্যালেন্স: ৫০০০ টোকেন</p>
+            <button class="bkash-btn">বিকাশ উত্তোলন</button>
+            <button class="nagad-btn">নগদ উত্তোলন</button>
         </div>
 
-        <div class="panel">
-            <div style="border-bottom: 1px solid #444; padding-bottom: 10px;">
-                <div style="color: #00d2ff;">ভার্চুয়াল টোকেন এক্সচেঞ্জ</div>
-                <div style="font-size: 0.8rem; color: #39FF14;">8.0.00098 ➔ USD</div>
-            </div>
-            <div style="margin-top: 15px;">
-                <div style="font-size: 0.9rem; margin-bottom: 10px;">দক্ষতাভিত্তিক কর্মসংস্থান পোর্টাল</div>
-                <button class="btn-action">পণ্য ব্যবস্থাপনা</button>
-                <button class="btn-action">হিমাগার পর্যবেক্ষণ</button>
-                <button class="btn-action">নিরাপত্তা কন্ট্রোল</button>
-            </div>
-            <div style="margin-top: 20px; font-size: 0.8rem;">
-                <div>কৃষি: 100 krm</div>
-                <div>পরিবেশ: 50%</div>
-            </div>
-        </div>
+        <button class="back-btn" onclick="location.reload()">🔙 ব্যাক বাটন</button>
     </div>
+
+    <script>
+        // লোডিং শেষ করে ড্যাশবোর্ড দেখানো
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-dashboard').style.display = 'grid';
+        }, 3000); // ৩ সেকেন্ড লোডিং
+
+        // ভয়েস কমান্ড সিমুলেশন
+        console.log("নাঈম ১৮ সিস্টেম আপনার কথা শোনার জন্য প্রস্তুত...");
+    </script>
 </body>
 </html>
