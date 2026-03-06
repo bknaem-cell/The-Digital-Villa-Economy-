@@ -3,244 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TDV Global System</title>
+    <title>NAYEM'S 10 KILO SQ. SYSTEM</title>
     <style>
-        :root {
-            --neon-cyan: #00f2ff;
-            --dark-bg: #030d0d;
-            --glass-bg: rgba(0, 242, 255, 0.05);
+        /* পুরো স্ক্রিন গেমের মতো সেটআপ */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body, html { 
+            width: 100%; height: 100%; 
+            overflow: hidden; 
+            background: #000; 
+            display: flex; justify-content: center; align-items: center;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            cursor: crosshair;
-        }
-
-        body {
-            background-color: var(--dark-bg);
-            color: var(--neon-cyan);
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* অটো ল্যান্ডস্কেপ হ্যান্ডলিং */
+        /* অটো ল্যান্ডস্কেপ প্রম্পট (যদি ফোন সোজা থাকে) */
         @media screen and (orientation: portrait) {
-            #landscape-warning {
-                display: flex;
-            }
-            .main-container {
-                display: none;
+            body::before {
+                content: "PLEASE ROTATE YOUR PHONE";
+                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                background: #001a1a; color: #00ffff;
+                display: flex; justify-content: center; align-items: center;
+                z-index: 9999; font-weight: bold; font-size: 24px; text-shadow: 0 0 10px #00ffff;
             }
         }
 
-        #landscape-warning {
-            display: none;
-            position: fixed;
-            background: var(--dark-bg);
-            width: 100%;
-            height: 100%;
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        /* মেইন কন্টেইনার - ছবির মতো ব্যাকগ্রাউন্ড */
-        .main-container {
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at center, rgba(0, 242, 255, 0.1) 0%, transparent 70%),
-                url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
-            border: 5px solid var(--neon-cyan);
-            box-shadow: inset 0 0 50px rgba(0, 242, 255, 0.2), 0 0 20px rgba(0, 242, 255, 0.5);
+        /* মূল কন্টেইনার */
+        .container {
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle, #002222 0%, #000 80%);
+            border: 4px solid #00ffff55;
             position: relative;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
-        /* ব্যাকগ্রাউন্ড সার্কিট ম্যাপ (ছবির মতো) */
-        .circuit-bg {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://i.imgur.com/8Q5p7XQ.png') center/cover no-repeat;
-            opacity: 0.15;
-            z-index: 0;
-            pointer-events: none;
+        /* ব্যাকগ্রাউন্ড ডিজিটাল ম্যাপ */
+        .map-bg {
+            position: absolute; width: 100%; height: 100%;
+            opacity: 0.1; background-image: linear-gradient(#00ffff 1px, transparent 1px), linear-gradient(90deg, #00ffff 1px, transparent 1px);
+            background-size: 50px 50px; pointer-events: none;
         }
 
-        /* ওপরের আইকন (Voice, Map) */
-        .top-icons {
-            display: flex;
-            justify-content: space-between;
-            z-index: 10;
-        }
-
-        .icon-box {
-            text-align: center;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--neon-cyan);
-        }
-
-        /* মাঝখানের লোডিং সেকশন */
-        .loading-center {
-            text-align: center;
-            z-index: 10;
-        }
-
+        /* লোডিং টেক্সট */
         .loading-text {
-            font-size: 40px;
-            font-weight: bold;
-            letter-spacing: 8px;
-            margin-bottom: 15px;
-            text-shadow: 0 0 15px var(--neon-cyan);
-            animation: pulse 1.5s infinite;
+            color: #00ffff; font-size: 40px; font-weight: bold;
+            text-transform: uppercase; letter-spacing: 10px;
+            margin-bottom: 20px; text-shadow: 0 0 20px #00ffff;
+            animation: blink 1s infinite;
         }
 
-        /* মেইন লোডিং বার - ড্রোন ও বিল্ডিং */
-        .progress-container {
-            width: 70%;
-            height: 100px;
-            margin: 0 auto;
-            border: 2px solid var(--neon-cyan);
-            border-radius: 50px;
-            position: relative;
-            background: rgba(0, 0, 0, 0.5);
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            padding: 0 10px;
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* গ্লাস-মরফিজম লোডিং বার */
+        .loading-bar-container {
+            width: 60%; height: 120px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 3px solid #00ffff88;
+            border-radius: 60px;
+            position: relative; overflow: hidden;
+            display: flex; align-items: center;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
         }
 
-        .progress-bar-fill {
-            height: 80%;
-            background: rgba(0, 242, 255, 0.2);
-            border-radius: 40px;
-            position: absolute;
-            left: 5px;
-            animation: fill 5s linear infinite;
+        /* লোডিং প্রগ্রেস ও ড্রোন */
+        .progress {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, transparent, #00ffff44);
+            position: absolute; left: 0;
+            display: flex; align-items: center; justify-content: flex-end;
+            animation: load 10s linear forwards;
         }
 
-        /* ড্রোন অ্যানিমেশন */
-        .drone {
-            width: 40px;
-            position: absolute;
+        .drone { font-size: 40px; margin-right: 10px; filter: drop-shadow(0 0 10px #00ffff); }
+
+        /* ডানদিকের বিল্ডিং */
+        .building {
+            position: absolute; right: 20px; font-size: 50px;
+            filter: drop-shadow(0 0 15px #00ffff);
             z-index: 5;
-            filter: drop-shadow(0 0 5px var(--neon-cyan));
-            animation: fly 3s ease-in-out infinite;
         }
 
-        /* নিচের টেক্সট ও আইডি */
-        .bottom-info {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 10;
-            margin-bottom: 10px;
-        }
-
-        .global-title {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 4px;
-            margin-bottom: 5px;
-        }
-
-        .id-badge {
-            background: rgba(0, 242, 255, 0.1);
-            padding: 5px 20px;
-            border: 1px solid var(--neon-cyan);
-            font-size: 14px;
-            margin-top: 10px;
-        }
-
-        /* অ্যানিমেশনগুলো */
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        @keyframes fill {
+        @keyframes load {
             0% { width: 0%; }
-            100% { width: 98%; }
+            100% { width: 90%; }
         }
 
-        @keyframes fly {
-            0%, 100% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-10px) rotate(5deg); }
+        /* টেক্সট ইনফরমেশন */
+        .info {
+            margin-top: 30px; text-align: center; color: #00ffff;
+        }
+
+        .system-name { font-size: 32px; font-weight: bold; letter-spacing: 2px; }
+        .sub-text { font-size: 14px; opacity: 0.7; letter-spacing: 5px; margin-bottom: 15px; }
+
+        /* আইডি বক্স */
+        .id-box {
+            border: 1px solid #00ffff; padding: 10px 30px;
+            border-radius: 5px; background: rgba(0, 255, 255, 0.1);
+            font-size: 18px; letter-spacing: 2px;
+            box-shadow: inset 0 0 10px #00ffff33;
         }
 
     </style>
 </head>
-<body onclick="playDigitalSound()">
+<body>
 
-    <div id="landscape-warning">
-        <h2>PLEASE ROTATE YOUR PHONE</h2>
-        <p>Landscape mode is required for full experience.</p>
-    </div>
+    <div class="map-bg"></div>
 
-    <div class="main-container">
-        <div class="circuit-bg"></div>
+    <div class="container">
+        <div class="loading-text">LOADING...</div>
 
-        <div class="top-icons">
-            <div class="icon-box">🎤<br>Voice</div>
-            <div class="icon-box">📡<br>Scanning</div>
-            <div class="icon-box">🗺️<br>Map</div>
+        <div class="loading-bar-container">
+            <div class="progress">
+                <span class="drone">🛸</span>
+                <span class="drone">🛸</span>
+                <span class="drone">🛸</span>
+            </div>
+            <div class="building">🏢</div>
         </div>
 
-        <div class="loading-center">
-            <div class="loading-text">LOADING...</div>
-            <div class="progress-container">
-                <div class="progress-bar-fill"></div>
-                <div class="drone" style="left: 20%;">🛸</div>
-                <div class="drone" style="left: 50%; animation-delay: 0.5s;">🛸</div>
-                <div class="drone" style="left: 80%; animation-delay: 1s;">🏢</div>
+        <div class="info">
+            <div class="system-name">NAYEM'S 10 KILO SQ. SYSTEM</div>
+            <div class="sub-text">BUILDING YOUR FUTURE...</div>
+            <div class="id-box">
+                ID: 918 | 000,000,001 / 10,000,000,000
             </div>
-        </div>
-
-        <div class="bottom-info">
-            <div class="global-title">GLOBAL 1000 CR SYSTEM</div>
-            <div style="font-size: 10px; opacity: 0.8;">GLOBAL YEAR 1000 FUTURE...</div>
-            
-            <div class="id-badge">
-                ID: 918 | 000,000,001/10,000,000,000
-            </div>
-            
-            <div style="font-size: 8px; margin-top: 5px; opacity: 0.5;">POWERED BY TDV ECONOMY</div>
         </div>
     </div>
 
-    <audio id="clickSound">
-        <source src="https://www.soundjay.com/buttons/beep-01a.mp3" type="audio/mpeg">
-    </audio>
-
-    <script>
-        function playDigitalSound() {
-            var sound = document.getElementById("clickSound");
-            sound.currentTime = 0;
-            sound.play();
-        }
-
-        // অটো ল্যান্ডস্কেপ ট্রাই
-        window.addEventListener("load", function() {
-            if (screen.orientation && screen.orientation.lock) {
-                screen.orientation.lock("landscape").catch(function(error) {
-                    console.log("Orientation lock not supported or failed.");
-                });
-            }
-        });
-    </script>
 </body>
 </html>
