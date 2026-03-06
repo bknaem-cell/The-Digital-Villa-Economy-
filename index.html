@@ -1,134 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NAYEM'S 10 KILO SQ. SYSTEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Digital Villa Economy - Test</title>
     <style>
-        /* পুরো স্ক্রিন গেমের মতো সেটআপ */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body, html { 
-            width: 100%; height: 100%; 
-            overflow: hidden; 
-            background: #000; 
-            display: flex; justify-content: center; align-items: center;
-        }
-
-        /* অটো ল্যান্ডস্কেপ প্রম্পট (যদি ফোন সোজা থাকে) */
-        @media screen and (orientation: portrait) {
-            body::before {
-                content: "PLEASE ROTATE YOUR PHONE";
-                position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                background: #001a1a; color: #00ffff;
-                display: flex; justify-content: center; align-items: center;
-                z-index: 9999; font-weight: bold; font-size: 24px; text-shadow: 0 0 10px #00ffff;
-            }
-        }
-
-        /* মূল কন্টেইনার */
-        .container {
-            width: 100vw; height: 100vh;
-            background: radial-gradient(circle, #002222 0%, #000 80%);
-            border: 4px solid #00ffff55;
-            position: relative;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            padding: 20px;
-        }
-
-        /* ব্যাকগ্রাউন্ড ডিজিটাল ম্যাপ */
-        .map-bg {
-            position: absolute; width: 100%; height: 100%;
-            opacity: 0.1; background-image: linear-gradient(#00ffff 1px, transparent 1px), linear-gradient(90deg, #00ffff 1px, transparent 1px);
-            background-size: 50px 50px; pointer-events: none;
-        }
-
-        /* লোডিং টেক্সট */
-        .loading-text {
-            color: #00ffff; font-size: 40px; font-weight: bold;
-            text-transform: uppercase; letter-spacing: 10px;
-            margin-bottom: 20px; text-shadow: 0 0 20px #00ffff;
-            animation: blink 1s infinite;
-        }
-
-        @keyframes blink { 50% { opacity: 0.5; } }
-
-        /* গ্লাস-মরফিজম লোডিং বার */
-        .loading-bar-container {
-            width: 60%; height: 120px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 3px solid #00ffff88;
-            border-radius: 60px;
-            position: relative; overflow: hidden;
-            display: flex; align-items: center;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
-        }
-
-        /* লোডিং প্রগ্রেস ও ড্রোন */
-        .progress {
-            height: 100%; width: 0%;
-            background: linear-gradient(90deg, transparent, #00ffff44);
-            position: absolute; left: 0;
-            display: flex; align-items: center; justify-content: flex-end;
-            animation: load 10s linear forwards;
-        }
-
-        .drone { font-size: 40px; margin-right: 10px; filter: drop-shadow(0 0 10px #00ffff); }
-
-        /* ডানদিকের বিল্ডিং */
-        .building {
-            position: absolute; right: 20px; font-size: 50px;
-            filter: drop-shadow(0 0 15px #00ffff);
-            z-index: 5;
-        }
-
-        @keyframes load {
-            0% { width: 0%; }
-            100% { width: 90%; }
-        }
-
-        /* টেক্সট ইনফরমেশন */
-        .info {
-            margin-top: 30px; text-align: center; color: #00ffff;
-        }
-
-        .system-name { font-size: 32px; font-weight: bold; letter-spacing: 2px; }
-        .sub-text { font-size: 14px; opacity: 0.7; letter-spacing: 5px; margin-bottom: 15px; }
-
-        /* আইডি বক্স */
-        .id-box {
-            border: 1px solid #00ffff; padding: 10px 30px;
-            border-radius: 5px; background: rgba(0, 255, 255, 0.1);
-            font-size: 18px; letter-spacing: 2px;
-            box-shadow: inset 0 0 10px #00ffff33;
-        }
-
+        body { margin: 0; font-family: 'Arial', sans-serif; background: #0a0a0a; color: white; text-align: center; }
+        
+        /* লোগো স্ক্রিন */
+        #splash { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .logo-text { font-size: 2.5rem; font-weight: bold; color: #00ffcc; text-shadow: 0 0 20px #00ffcc; }
+        
+        /* মূল লবি (শুরুতে লুকানো থাকবে) */
+        #lobby { display: none; padding: 20px; }
+        .card { background: #1a1a1a; border: 2px solid #00ffcc; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 350px; }
+        button { background: #00ffcc; color: black; border: none; padding: 15px 30px; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-    <div class="map-bg"></div>
+    <div id="splash">
+        <div class="logo-text">TDV ECONOMY</div>
+        <p>জীবনযাত্রার চাবিকাঠি...</p>
+        <p style="color: gray;">লোডিং হচ্ছে...</p>
+    </div>
 
-    <div class="container">
-        <div class="loading-text">LOADING...</div>
-
-        <div class="loading-bar-container">
-            <div class="progress">
-                <span class="drone">🛸</span>
-                <span class="drone">🛸</span>
-                <span class="drone">🛸</span>
-            </div>
-            <div class="building">🏢</div>
+    <div id="lobby">
+        <h2>স্বাগতম, নাঈম ইব্রাহিম</h2>
+        <div class="card">
+            <h3>শান্তির মিশন ১৮</h3>
+            <p>৫ ওয়াক্ত নামাজ ও সঠিক পথের গাইড</p>
+            <button onclick="playGuide()">নির্দেশনা শুনুন (ভয়েস টেস্ট)</button>
         </div>
-
-        <div class="info">
-            <div class="system-name">NAYEM'S 10 KILO SQ. SYSTEM</div>
-            <div class="sub-text">BUILDING YOUR FUTURE...</div>
-            <div class="id-box">
-                ID: 918 | 000,000,001 / 10,000,000,000
-            </div>
+        
+        <div class="card" style="border-color: gold;">
+            <h3>Nj Gold: 0.00</h3>
+            <p>আপনার আজকের কাজের অগ্রগতি</p>
         </div>
     </div>
+
+    <script>
+        // ৩ সেকেন্ড পর লবি দেখানোর লজিক
+        setTimeout(() => {
+            document.getElementById('splash').style.display = 'none';
+            document.getElementById('lobby').style.display = 'block';
+        }, 3000);
+
+        // ভয়েস বাটন ফাংশন
+        function playGuide() {
+            let message = new SpeechSynthesisUtterance("আসসালামু আলাইকুম নাঈম ইব্রাহিম। এটি আপনার সফটওয়্যারের টেস্ট ভার্সন। আমরা সঠিক পথেই এগোচ্ছি।");
+            message.lang = 'bn-BD';
+            window.speechSynthesis.speak(message);
+        }
+    </script>
 
 </body>
 </html>
