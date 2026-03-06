@@ -2,91 +2,90 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, landscape=yes">
-    <title>GLOBAL 1000 CR SYSTEM - LOADING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GLOBAL 1000 CR SYSTEM - FULL SCREEN</title>
     <style>
+        /* পুরো স্ক্রিনকে ছবির মতো ল্যান্ডস্কেপ করা */
         body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            overflow: hidden; background-color: #010808;
-            display: flex; justify-content: center; align-items: center;
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            overflow: hidden;
+            background-color: #010808;
         }
 
-        /* আপনার প্রিয় ছবিটিকে ব্যাকগ্রাউন্ডে রাখা */
-        .loading-container {
+        /* আপনার সেই দামী ছবির হুবহু ব্যাকগ্রাউন্ড */
+        .full-display-wrapper {
             width: 100vw; height: 100vh;
-            background: url('https://i.ibb.co/image_2.png') no-repeat center center;
-            background-size: cover;
+            background: url('https://i.ibb.co/L5pYFhL/image-2.png') no-repeat center center;
+            background-size: 100% 100%; /* এটি পুরো স্ক্রিন জুড়ে ছবিটিকে টেনে বসাবে */
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             position: relative;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
         }
 
-        /* LOADING... লেখা যা জ্বলজ্বল করবে */
+        /* LOADING... লেখা যা ছবির মতো জায়গাতে থাকবে */
         .loading-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 6vw; color: #00ffcc;
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 7vw; color: #00ffcc;
             text-shadow: 0 0 20px #00ffcc;
-            margin-bottom: 30px;
-            animation: blinker 1.5s linear infinite;
+            margin-bottom: 2%;
+            animation: blink 1.2s infinite;
         }
 
-        @keyframes blinker {
-            50% { opacity: 0; }
-        }
+        @keyframes blink { 50% { opacity: 0.2; } }
 
-        /* ড্রোনের ভেতরকার প্রোগ্রেস বার */
+        /* ড্রোনের ভেতরকার এনিমেটেড প্রোগ্রেস বার */
         .progress-box {
-            width: 50%; height: 50px;
-            border-radius: 25px; border: 2px solid #00ffcc;
-            background: rgba(0, 0, 0, 0.5);
-            overflow: hidden; box-shadow: 0 0 15px #00ffcc;
+            width: 50%; height: 8%;
+            border-radius: 50px;
+            border: 3px solid #00ffcc;
+            background: rgba(0, 0, 0, 0.7);
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.6);
         }
 
-        .progress-fill {
+        .fill-bar {
             width: 0%; height: 100%;
-            background: linear-gradient(90deg, #004d4d, #00ffcc);
+            background: linear-gradient(90deg, transparent, #00ffcc, #00ffff);
             box-shadow: 0 0 25px #00ffcc;
-            animation: loadProgress 5s forwards cubic-bezier(0.4, 0, 0.2, 1);
+            animation: fillUp 6s forwards linear;
         }
 
-        @keyframes loadProgress {
-            to { width: 100%; }
-        }
+        @keyframes fillUp { to { width: 100%; } }
 
-        /* নিচের ID প্যানেল */
-        .bottom-info {
+        /* নিচে আপনার ID: 918 এবং সিরিয়াল নাম্বার */
+        .nayem-footer {
             position: absolute; bottom: 8%;
             color: #00ffcc; font-family: sans-serif;
-            font-size: 1.8vw; text-align: center;
-            letter-spacing: 2px; text-shadow: 0 0 10px #00ffcc;
+            font-size: 2.2vw; text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #00ffcc;
         }
     </style>
 </head>
-<body onclick="initiateSystem()">
+<body onclick="startSound()">
 
-    <div class="loading-container">
+    <div class="full-display-wrapper">
         <div class="loading-text">LOADING...</div>
         <div class="progress-box">
-            <div class="progress-fill"></div>
+            <div class="fill-bar"></div>
         </div>
-        <div class="bottom-info">
-            GLOBAL ID: 918 <br>
-            USER: 000,000,001 / 10,000,000,000
+        <div class="nayem-footer">
+            ID: 918 <br>
+            000,000,001 / 10,000,000,000
         </div>
     </div>
 
-    <audio id="startAudio" src="https://www.soundjay.com/mechanical/sounds/power-up-1.mp3"></audio>
+    <audio id="engineSound" src="https://www.soundjay.com/mechanical/sounds/power-up-1.mp3"></audio>
 
     <script>
-        function initiateSystem() {
-            // সাউন্ড প্লে করা
-            var audio = document.getElementById('startAudio');
-            audio.play();
-
-            // ৫ সেকেন্ড পর অটোমেটিক অ্যালার্ট আসবে (পরে এখানে ড্যাশবোর্ড যোগ হবে)
+        function startSound() {
+            document.getElementById('engineSound').play();
+            // লোডিং শেষ হওয়ার পর স্বাগতম মেসেজ
             setTimeout(function() {
-                alert("সিস্টেম সফলভাবে চালু হয়েছে, নাঈম ইব্রাহিম!");
-            }, 5000);
+                alert("স্বাগতম নাঈম ইব্রাহিম! আপনার ১০০০ কোটি বছরের উন্নতির সিঁড়ি প্রস্তুত।");
+            }, 6000);
         }
     </script>
 </body>
