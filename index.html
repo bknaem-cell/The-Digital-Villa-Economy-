@@ -1,97 +1,246 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NAYEM 918 - THE FUTURE SYSTEM</title>
+    <title>TDV Global System</title>
     <style>
-        /* পুরো স্ক্রিনকে ল্যান্ডস্কেপ এবং ছবির মতো করা */
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            overflow: hidden;
-            background-color: #010808;
-            display: flex; justify-content: center; align-items: center;
+        :root {
+            --neon-cyan: #00f2ff;
+            --dark-bg: #030d0d;
+            --glass-bg: rgba(0, 242, 255, 0.05);
         }
 
-        /* আপনার সেই দামী ছবির হুবহু ব্যাকগ্রাউন্ড */
-        .loading-wrapper {
-            width: 100vw; height: 100vh;
-            /* আপনার আপলোড করা ইমেজ ফাইলটি সরাসরি ব্যবহার করা হয়েছে */
-            background: url('https://raw.githubusercontent.com/bknaem-cell/The-Digital-Villa-Economy-/main/5962.png') no-repeat center center;
-            background-size: 100% 100%;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: crosshair;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--neon-cyan);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* অটো ল্যান্ডস্কেপ হ্যান্ডলিং */
+        @media screen and (orientation: portrait) {
+            #landscape-warning {
+                display: flex;
+            }
+            .main-container {
+                display: none;
+            }
+        }
+
+        #landscape-warning {
+            display: none;
+            position: fixed;
+            background: var(--dark-bg);
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* মেইন কন্টেইনার - ছবির মতো ব্যাকগ্রাউন্ড */
+        .main-container {
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at center, rgba(0, 242, 255, 0.1) 0%, transparent 70%),
+                url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            border: 5px solid var(--neon-cyan);
+            box-shadow: inset 0 0 50px rgba(0, 242, 255, 0.2), 0 0 20px rgba(0, 242, 255, 0.5);
             position: relative;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        /* LOADING... লেখা যা জ্বলজ্বল করবে */
-        .loading-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            font-size: 6vw; color: #00ffcc;
-            text-shadow: 0 0 20px #00ffcc;
-            margin-bottom: 2%;
-            animation: blink 1.5s infinite;
+        /* ব্যাকগ্রাউন্ড সার্কিট ম্যাপ (ছবির মতো) */
+        .circuit-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://i.imgur.com/8Q5p7XQ.png') center/cover no-repeat;
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        @keyframes blink { 50% { opacity: 0.2; } }
-
-        /* ড্রোনের ভেতরকার প্রোগ্রেস বার */
-        .progress-box {
-            width: 50%; height: 45px;
-            border-radius: 25px;
-            border: 2px solid #00ffcc;
-            background: rgba(0, 0, 0, 0.7);
-            overflow: hidden;
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.5);
+        /* ওপরের আইকন (Voice, Map) */
+        .top-icons {
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
         }
 
-        .fill-bar {
-            width: 0%; height: 100%;
-            background: linear-gradient(90deg, transparent, #00ffcc);
-            box-shadow: 0 0 20px #00ffcc;
-            animation: load 6s forwards linear;
-        }
-
-        @keyframes load { to { width: 100%; } }
-
-        /* আপনার ID: 918 এবং সিরিয়াল নাম্বার */
-        .id-panel {
-            position: absolute; bottom: 8%;
-            color: #00ffcc; font-family: sans-serif;
-            font-size: 2vw; text-align: center;
+        .icon-box {
+            text-align: center;
+            font-size: 10px;
+            text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 0 0 10px #00ffcc;
+            text-shadow: 0 0 10px var(--neon-cyan);
         }
+
+        /* মাঝখানের লোডিং সেকশন */
+        .loading-center {
+            text-align: center;
+            z-index: 10;
+        }
+
+        .loading-text {
+            font-size: 40px;
+            font-weight: bold;
+            letter-spacing: 8px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px var(--neon-cyan);
+            animation: pulse 1.5s infinite;
+        }
+
+        /* মেইন লোডিং বার - ড্রোন ও বিল্ডিং */
+        .progress-container {
+            width: 70%;
+            height: 100px;
+            margin: 0 auto;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50px;
+            position: relative;
+            background: rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .progress-bar-fill {
+            height: 80%;
+            background: rgba(0, 242, 255, 0.2);
+            border-radius: 40px;
+            position: absolute;
+            left: 5px;
+            animation: fill 5s linear infinite;
+        }
+
+        /* ড্রোন অ্যানিমেশন */
+        .drone {
+            width: 40px;
+            position: absolute;
+            z-index: 5;
+            filter: drop-shadow(0 0 5px var(--neon-cyan));
+            animation: fly 3s ease-in-out infinite;
+        }
+
+        /* নিচের টেক্সট ও আইডি */
+        .bottom-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+            margin-bottom: 10px;
+        }
+
+        .global-title {
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            margin-bottom: 5px;
+        }
+
+        .id-badge {
+            background: rgba(0, 242, 255, 0.1);
+            padding: 5px 20px;
+            border: 1px solid var(--neon-cyan);
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* অ্যানিমেশনগুলো */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes fill {
+            0% { width: 0%; }
+            100% { width: 98%; }
+        }
+
+        @keyframes fly {
+            0%, 100% { transform: translateY(0) rotate(0); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+
     </style>
 </head>
-<body onclick="startSystem()">
+<body onclick="playDigitalSound()">
 
-    <div class="loading-wrapper">
-        <div class="loading-text">LOADING...</div>
-        <div class="progress-box">
-            <div class="fill-bar"></div>
+    <div id="landscape-warning">
+        <h2>PLEASE ROTATE YOUR PHONE</h2>
+        <p>Landscape mode is required for full experience.</p>
+    </div>
+
+    <div class="main-container">
+        <div class="circuit-bg"></div>
+
+        <div class="top-icons">
+            <div class="icon-box">🎤<br>Voice</div>
+            <div class="icon-box">📡<br>Scanning</div>
+            <div class="icon-box">🗺️<br>Map</div>
         </div>
-        <div class="id-panel">
-            GLOBAL ID: 918 <br>
-            USER: 000,000,001 / 10,000,000,000
+
+        <div class="loading-center">
+            <div class="loading-text">LOADING...</div>
+            <div class="progress-container">
+                <div class="progress-bar-fill"></div>
+                <div class="drone" style="left: 20%;">🛸</div>
+                <div class="drone" style="left: 50%; animation-delay: 0.5s;">🛸</div>
+                <div class="drone" style="left: 80%; animation-delay: 1s;">🏢</div>
+            </div>
+        </div>
+
+        <div class="bottom-info">
+            <div class="global-title">GLOBAL 1000 CR SYSTEM</div>
+            <div style="font-size: 10px; opacity: 0.8;">GLOBAL YEAR 1000 FUTURE...</div>
+            
+            <div class="id-badge">
+                ID: 918 | 000,000,001/10,000,000,000
+            </div>
+            
+            <div style="font-size: 8px; margin-top: 5px; opacity: 0.5;">POWERED BY TDV ECONOMY</div>
         </div>
     </div>
 
-    <audio id="startAudio" src="https://www.soundjay.com/mechanical/sounds/power-up-1.mp3"></audio>
+    <audio id="clickSound">
+        <source src="https://www.soundjay.com/buttons/beep-01a.mp3" type="audio/mpeg">
+    </audio>
 
     <script>
-        function startSystem() {
-            // টাচ করার সাথে সাথে সাউন্ড শুরু হবে
-            var audio = document.getElementById('startAudio');
-            audio.play();
-
-            // ৫ সেকেন্ড পর অটোমেটিক লোডিং শেষ হবে
-            setTimeout(function() {
-                alert("স্বাগতম নাঈম ইব্রাহিম! আপনার ১০০০ কোটি বছরের ভবিষ্যৎ সিস্টেম প্রস্তুত।");
-            }, 6000);
+        function playDigitalSound() {
+            var sound = document.getElementById("clickSound");
+            sound.currentTime = 0;
+            sound.play();
         }
+
+        // অটো ল্যান্ডস্কেপ ট্রাই
+        window.addEventListener("load", function() {
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock("landscape").catch(function(error) {
+                    console.log("Orientation lock not supported or failed.");
+                });
+            }
+        });
     </script>
 </body>
 </html>
