@@ -3,56 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Digital Villa Economy - Test</title>
+    <title>Master Control Panel - Mission 18</title>
     <style>
-        body { margin: 0; font-family: 'Arial', sans-serif; background: #0a0a0a; color: white; text-align: center; }
-        
-        /* লোগো স্ক্রিন */
-        #splash { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .logo-text { font-size: 2.5rem; font-weight: bold; color: #00ffcc; text-shadow: 0 0 20px #00ffcc; }
-        
-        /* মূল লবি (শুরুতে লুকানো থাকবে) */
-        #lobby { display: none; padding: 20px; }
-        .card { background: #1a1a1a; border: 2px solid #00ffcc; border-radius: 15px; padding: 20px; margin: 20px auto; max-width: 350px; }
-        button { background: #00ffcc; color: black; border: none; padding: 15px 30px; font-weight: bold; border-radius: 10px; cursor: pointer; font-size: 1.1rem; }
+        /* হাই-টেক ডিজাইন স্টাইল */
+        body {
+            background-color: #0a0a0a;
+            color: #00ffcc;
+            font-family: 'Segoe UI', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            border-bottom: 2px solid #00ffcc;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 15px #00ffcc;
+        }
+        .card {
+            background: #1a1a1a;
+            border: 1px solid #00ffcc;
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+        }
+        h1 { font-size: 24px; text-transform: uppercase; }
+        .status { color: #ffcc00; font-weight: bold; }
+        .btn {
+            background: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 
-    <div id="splash">
-        <div class="logo-text">TDV ECONOMY</div>
-        <p>জীবনযাত্রার চাবিকাঠি...</p>
-        <p style="color: gray;">লোডিং হচ্ছে...</p>
+    <div class="header">
+        <h1>Digital Villa Economy</h1>
+        <p>Master Control: নাঈম ইব্রাহিম</p>
     </div>
 
-    <div id="lobby">
-        <h2>স্বাগতম, নাঈম ইব্রাহিম</h2>
-        <div class="card">
-            <h3>শান্তির মিশন ১৮</h3>
-            <p>৫ ওয়াক্ত নামাজ ও সঠিক পথের গাইড</p>
-            <button onclick="playGuide()">নির্দেশনা শুনুন (ভয়েস টেস্ট)</button>
-        </div>
-        
-        <div class="card" style="border-color: gold;">
-            <h3>Nj Gold: 0.00</h3>
-            <p>আপনার আজকের কাজের অগ্রগতি</p>
-        </div>
+    <div class="card">
+        <h3>মাস্টার কন্ট্রোল অ্যাক্টিভেটেড</h3>
+        <p>সিস্টেম স্ট্যাটাস: <span class="status">অনলাইন (Live)</span></p>
+        <p>সাথী সংখ্যা: ০২ (সজীব ও ওমান টিম)</p>
+        <p>আপনার Nj Gold: ১০০.০০</p>
+        <button class="btn" onclick="alert('সিস্টেম লোড হচ্ছে...')">কন্ট্রোল প্যানেল ওপেন করুন</button>
     </div>
 
-    <script>
-        // ৩ সেকেন্ড পর লবি দেখানোর লজিক
-        setTimeout(() => {
-            document.getElementById('splash').style.display = 'none';
-            document.getElementById('lobby').style.display = 'block';
-        }, 3000);
-
-        // ভয়েস বাটন ফাংশন
-        function playGuide() {
-            let message = new SpeechSynthesisUtterance("আসসালামু আলাইকুম নাঈম ইব্রাহিম। এটি আপনার সফটওয়্যারের টেস্ট ভার্সন। আমরা সঠিক পথেই এগোচ্ছি।");
-            message.lang = 'bn-BD';
-            window.speechSynthesis.speak(message);
-        }
-    </script>
+    <p style="margin-top: 30px; font-size: 12px; color: #555;">© মিশন ১৮ - বৈশ্বিক ডিজিটাল সাম্রাজ্য</p>
 
 </body>
 </html>
