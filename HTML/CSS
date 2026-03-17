@@ -1,8 +1,73 @@
-----------------------------------
-      |       [নাঈম]                    |  (আপনার নাম)
-      |   --------------------------    |
-      |  |  কোড: [নাঈম ১৮]         |    |
-      |   --------------------------    |
-      |                                |
-      |  [ সেভ ]        [ বাতিল ]      |  (কন্ত્રોલ বাটন)
-       ----------------------------------
+/* ব্যাকগ্রাউন্ড এবং বডি সেটিংস */
+body {
+    background: radial-gradient(circle at center, #001a2c 0%, #000000 100%);
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+}
+
+/* টেক্সট গ্লো ইফেক্ট */
+.hero-title {
+    font-size: 4rem;
+    font-weight: bold;
+    color: #ffcc00;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00, 0 0 40px #ffae00;
+    margin-bottom: 10px;
+}
+
+/* গ্লাস-মর্ফিজম কার্ড ডিজাইন */
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    text-align: center;
+    max-width: 400px;
+}
+
+/* নিয়ন প্রগ্রেস বার */
+.progress-container {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    height: 12px;
+    margin: 20px 0;
+    overflow: hidden;
+    border: 1px solid rgba(0, 255, 127, 0.3);
+}
+
+.progress-bar {
+    width: 65%; /* আপনার প্রগ্রেস অনুযায়ী পরিবর্তন করুন */
+    height: 100%;
+    background: linear-gradient(90deg, #00ff80, #00ccff);
+    box-shadow: 0 0 15px #00ff80;
+    border-radius: 50px;
+    transition: width 0.5s ease-in-out;
+}
+
+/* ফিউচারিস্টিক বাটন */
+.btn-enter {
+    background: linear-gradient(45deg, #ffcc00, #ff9900);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+    transition: 0.3s;
+}
+
+.btn-enter:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 204, 0, 0.9);
+}
