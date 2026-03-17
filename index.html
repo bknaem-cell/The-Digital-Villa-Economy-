@@ -4,77 +4,105 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NAIM - Shanti System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
-        /* পুরো স্ক্রিন কালো এবং নীল করার জন্য */
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
+            /* গভীর মহাকাশ ইফেক্ট */
             background: radial-gradient(circle at center, #001f3f 0%, #000000 100%);
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Arial', sans-serif;
             overflow: hidden;
             color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         .container {
             text-align: center;
-            width: 90%;
+            width: 100%;
         }
 
-        /* সোনালী রঙের নাম */
-        .brand-name {
-            font-size: 3.5rem;
-            font-weight: bold;
-            color: #ffd700;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
-            margin: 0;
-        }
-
+        /* "MY Sweet" - হাতের লেখার মতো স্টাইল */
         .sub-name {
-            font-size: 1.2rem;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.2rem;
             color: #ffffff;
-            margin-bottom: 10px;
+            margin-bottom: -15px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        /* "NAIM" - একদম ছবির মতো রাজকীয় সোনালী */
+        .brand-name {
+            font-family: 'Cinzel', serif;
+            font-size: 4.5rem;
+            font-weight: bold;
+            background: linear-gradient(to bottom, #fff3b0 0%, #ffd700 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6));
+            margin: 0;
+            letter-spacing: 8px;
+            text-transform: uppercase;
         }
 
         /* স্লোগান */
         .slogan {
-            font-size: 1rem;
-            color: #cccccc;
-            margin-bottom: 30px;
+            font-size: 1.1rem;
+            color: #ffffff;
+            margin-top: 15px;
+            letter-spacing: 1px;
+            font-weight: 300;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
-        /* নিয়ন সবুজ লোডিং বার */
+        /* লোডিং বার - ছবির মতো নিয়ন সবুজ */
+        .progress-box {
+            margin-top: 50px;
+            width: 80%;
+            max-width: 320px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         .loading-container {
             width: 100%;
-            max-width: 280px;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin: 0 auto;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 127, 0.4);
             overflow: hidden;
-            border: 1px solid rgba(0, 255, 127, 0.3);
+            position: relative;
         }
 
         .loading-bar {
             width: 0%;
             height: 100%;
-            background: #00ff7f;
-            box-shadow: 0 0 15px #00ff7f;
-            animation: load 5s forwards;
-        }
-
-        @keyframes load {
-            100% { width: 100%; }
+            background: linear-gradient(90deg, #00ff87 0%, #60efff 100%);
+            box-shadow: 0 0 20px #00ff87;
+            border-radius: 20px;
+            animation: load 6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
 
         .loading-text {
             margin-top: 15px;
-            color: #00ff7f;
             font-size: 0.9rem;
+            color: #00ff87;
+            letter-spacing: 1px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
@@ -85,11 +113,12 @@
         <div class="brand-name">NAIM</div>
         <div class="slogan">শান্তি সিস্টেম - ১০০০ কোটি মানুষের সমাধান</div>
         
-        <div class="loading-container">
-            <div class="loading-bar"></div>
+        <div class="progress-box">
+            <div class="loading-container">
+                <div class="loading-bar"></div>
+            </div>
+            <div class="loading-text">লোডিং হচ্ছে... একটি নতুন পৃথিবী...</div>
         </div>
-        
-        <div class="loading-text">লোডিং হচ্ছে... একটি নতুন পৃথিবী...</div>
     </div>
 
 </body>
