@@ -3,30 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Global Interface</title>
-    <link rel="stylesheet" href="style.css">
+    <title>NAIM - Shanti System</title>
+    <style>
+        /* পুরো স্ক্রিন কালো এবং নীল করার জন্য */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #001f3f 0%, #000000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+        }
+
+        /* সোনালী রঙের নাম */
+        .brand-name {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            margin: 0;
+        }
+
+        .sub-name {
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        /* স্লোগান */
+        .slogan {
+            font-size: 1rem;
+            color: #cccccc;
+            margin-bottom: 30px;
+        }
+
+        /* নিয়ন সবুজ লোডিং বার */
+        .loading-container {
+            width: 100%;
+            max-width: 280px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 auto;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 127, 0.3);
+        }
+
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: #00ff7f;
+            box-shadow: 0 0 15px #00ff7f;
+            animation: load 5s forwards;
+        }
+
+        @keyframes load {
+            100% { width: 100%; }
+        }
+
+        .loading-text {
+            margin-top: 15px;
+            color: #00ff7f;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
-    <div id="id-screen" class="glass-card">
-        <h2>ID Verification</h2>
-        <div class="scanner-line"></div>
-        <p>আইডি চেকআপ করা হচ্ছে...</p>
-        <button onclick="startSystem()">ভেরিফাই করুন</button>
-    </div>
-
-    <div id="map-container" class="hidden">
-        <div class="map-overlay">
-            <h1>পুরো পৃথিবী এখন আপনার হাতের মুঠোয়</h1>
-            <div class="map-placeholder">
-                <div class="pulse-point" style="top: 40%; left: 30%;"></div>
-                <div class="pulse-point" style="top: 60%; left: 70%;"></div>
-                <div class="connection-line"></div>
-            </div>
-            <p class="status-text">সব প্রান্তে যাতায়াত পথ সচল রয়েছে...</p>
+    <div class="container">
+        <div class="sub-name">MY Sweet</div>
+        <div class="brand-name">NAIM</div>
+        <div class="slogan">শান্তি সিস্টেম - ১০০০ কোটি মানুষের সমাধান</div>
+        
+        <div class="loading-container">
+            <div class="loading-bar"></div>
         </div>
+        
+        <div class="loading-text">লোডিং হচ্ছে... একটি নতুন পৃথিবী...</div>
     </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
