@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Villa Loading Screen</title>
+    <title>Digital Villa</title>
     <style>
-        /* ব্যাকগ্রাউন্ড স্টাইল - ডার্ক গ্যালাক্সি আবহ */
         body {
             margin: 0;
             padding: 0;
@@ -13,82 +12,73 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: radial-gradient(circle, #001a33 0%, #000000 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at center, #001220 0%, #000000 100%);
+            font-family: 'Arial Black', sans-serif;
             overflow: hidden;
             color: white;
             text-align: center;
         }
 
-        .container {
-            width: 90%;
-            max-width: 400px;
+        /* NAIM - হুবহু ছবির মতো বড় ও গ্লোয়িং সোনালী */
+        .naim-text {
+            font-size: 85px;
+            font-weight: 900;
+            color: #FFD700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 
+                         0 0 60px rgba(255, 215, 0, 0.4);
+            letter-spacing: 8px;
+            margin-bottom: 5px;
+            line-height: 1;
         }
 
-        /* NAIM - বড় এবং গোল্ডেন ইফেক্ট */
-        .title-main {
-            font-size: 70px;
-            font-weight: bold;
-            color: #ffd700;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.6), 2px 2px 5px rgba(0,0,0,1);
-            letter-spacing: 5px;
-            margin-bottom: -10px;
-            text-transform: uppercase;
-        }
-
-        /* MY Sweet - স্টাইলিশ ছোট লেখা */
-        .title-sub {
-            font-size: 28px;
+        /* MY Sweet - সাদা স্টাইলিশ লেখা */
+        .sweet-text {
+            font-size: 24px;
+            font-family: 'Georgia', serif;
             font-style: italic;
-            font-family: 'Cursive', serif;
             color: #ffffff;
-            margin-bottom: 30px;
-            font-weight: 300;
+            margin-bottom: 40px;
+            font-weight: normal;
         }
 
-        /* শান্তি সিস্টেম লেখা */
-        .description {
-            font-size: 18px;
-            color: #ffcc00;
+        /* শান্তি সিস্টেম - হলুদ কালার */
+        .info-text {
+            font-size: 16px;
+            color: #FFCC00;
             margin-bottom: 25px;
             font-weight: bold;
         }
 
-        /* লোডিং বার কন্টেইনার */
-        .loading-bar-container {
-            width: 100%;
-            height: 12px;
+        /* লোডিং বার - নিয়ন গ্রিন */
+        .loader-container {
+            width: 85%;
+            max-width: 350px;
+            height: 10px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(0, 255, 127, 0.3);
+            border-radius: 20px;
+            margin: 0 auto;
             position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 15px rgba(0, 255, 127, 0.2);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        /* এনিমেটেড গ্রিন লোডিং বার */
-        .loading-bar-fill {
+        .loader-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(90deg, #00ff7f, #00ffcc);
-            box-shadow: 0 0 20px #00ff7f;
-            border-radius: 10px;
-            animation: loadProgress 5s infinite ease-in-out;
+            background: #00FFCC;
+            box-shadow: 0 0 20px #00FFCC, 0 0 40px #00FFCC;
+            border-radius: 20px;
+            animation: moveProgress 4s infinite ease-in-out;
         }
 
-        /* লোডিং হচ্ছে টেক্সট */
-        .loading-text {
+        .bottom-text {
             margin-top: 15px;
-            font-size: 14px;
-            color: #00ff7f;
-            opacity: 0.8;
-            font-style: italic;
+            font-size: 13px;
+            color: #00FFCC;
+            font-family: 'Courier New', monospace;
         }
 
-        /* এনিমেশন লজিক */
-        @keyframes loadProgress {
+        @keyframes moveProgress {
             0% { width: 0%; }
-            50% { width: 70%; }
             100% { width: 100%; }
         }
     </style>
@@ -96,16 +86,16 @@
 <body>
 
     <div class="container">
-        <div class="title-main">NAIM</div>
-        <div class="title-sub">MY Sweet</div>
+        <div class="naim-text">NAIM</div>
+        <div class="sweet-text">MY Sweet</div>
         
-        <div class="description">শান্তি সিস্টেম - ১০০০ কোটি মানুষের সমাধান</div>
+        <div class="info-text">শান্তি সিস্টেম - ১০০০ কোটি মানুষের সমাধান</div>
         
-        <div class="loading-bar-container">
-            <div class="loading-bar-fill"></div>
+        <div class="loader-container">
+            <div class="loader-fill"></div>
         </div>
         
-        <div class="loading-text">লোডিং হচ্ছে... একটি নতুন পৃথিবী...</div>
+        <div class="bottom-text">লোডিং হচ্ছে... একটি নতুন পৃথিবী...</div>
     </div>
 
 </body>
