@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAIM - Shanti System</title>
+    <style>
+        /* ব্যাকগ্রাউন্ড স্টাইল: গভীর মহাকাশ */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            /* আপনি এখানে যেকোনো ছবির লিংকও বসাতে পারেন, আমি রঙের গ্রাডিয়েন্ট দিয়েছি */
+            background: radial-gradient(circle at center, #001f3f 0%, #000000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            width: 90%;
+        }
+
+        /* নামের ডিজাইন: সোনালী (Gold) রঙ */
+        .brand-name {
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+            margin: 0;
+            letter-spacing: 3px;
+        }
+
+        .sub-name {
+            font-size: 1.2rem;
+            color: #ffffff;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        /* স্লোগান */
+        .slogan {
+            font-size: 1.1rem;
+            color: #e0e0e0;
+            margin-bottom: 40px;
+        }
+
+        /* লোডিং বারের ডিজাইন: নিয়ন সবুজ */
+        .loading-container {
+            width: 100%;
+            max-width: 300px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 127, 0.3);
+        }
+
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #00ff7f, #00ffcc);
+            box-shadow: 0 0 15px #00ff7f;
+            border-radius: 10px;
+            animation: loadProgress 5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        /* টেক্সট এনিমেশন */
+        .loading-text {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #00ff7f;
+            letter-spacing: 1px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="sub-name">MY Sweet</div>
+        <div class="brand-name">NAIM</div>
+        <div class="slogan">শান্তি সিস্টেম - ১০০০ কোটি মানুষের সমাধান</div>
+        
+        <div class="loading-container">
+            <div class="loading-bar"></div>
+        </div>
+        
+        <div class="loading-text">লোডিং হচ্ছে... একটি নতুন পৃথিবী...</div>
+    </div>
+
+</body>
+</html>
