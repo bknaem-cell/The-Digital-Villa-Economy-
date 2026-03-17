@@ -1,55 +1,32 @@
-body {
-    background: radial-gradient(circle at center, #001a2c 0%, #000000 100%);
-    color: #ffffff;
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Interface</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: bold;
-    color: #ffcc00;
-    text-shadow: 0 0 10px #ffcc00, 0 0 30px #ffae00;
-    margin: 10px 0;
-}
+    <div id="id-screen" class="glass-card">
+        <h2>ID Verification</h2>
+        <div class="scanner-line"></div>
+        <p>আইডি চেকআপ করা হচ্ছে...</p>
+        <button onclick="startSystem()">ভেরিফাই করুন</button>
+    </div>
 
-.card {
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(15px);
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    text-align: center;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
-}
+    <div id="map-container" class="hidden">
+        <div class="map-overlay">
+            <h1>পুরো পৃথিবী এখন আপনার হাতের মুঠোয়</h1>
+            <div class="map-placeholder">
+                <div class="pulse-point" style="top: 40%; left: 30%;"></div>
+                <div class="pulse-point" style="top: 60%; left: 70%;"></div>
+                <div class="connection-line"></div>
+            </div>
+            <p class="status-text">সব প্রান্তে যাতায়াত পথ সচল রয়েছে...</p>
+        </div>
+    </div>
 
-.progress-container {
-    width: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 50px;
-    height: 10px;
-    margin: 20px 0;
-}
-
-.progress-bar {
-    width: 70%;
-    height: 100%;
-    background: linear-gradient(90deg, #00ff88, #00ffee);
-    box-shadow: 0 0 15px #00ff88;
-    border-radius: 50px;
-}
-
-.btn-enter {
-    background: linear-gradient(45deg, #ffcc00, #ff9900);
-    border: none;
-    padding: 12px 25px;
-    border-radius: 50px;
-    color: #000;
-    font-weight: bold;
-    margin-top: 20px;
-    box-shadow: 0 0 15px rgba(255, 204, 0, 0.5);
-}
+    <script src="script.js"></script>
+</body>
+</html>
