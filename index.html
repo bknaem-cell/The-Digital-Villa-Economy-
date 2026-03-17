@@ -3,63 +3,107 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Control Panel - Mission 18</title>
+    <title>NAIM - Shanti System</title>
     <style>
-        /* হাই-টেক ডিজাইন স্টাইল */
-        body {
-            background-color: #0a0a0a;
-            color: #00ffcc;
-            font-family: 'Segoe UI', sans-serif;
-            text-align: center;
+        /* পুরো স্ক্রিনের স্টাইল */
+        body, html {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #001d3d 0%, #000000 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            color: white;
         }
-        .header {
-            border-bottom: 2px solid #00ffcc;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 0 15px #00ffcc;
-        }
-        .card {
-            background: #1a1a1a;
-            border: 1px solid #00ffcc;
-            padding: 20px;
-            border-radius: 15px;
-            display: inline-block;
+
+        .container {
+            text-align: center;
             width: 90%;
-            max-width: 400px;
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
         }
-        h1 { font-size: 24px; text-transform: uppercase; }
-        .status { color: #ffcc00; font-weight: bold; }
-        .btn {
-            background: #00ffcc;
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 15px;
-            border-radius: 5px;
+
+        /* নামের ডিজাইন (সোনালী রঙ) */
+        .brand-name {
+            font-size: 3.5rem;
             font-weight: bold;
-            cursor: pointer;
+            color: #ffcc33;
+            text-shadow: 0 0 20px rgba(255, 204, 51, 0.7);
+            margin: 0;
+            letter-spacing: 5px;
+        }
+
+        .sub-name {
+            font-size: 1.5rem;
+            color: #ffffff;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+
+        /* স্লোগান */
+        .slogan {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            margin-bottom: 40px;
+        }
+
+        /* লোডিং বারের ডিজাইন (নিয়ন সবুজ) */
+        .loading-container {
+            width: 100%;
+            max-width: 300px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0, 255, 127, 0.3);
+        }
+
+        .loading-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #00ff7f, #00ffcc);
+            box-shadow: 0 0 15px #00ff7f;
+            border-radius: 10px;
+            animation: load 5s infinite;
+        }
+
+        /* টেক্সট এনিমেশন */
+        .loading-text {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: #00ff7f;
+            letter-spacing: 1px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>Digital Villa Economy</h1>
-        <p>Master Control: নাঈম ইব্রাহিম</p>
+    <div class="container">
+        <div class="sub-name">MY Sweet</div>
+        <div class="brand-name">NAIM</div>
+        <div class="slogan">শান্তি সিস্টেম - ১০০০ কোটি মানুষের সমাধান</div>
+        
+        <div class="loading-container">
+            <div class="loading-bar"></div>
+        </div>
+        
+        <div class="loading-text">লোডিং হচ্ছে... একটি নতুন পৃথিবী...</div>
     </div>
-
-    <div class="card">
-        <h3>মাস্টার কন্ট্রোল অ্যাক্টিভেটেড</h3>
-        <p>সিস্টেম স্ট্যাটাস: <span class="status">অনলাইন (Live)</span></p>
-        <p>সাথী সংখ্যা: ০২ (সজীব ও ওমান টিম)</p>
-        <p>আপনার Nj Gold: ১০০.০০</p>
-        <button class="btn" onclick="alert('সিস্টেম লোড হচ্ছে...')">কন্ট্রোল প্যানেল ওপেন করুন</button>
-    </div>
-
-    <p style="margin-top: 30px; font-size: 12px; color: #555;">© মিশন ১৮ - বৈশ্বিক ডিজিটাল সাম্রাজ্য</p>
 
 </body>
 </html>
