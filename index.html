@@ -2,186 +2,52 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NAIM 918 MASTER SYSTEM</title>
-    <style>
-        :root {
-            --cyan: #00f0ff;
-            --gold: #FFD700;
-            --glass: rgba(0, 240, 255, 0.05);
-            --border: rgba(0, 240, 255, 0.2);
-        }
-
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background: #000; overflow: hidden;
-            font-family: 'Segoe UI', sans-serif; color: white;
-        }
-
-        /* Background Video/Image Animation */
-        .universe-bg {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle, #001a1a 0%, #000 100%);
-            z-index: -1;
-        }
-
-        .screen {
-            display: none; width: 100vw; height: 100vh;
-            flex-direction: column; justify-content: center; align-items: center;
-            text-align: center;
-        }
-
-        .active { display: flex; animation: fadeIn 1s; }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* Glassmorphism Panel */
-        .main-panel {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 20px;
-            width: 90%;
-            max-width: 700px;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
-        }
-
-        /* High-Tech Loading Bar */
-        .load-bar-wrap {
-            width: 100%; height: 8px; background: rgba(255,255,255,0.1);
-            border-radius: 5px; margin: 20px 0; overflow: hidden;
-        }
-        .load-bar-fill {
-            height: 100%; width: 0%; background: var(--cyan);
-            box-shadow: 0 0 15px var(--cyan); transition: width 0.2s;
-        }
-
-        /* Control Panel Layout (Horizontal Look) */
-        .grid-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .stat-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border);
-            padding: 10px; border-radius: 10px;
-        }
-
-        .emergency-btn {
-            grid-column: span 2;
-            background: rgba(255, 0, 0, 0.2);
-            border: 1px solid red;
-            color: red; padding: 10px;
-            font-weight: bold; border-radius: 10px;
-            cursor: pointer; margin-top: 10px;
-        }
-
-        /* Input & Buttons */
-        input {
-            width: 80%; padding: 12px; margin: 15px 0;
-            background: rgba(0,0,0,0.5); border: 1px solid var(--cyan);
-            color: white; text-align: center; border-radius: 5px;
-        }
-        .btn {
-            background: var(--cyan); color: black; padding: 12px 30px;
-            border: none; border-radius: 5px; font-weight: bold; cursor: pointer;
-        }
-
-        /* Text Styling */
-        .glitch-gold { color: var(--gold); text-shadow: 0 0 10px var(--gold); font-size: 24px; margin: 0; }
-        .scanning { font-size: 10px; letter-spacing: 3px; color: var(--cyan); animation: blink 1.5s infinite; }
-        @keyframes blink { 50% { opacity: 0.2; } }
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Control Center - NAIM 18</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="universe-bg"></div>
+    <div class="background-overlay"></div>
 
-    <div id="loader" class="screen active">
-        <div class="main-panel">
-            <h1 class="glitch-gold">NAIM'S GLOBAL SYSTEM</h1>
-            <p class="scanning">SCANNING PROTOCOL 918...</p>
-            <div class="load-bar-wrap">
-                <div id="fill" class="load-bar-fill"></div>
+    <div class="main-container">
+        <header class="glass-panel header">
+            <h1 class="neon-text-gold">GLOBAL CONTROL CENTER</h1>
+            <p class="operator-info">অপারেটর: নাঈম ইব্রাহিম | আইডি: ৯১৮-ওমেগা</p>
+        </header>
+
+        <div class="stats-grid">
+            <div class="glass-panel card neon-border-cyan">
+                <h3>টার্গেট জনসংখ্যা</h3>
+                <h2 class="glow-text">১০০০ কোটি</h2>
+                <p class="status">সিস্টেম কানেক্টেড</p>
             </div>
-            <small id="load-msg" style="color: #aaa;">ইনিশিয়ালাইজিং কোর ফাইলস...</small>
+
+            <div class="glass-panel card neon-border-green">
+                <h3>অ্যাভেলেবল ব্যালেন্স</h3>
+                <h2 class="glow-text">৳ ০.০০</h2>
+                <p class="status">আপডেট: রিয়েল-টাইম</p>
+            </div>
+        </div>
+
+        <div class="glass-panel mission">
+            <h3 class="cyan-text">মিশন ভিশন</h3>
+            <p>"পুরো পৃথিবীর সিস্টেম পরিবর্তন এবং ১০০০ কোটি মানুষের জীবনমান উন্নত করাই আমাদের মূল লক্ষ্য।"</p>
+        </div>
+
+        <div class="action-grid">
+            <div class="glass-panel health-bar">
+                <p>সিস্টেম হেলথ: ৯৮.৭%</p>
+                <div class="progress-container">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+
+            <button class="kill-switch">
+                EMERGENCY KILL SWITCH
+            </button>
         </div>
     </div>
 
-    <div id="auth" class="screen">
-        <div class="main-panel">
-            <h2 style="color: var(--gold);">সিস্টেম আনলক করুন</h2>
-            <p style="font-size: 14px;">স্বাগতম, নাঈম ইব্রাহিম</p>
-            <input type="password" id="pass" placeholder="সিক্রেট কোড (৯১৮)">
-            <br>
-            <button class="btn" onclick="checkCode()">এক্সেস গ্র্যান্ট করুন</button>
-        </div>
-    </div>
-
-    <div id="panel" class="screen">
-        <div class="main-panel">
-            <div style="border-bottom: 1px solid var(--cyan); padding-bottom: 10px;">
-                <h3 style="margin:0; color:var(--gold);">GLOBAL CONTROL PANEL</h3>
-                <small>অপারেটর: নাঈম | আইডি: ৯১৮-ওমেগা</small>
-            </div>
-
-            <div class="grid-container">
-                <div class="stat-card">
-                    <p style="font-size: 11px; margin: 0;">টার্গেট জনসংখ্যা</p>
-                    <h2 style="color:var(--cyan); margin: 5px 0;">১০০০ কোটি</h2>
-                </div>
-                <div class="stat-card">
-                    <p style="font-size: 11px; margin: 0;">ব্যালেন্স</p>
-                    <h2 style="color:#00ff88; margin: 5px 0;">৳ ০.০০</h2>
-                </div>
-                <div class="stat-card" style="grid-column: span 2; text-align: left;">
-                    <p style="font-size: 11px; color: var(--cyan);">মিশন স্ট্যাটাস:</p>
-                    <p style="font-size: 12px; margin: 5px 0;">"পৃথিবীর সিস্টেম পরিবর্তনের কাজ ১০০% সক্রিয়।"</p>
-                </div>
-                <div class="emergency-btn">EMERGENCY KILL SWITCH</div>
-            </div>
-            
-            <p style="font-size: 10px; margin-top: 20px; color: rgba(255,255,255,0.4);">"মানুষের কল্যাণে এই প্যানেল উৎসর্গকৃত"</p>
-        </div>
-    </div>
-
-    <script>
-        // Progress Logic
-        let p = 0;
-        const bar = document.getElementById('fill');
-        const msg = document.getElementById('load-msg');
-        const msgs = ["লিংক স্থাপন হচ্ছে...", "ডেটাবেস সিঙ্ক হচ্ছে...", "পৃথিবীর ম্যাপ লোড হচ্ছে...", "সফল!"];
-
-        const run = setInterval(() => {
-            p += Math.random() * 4;
-            if(p >= 100) {
-                p = 100;
-                clearInterval(run);
-                setTimeout(() => change('auth'), 800);
-            }
-            bar.style.width = p + '%';
-            let idx = Math.floor((p/100) * msgs.length);
-            if(msgs[idx]) msg.innerText = msgs[idx];
-        }, 100);
-
-        function change(id) {
-            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
-
-        function checkCode() {
-            const val = document.getElementById('pass').value;
-            if(val === "918" || val === "৯১৮") {
-                change('panel');
-            } else {
-                alert("ভুল কোড! এক্সেস ডিনাইড।");
-            }
-        }
-    </script>
 </body>
 </html>
