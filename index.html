@@ -3,208 +3,174 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAIM 18 - GLOBAL CONTROL SYSTEM</title>
+    <title>NAIM 918 - GLOBAL MASTER SYSTEM</title>
     <style>
         :root {
-            --neon-cyan: #00f0ff;
-            --neon-green: #00ff88;
+            --cyan: #00f0ff;
+            --green: #00ff88;
             --gold: #FFD700;
-            --glass: rgba(255, 255, 255, 0.1);
+            --red: #ff3e3e;
+            --glass: rgba(255, 255, 255, 0.05);
+            --border: rgba(255, 255, 255, 0.15);
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            background: #050a10;
-            color: white;
-            font-family: 'Segoe UI', sans-serif;
-            overflow: hidden;
+            margin: 0; padding: 0; height: 100%;
+            background: #02050a url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80') no-repeat center center/cover;
+            color: white; font-family: 'Segoe UI', sans-serif; overflow: hidden;
         }
 
-        /* Background Animation */
-        .bg-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #102a43 0%, #050a10 100%);
-            z-index: -1;
+        .screen { display: none; height: 100vh; width: 100%; justify-content: center; align-items: center; flex-direction: column; transition: 1s ease-in-out; }
+        .active { display: flex; }
+
+        /* 1. Transparent Loading Style */
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 25px; padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5); text-align: center; width: 85%; max-width: 500px;
         }
 
-        /* Loading Screen */
-        #loading-screen {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            transition: opacity 1s ease;
+        .loader-bar-container {
+            width: 100%; height: 6px; background: rgba(255,255,255,0.1);
+            border-radius: 10px; margin: 25px 0; overflow: hidden;
+        }
+        .loader-bar-fill {
+            height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--green));
+            box-shadow: 0 0 15px var(--cyan); transition: width 0.3s;
         }
 
-        .loader-ring {
-            width: 150px;
-            height: 150px;
-            border: 5px solid transparent;
-            border-top: 5px solid var(--neon-cyan);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* Auth Screen (Sign Up/Login) */
-        #auth-screen {
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .glass-box {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
-            text-align: center;
-            box-shadow: 0 0 30px rgba(0,240,255,0.2);
-        }
-
+        /* 2. Authentication Style */
         input {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--neon-cyan);
-            padding: 12px;
-            color: white;
-            margin: 10px 0;
-            width: 250px;
-            border-radius: 5px;
-            text-align: center;
+            width: 80%; padding: 12px; margin: 15px 0; border-radius: 8px;
+            border: 1px solid var(--cyan); background: rgba(0,0,0,0.4); color: white; text-align: center; font-size: 18px;
         }
-
         button {
-            background: var(--neon-cyan);
-            border: none;
-            padding: 12px 30px;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 20px;
+            padding: 12px 40px; background: var(--cyan); color: black; font-weight: bold;
+            border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; transition: 0.3s;
         }
+        button:hover { box-shadow: 0 0 20px var(--cyan); transform: scale(1.05); }
 
-        /* Control Panel */
-        #control-panel {
-            display: none;
-            padding: 20px;
-            height: 100vh;
-            overflow-y: auto;
+        /* 3. Global Control Panel Layout */
+        #control-panel { padding: 20px; box-sizing: border-box; }
+        .grid-layout {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 900px;
         }
+        .stat-box {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);
+        }
+        .full-width { grid-column: span 2; }
+        
+        .emergency { border: 2px solid var(--red); color: var(--red); font-weight: bold; padding: 15px; border-radius: 10px; cursor: pointer; margin-top: 10px; }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 2px solid var(--neon-cyan);
-            padding-bottom: 10px;
-        }
+        .earth-glow { font-size: 40px; color: var(--gold); text-shadow: 0 0 20px var(--gold); margin: 10px 0; }
 
-        .stat-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .stat-card {
-            background: var(--glass);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 5px solid var(--neon-green);
-        }
-
-        .vision-section {
-            margin-top: 40px;
-            background: rgba(0, 255, 136, 0.05);
-            padding: 20px;
-            border-radius: 15px;
-        }
+        /* Scanning Animation */
+        .scanning-text { font-size: 12px; color: var(--cyan); letter-spacing: 2px; animation: blink 1s infinite; }
+        @keyframes blink { 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
-    <div class="bg-overlay"></div>
-
-    <div id="loading-screen">
-        <div class="loader-ring"></div>
-        <h2 style="color: var(--neon-cyan); margin-top: 20px;">সিস্টেম প্রোটোকল ৯১৮ লোড হচ্ছে...</h2>
-        <p id="load-status">এনক্রিপশন চেক করা হচ্ছে...</p>
+    <div id="step-loading" class="screen active">
+        <div class="glass-card">
+            <h2 style="color: var(--gold); margin:0;">NAIM MASTER SYSTEM</h2>
+            <p class="scanning-text">সিস্টেম প্রোটোকল ৯১৮ স্ক্যানিং হচ্ছে...</p>
+            <div class="loader-bar-container">
+                <div id="loading-fill" class="loader-bar-fill"></div>
+            </div>
+            <p id="loading-msg" style="font-size: 13px; color: rgba(255,255,255,0.7);">ইনিশিয়ালাইজিং কোর ফাইলস...</p>
+        </div>
     </div>
 
-    <div id="auth-screen">
-        <div class="glass-box">
-            <h1 style="color: var(--gold);">স্বাগতম, নাঈম ইব্রাহিম</h1>
-            <p>আপনার ব্যক্তিগত এক্সেস কোড দিন</p>
-            <input type="password" id="secret-code" placeholder="কোড এখানে লিখুন (৯১৮)">
+    <div id="step-auth" class="screen">
+        <div class="glass-card">
+            <h1 style="color: var(--gold); margin-bottom: 5px;">প্যানেল আনলক</h1>
+            <p style="color: var(--cyan);">স্বাগতম, নাঈম ইব্রাহিম</p>
+            <input type="password" id="pass-code" placeholder="সিক্রেট কোড (৯১৮)">
             <br>
-            <button onclick="checkAuth()">সিস্টেম আনলক করুন</button>
+            <button onclick="unlockSystem()">সিস্টেম এক্সেস করুন</button>
+            <p style="font-size: 10px; color: var(--red); margin-top: 20px;">SECURITY LEVEL: MAXIMUM</p>
         </div>
     </div>
 
-    <div id="control-panel">
-        <div class="header">
-            <div>
-                <h2 style="margin:0; color:var(--neon-cyan);">NAIM'S GLOBAL COMMAND</h2>
-                <small>আইডি: ৯১৮ | স্ট্যাটাস: অনলাইন</small>
+    <div id="step-panel" class="screen">
+        <div class="grid-layout">
+            <div class="stat-box full-width" style="text-align:center;">
+                <h2 style="margin:0; color:var(--gold);">GLOBAL CONTROL CENTER</h2>
+                <small style="color:var(--cyan);">অপারেটর: নাঈম ইব্রাহিম | আইডি: ৯১৮-ওমেগা</small>
             </div>
-            <div style="text-align:right; color:var(--gold);">
-                ১০ কিলো স্কয়ার প্রজেক্ট
-            </div>
-        </div>
 
-        <div class="stat-grid">
-            <div class="stat-card">
-                <h3>টার্গেট জনসংখ্যা</h3>
-                <h1 style="color:var(--neon-cyan);">১০০০ কোটি</h1>
+            <div class="stat-box">
+                <p style="font-size: 12px; margin:0;">টার্গেট জনসংখ্যা</p>
+                <div class="earth-glow">১০০০ কোটি</div>
+                <small style="color: var(--green);">সিস্টেম কানেক্টেড</small>
             </div>
-            <div class="stat-card">
-                <h3>সিস্টেম হেলথ</h3>
-                <h1 style="color:var(--neon-green);">৯৮.৭%</h1>
-            </div>
-            <div class="stat-card" style="border-left-color: var(--gold);">
-                <h3>অ্যাভেলেবল ব্যালেন্স</h3>
-                <h1 id="balance">৳ ০.০০</h1>
-            </div>
-        </div>
 
-        <div class="vision-section">
-            <h2 style="color:var(--neon-green);">আমাদের লক্ষ্য ও ভিশন</h2>
-            <p>"পৃথিবীর খাদ্য সংকট কমাতে কৃষকদের সাহায্য করা এবং মানুষের জীবনযাত্রার মান উন্নত করা। ১০ কিলো স্কয়ার সিস্টেমের মাধ্যমে বিশ্বজুড়ে উন্নয়ন ছড়িয়ে দেওয়া।"</p>
-        </div>
+            <div class="stat-box">
+                <p style="font-size: 12px; margin:0;">অ্যাভেলেবল ব্যালেন্স</p>
+                <div style="font-size: 30px; color: var(--green); margin: 10px 0;">৳ ০.০০</div>
+                <small>আপডেট: রিয়েল-টাইম</small>
+            </div>
 
-        <div style="margin-top: 30px; text-align:center;">
-            <button style="background:var(--gold);" onclick="alert('মিশন আপডেট হচ্ছে...')">নতুন মিশন শুরু করুন</button>
+            <div class="stat-box full-width">
+                <h4 style="margin:0 0 10px 0; color:var(--cyan);">মিশন ভিশন</h4>
+                <p style="font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.8);">
+                    "পুরো পৃথিবীর সিস্টেম পরিবর্তন এবং ১০০০ কোটি মানুষের জীবনমান উন্নত করাই আমাদের মূল লক্ষ্য। ১০ কিলো স্কয়ার সিস্টেম এখন সক্রিয়।"
+                </p>
+            </div>
+
+            <div class="stat-box">
+                <p style="font-size: 12px;">সিস্টেম হেলথ: ৯৮.৭%</p>
+                <div style="height:4px; background:var(--green); width:100%;"></div>
+            </div>
+
+            <div class="emergency" onclick="location.reload()">
+                EMERGENCY KILL SWITCH
+            </div>
         </div>
     </div>
 
     <script>
-        // Simulation logic
-        setTimeout(() => {
-            document.getElementById('loading-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('loading-screen').style.display = 'none';
-                document.getElementById('auth-screen').style.display = 'flex';
-            }, 1000);
-        }, 4000);
+        // Loading Logic
+        let progress = 0;
+        const fill = document.getElementById('loading-fill');
+        const msg = document.getElementById('loading-msg');
+        const loadingMessages = [
+            "ডেটাবেস চেক করা হচ্ছে...",
+            "১০ কিলো স্কয়ার নেটওয়ার্ক সিঙ্ক্রোনাইজ হচ্ছে...",
+            "পৃথিবীর মানচিত্র লোড করা হচ্ছে...",
+            "সিকিউরিটি শিল্ড সক্রিয় হচ্ছে...",
+            "এক্সেস গ্রান্টেড!"
+        ];
 
-        function checkAuth() {
-            const code = document.getElementById('secret-code').value;
-            if(code === "918" || code === "৯১৮") {
-                document.getElementById('auth-screen').style.display = 'none';
-                document.getElementById('control-panel').style.display = 'block';
+        const loadingInterval = setInterval(() => {
+            progress += Math.random() * 5;
+            if (progress >= 100) {
+                progress = 100;
+                clearInterval(loadingInterval);
+                setTimeout(() => {
+                    showScreen('step-auth');
+                }, 1000);
+            }
+            fill.style.width = progress + '%';
+            let msgIdx = Math.floor((progress / 100) * loadingMessages.length);
+            if(loadingMessages[msgIdx]) msg.innerText = loadingMessages[msgIdx];
+        }, 150);
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function unlockSystem() {
+            const code = document.getElementById('pass-code').value;
+            if (code === "918" || code === "৯১৮") {
+                showScreen('step-panel');
             } else {
-                alert("ভুল কোড! শুধুমাত্র নাঈম ইব্রাহিম প্রবেশ করতে পারবেন।");
+                alert("ভুল কোড! এক্সেস ডিনাইড।");
             }
         }
     </script>
-
 </body>
 </html>
