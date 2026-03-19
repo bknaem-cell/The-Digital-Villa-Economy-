@@ -2,171 +2,182 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAIM 918 - GLOBAL MASTER SYSTEM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NAIM 918 MASTER SYSTEM</title>
     <style>
         :root {
             --cyan: #00f0ff;
-            --green: #00ff88;
             --gold: #FFD700;
-            --red: #ff3e3e;
-            --glass: rgba(255, 255, 255, 0.05);
-            --border: rgba(255, 255, 255, 0.15);
+            --glass: rgba(0, 240, 255, 0.05);
+            --border: rgba(0, 240, 255, 0.2);
         }
 
         body, html {
-            margin: 0; padding: 0; height: 100%;
-            background: #02050a url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80') no-repeat center center/cover;
-            color: white; font-family: 'Segoe UI', sans-serif; overflow: hidden;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background: #000; overflow: hidden;
+            font-family: 'Segoe UI', sans-serif; color: white;
         }
 
-        .screen { display: none; height: 100vh; width: 100%; justify-content: center; align-items: center; flex-direction: column; transition: 1s ease-in-out; }
-        .active { display: flex; }
-
-        /* 1. Transparent Loading Style */
-        .glass-card {
-            background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--border); border-radius: 25px; padding: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5); text-align: center; width: 85%; max-width: 500px;
+        /* Background Video/Image Animation */
+        .universe-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, #001a1a 0%, #000 100%);
+            z-index: -1;
         }
 
-        .loader-bar-container {
-            width: 100%; height: 6px; background: rgba(255,255,255,0.1);
-            border-radius: 10px; margin: 25px 0; overflow: hidden;
-        }
-        .loader-bar-fill {
-            height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--green));
-            box-shadow: 0 0 15px var(--cyan); transition: width 0.3s;
+        .screen {
+            display: none; width: 100vw; height: 100vh;
+            flex-direction: column; justify-content: center; align-items: center;
+            text-align: center;
         }
 
-        /* 2. Authentication Style */
+        .active { display: flex; animation: fadeIn 1s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Glassmorphism Panel */
+        .main-panel {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            width: 90%;
+            max-width: 700px;
+            box-shadow: 0 0 30px rgba(0, 240, 255, 0.1);
+        }
+
+        /* High-Tech Loading Bar */
+        .load-bar-wrap {
+            width: 100%; height: 8px; background: rgba(255,255,255,0.1);
+            border-radius: 5px; margin: 20px 0; overflow: hidden;
+        }
+        .load-bar-fill {
+            height: 100%; width: 0%; background: var(--cyan);
+            box-shadow: 0 0 15px var(--cyan); transition: width 0.2s;
+        }
+
+        /* Control Panel Layout (Horizontal Look) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 10px; border-radius: 10px;
+        }
+
+        .emergency-btn {
+            grid-column: span 2;
+            background: rgba(255, 0, 0, 0.2);
+            border: 1px solid red;
+            color: red; padding: 10px;
+            font-weight: bold; border-radius: 10px;
+            cursor: pointer; margin-top: 10px;
+        }
+
+        /* Input & Buttons */
         input {
-            width: 80%; padding: 12px; margin: 15px 0; border-radius: 8px;
-            border: 1px solid var(--cyan); background: rgba(0,0,0,0.4); color: white; text-align: center; font-size: 18px;
+            width: 80%; padding: 12px; margin: 15px 0;
+            background: rgba(0,0,0,0.5); border: 1px solid var(--cyan);
+            color: white; text-align: center; border-radius: 5px;
         }
-        button {
-            padding: 12px 40px; background: var(--cyan); color: black; font-weight: bold;
-            border: none; border-radius: 8px; cursor: pointer; text-transform: uppercase; transition: 0.3s;
+        .btn {
+            background: var(--cyan); color: black; padding: 12px 30px;
+            border: none; border-radius: 5px; font-weight: bold; cursor: pointer;
         }
-        button:hover { box-shadow: 0 0 20px var(--cyan); transform: scale(1.05); }
 
-        /* 3. Global Control Panel Layout */
-        #control-panel { padding: 20px; box-sizing: border-box; }
-        .grid-layout {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 900px;
-        }
-        .stat-box {
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 20px; border-radius: 15px; backdrop-filter: blur(10px);
-        }
-        .full-width { grid-column: span 2; }
-        
-        .emergency { border: 2px solid var(--red); color: var(--red); font-weight: bold; padding: 15px; border-radius: 10px; cursor: pointer; margin-top: 10px; }
+        /* Text Styling */
+        .glitch-gold { color: var(--gold); text-shadow: 0 0 10px var(--gold); font-size: 24px; margin: 0; }
+        .scanning { font-size: 10px; letter-spacing: 3px; color: var(--cyan); animation: blink 1.5s infinite; }
+        @keyframes blink { 50% { opacity: 0.2; } }
 
-        .earth-glow { font-size: 40px; color: var(--gold); text-shadow: 0 0 20px var(--gold); margin: 10px 0; }
-
-        /* Scanning Animation */
-        .scanning-text { font-size: 12px; color: var(--cyan); letter-spacing: 2px; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
 
-    <div id="step-loading" class="screen active">
-        <div class="glass-card">
-            <h2 style="color: var(--gold); margin:0;">NAIM MASTER SYSTEM</h2>
-            <p class="scanning-text">সিস্টেম প্রোটোকল ৯১৮ স্ক্যানিং হচ্ছে...</p>
-            <div class="loader-bar-container">
-                <div id="loading-fill" class="loader-bar-fill"></div>
+    <div class="universe-bg"></div>
+
+    <div id="loader" class="screen active">
+        <div class="main-panel">
+            <h1 class="glitch-gold">NAIM'S GLOBAL SYSTEM</h1>
+            <p class="scanning">SCANNING PROTOCOL 918...</p>
+            <div class="load-bar-wrap">
+                <div id="fill" class="load-bar-fill"></div>
             </div>
-            <p id="loading-msg" style="font-size: 13px; color: rgba(255,255,255,0.7);">ইনিশিয়ালাইজিং কোর ফাইলস...</p>
+            <small id="load-msg" style="color: #aaa;">ইনিশিয়ালাইজিং কোর ফাইলস...</small>
         </div>
     </div>
 
-    <div id="step-auth" class="screen">
-        <div class="glass-card">
-            <h1 style="color: var(--gold); margin-bottom: 5px;">প্যানেল আনলক</h1>
-            <p style="color: var(--cyan);">স্বাগতম, নাঈম ইব্রাহিম</p>
-            <input type="password" id="pass-code" placeholder="সিক্রেট কোড (৯১৮)">
+    <div id="auth" class="screen">
+        <div class="main-panel">
+            <h2 style="color: var(--gold);">সিস্টেম আনলক করুন</h2>
+            <p style="font-size: 14px;">স্বাগতম, নাঈম ইব্রাহিম</p>
+            <input type="password" id="pass" placeholder="সিক্রেট কোড (৯১৮)">
             <br>
-            <button onclick="unlockSystem()">সিস্টেম এক্সেস করুন</button>
-            <p style="font-size: 10px; color: var(--red); margin-top: 20px;">SECURITY LEVEL: MAXIMUM</p>
+            <button class="btn" onclick="checkCode()">এক্সেস গ্র্যান্ট করুন</button>
         </div>
     </div>
 
-    <div id="step-panel" class="screen">
-        <div class="grid-layout">
-            <div class="stat-box full-width" style="text-align:center;">
-                <h2 style="margin:0; color:var(--gold);">GLOBAL CONTROL CENTER</h2>
-                <small style="color:var(--cyan);">অপারেটর: নাঈম ইব্রাহিম | আইডি: ৯১৮-ওমেগা</small>
+    <div id="panel" class="screen">
+        <div class="main-panel">
+            <div style="border-bottom: 1px solid var(--cyan); padding-bottom: 10px;">
+                <h3 style="margin:0; color:var(--gold);">GLOBAL CONTROL PANEL</h3>
+                <small>অপারেটর: নাঈম | আইডি: ৯১৮-ওমেগা</small>
             </div>
 
-            <div class="stat-box">
-                <p style="font-size: 12px; margin:0;">টার্গেট জনসংখ্যা</p>
-                <div class="earth-glow">১০০০ কোটি</div>
-                <small style="color: var(--green);">সিস্টেম কানেক্টেড</small>
+            <div class="grid-container">
+                <div class="stat-card">
+                    <p style="font-size: 11px; margin: 0;">টার্গেট জনসংখ্যা</p>
+                    <h2 style="color:var(--cyan); margin: 5px 0;">১০০০ কোটি</h2>
+                </div>
+                <div class="stat-card">
+                    <p style="font-size: 11px; margin: 0;">ব্যালেন্স</p>
+                    <h2 style="color:#00ff88; margin: 5px 0;">৳ ০.০০</h2>
+                </div>
+                <div class="stat-card" style="grid-column: span 2; text-align: left;">
+                    <p style="font-size: 11px; color: var(--cyan);">মিশন স্ট্যাটাস:</p>
+                    <p style="font-size: 12px; margin: 5px 0;">"পৃথিবীর সিস্টেম পরিবর্তনের কাজ ১০০% সক্রিয়।"</p>
+                </div>
+                <div class="emergency-btn">EMERGENCY KILL SWITCH</div>
             </div>
-
-            <div class="stat-box">
-                <p style="font-size: 12px; margin:0;">অ্যাভেলেবল ব্যালেন্স</p>
-                <div style="font-size: 30px; color: var(--green); margin: 10px 0;">৳ ০.০০</div>
-                <small>আপডেট: রিয়েল-টাইম</small>
-            </div>
-
-            <div class="stat-box full-width">
-                <h4 style="margin:0 0 10px 0; color:var(--cyan);">মিশন ভিশন</h4>
-                <p style="font-size: 13px; line-height: 1.5; color: rgba(255,255,255,0.8);">
-                    "পুরো পৃথিবীর সিস্টেম পরিবর্তন এবং ১০০০ কোটি মানুষের জীবনমান উন্নত করাই আমাদের মূল লক্ষ্য। ১০ কিলো স্কয়ার সিস্টেম এখন সক্রিয়।"
-                </p>
-            </div>
-
-            <div class="stat-box">
-                <p style="font-size: 12px;">সিস্টেম হেলথ: ৯৮.৭%</p>
-                <div style="height:4px; background:var(--green); width:100%;"></div>
-            </div>
-
-            <div class="emergency" onclick="location.reload()">
-                EMERGENCY KILL SWITCH
-            </div>
+            
+            <p style="font-size: 10px; margin-top: 20px; color: rgba(255,255,255,0.4);">"মানুষের কল্যাণে এই প্যানেল উৎসর্গকৃত"</p>
         </div>
     </div>
 
     <script>
-        // Loading Logic
-        let progress = 0;
-        const fill = document.getElementById('loading-fill');
-        const msg = document.getElementById('loading-msg');
-        const loadingMessages = [
-            "ডেটাবেস চেক করা হচ্ছে...",
-            "১০ কিলো স্কয়ার নেটওয়ার্ক সিঙ্ক্রোনাইজ হচ্ছে...",
-            "পৃথিবীর মানচিত্র লোড করা হচ্ছে...",
-            "সিকিউরিটি শিল্ড সক্রিয় হচ্ছে...",
-            "এক্সেস গ্রান্টেড!"
-        ];
+        // Progress Logic
+        let p = 0;
+        const bar = document.getElementById('fill');
+        const msg = document.getElementById('load-msg');
+        const msgs = ["লিংক স্থাপন হচ্ছে...", "ডেটাবেস সিঙ্ক হচ্ছে...", "পৃথিবীর ম্যাপ লোড হচ্ছে...", "সফল!"];
 
-        const loadingInterval = setInterval(() => {
-            progress += Math.random() * 5;
-            if (progress >= 100) {
-                progress = 100;
-                clearInterval(loadingInterval);
-                setTimeout(() => {
-                    showScreen('step-auth');
-                }, 1000);
+        const run = setInterval(() => {
+            p += Math.random() * 4;
+            if(p >= 100) {
+                p = 100;
+                clearInterval(run);
+                setTimeout(() => change('auth'), 800);
             }
-            fill.style.width = progress + '%';
-            let msgIdx = Math.floor((progress / 100) * loadingMessages.length);
-            if(loadingMessages[msgIdx]) msg.innerText = loadingMessages[msgIdx];
-        }, 150);
+            bar.style.width = p + '%';
+            let idx = Math.floor((p/100) * msgs.length);
+            if(msgs[idx]) msg.innerText = msgs[idx];
+        }, 100);
 
-        function showScreen(id) {
+        function change(id) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        function unlockSystem() {
-            const code = document.getElementById('pass-code').value;
-            if (code === "918" || code === "৯১৮") {
-                showScreen('step-panel');
+        function checkCode() {
+            const val = document.getElementById('pass').value;
+            if(val === "918" || val === "৯১৮") {
+                change('panel');
             } else {
                 alert("ভুল কোড! এক্সেস ডিনাইড।");
             }
