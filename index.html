@@ -3,89 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDV World Mission</title>
+    <title>TDV Project Loading</title>
     <style>
-        /* পুরো স্ক্রিন কালো এবং মহাকাশের মতো */
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: #0a0a0a;
             overflow: hidden;
-            background-color: #000;
-            font-family: sans-serif;
+            font-family: Arial, sans-serif;
         }
 
         /* লোডিং স্ক্রিন */
         #loading-screen {
             position: fixed;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             background: #000;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 100;
-            color: #00ffcc;
+            transition: opacity 1s ease-out;
         }
 
-        .loader {
-            border: 5px solid #333;
-            border-top: 5px solid #00ffcc;
+        /* প্রোফাইল প্যানেল */
+        .profile-panel {
+            width: 80px;
+            height: 80px;
+            background: cyan;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+            border: 3px solid #fff;
+            box-shadow: 0 0 15px cyan;
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* পৃথিবী এবং আকাশের মূল এরিয়া */
-        #world-container {
-            width: 100vw;
-            height: 100vh;
-            perspective: 1000px;
-            display: none; /* শুরুতে লুকানো থাকবে */
+        /* লোডিং বক্স */
+        .loading-box {
+            width: 250px;
+            height: 20px;
+            border: 2px solid cyan;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
         }
 
-        /* মাটি এবং আকাশ (৩ডি ফিল তৈরি করতে) */
-        #ground {
-            position: absolute;
-            width: 5000px;
-            height: 5000px;
-            background: #4d3319; /* মাটির রঙ */
-            transform: rotateX(90deg) translateZ(-500px);
-            left: -2000px;
-            top: -2000px;
-        }
-
-        #sky {
-            position: absolute;
-            width: 100%;
+        .loading-bar {
+            width: 0%;
             height: 100%;
-            background: linear-gradient(to bottom, #001133, #87CEEB); /* মহাকাশ থেকে আকাশ */
+            background: cyan;
+            box-shadow: 0 0 10px cyan;
+            animation: loadProgress 3s linear forwards;
+        }
+
+        @keyframes loadProgress {
+            to { width: 100%; }
+        }
+
+        /* মূল দৃশ্য (ম্যাপ ও আকাশ) */
+        #main-content {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(to bottom, #001d3d, #003566);
+            position: relative;
+        }
+
+        /* সূর্য ও চাঁদ */
+        .sun {
+            width: 80px;
+            height: 80px;
+            background: yellow;
+            border-radius: 50%;
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            box-shadow: 0 0 50px yellow;
+        }
+
+        .moon {
+            width: 60px;
+            height: 60px;
+            background: #ddd;
+            border-radius: 50%;
+            position: absolute;
+            top: 60px;
+            right: 50px;
+            box-shadow: 0 0 30px white;
+        }
+
+        /* মাটি */
+        .ground {
+            width: 100%;
+            height: 150px;
+            background: #3d2b1f;
+            position: absolute;
+            bottom: 0;
+            border-top: 5px solid #228b22;
         }
     </style>
 </head>
 <body>
 
     <div id="loading-screen">
-        <div class="loader"></div>
-        <p>মহাকাশ থেকে পৃথিবীতে নামছে... অপেক্ষা করুন</p>
+        <div class="profile-panel"></div>
+        <div class="loading-box">
+            <div class="loading-bar"></div>
+        </div>
+        <p style="color: cyan; margin-top: 10px;">প্রবেশ করা হচ্ছে...</p>
     </div>
 
-    <div id="world-container">
-        <div id="sky"></div>
-        <div id="ground"></div>
+    <div id="main-content">
+        <div class="sun"></div>
+        <div class="moon"></div>
+        <div class="ground"></div>
+        <h1 style="color: white; text-align: center; margin-top: 200px;">আমাদের ম্যাপ</h1>
     </div>
 
     <script>
-        // ৫ সেকেন্ড পর লোডিং শেষ হয়ে পৃথিবী দেখা যাবে
-        setTimeout(function() {
-            document.getElementById('loading-screen').style.display = 'none';
-            document.getElementById('world-container').style.display = 'block';
-        }, 5000);
+        // ৩ সেকেন্ড পর লোডিং বন্ধ করে ম্যাপ দেখানোর স্ক্রিপ্ট
+        setTimeout(() => {
+            document.getElementById('loading-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+            }, 1000);
+        }, 3000);
     </script>
 
 </body>
