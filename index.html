@@ -3,134 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NI Global Attack Panel - Smart Map</title>
+    <title>TDV World Mission</title>
     <style>
-        /* ১. আকাশ ও ব্যাকগ্রাউন্ড (গেমের মতো সাদা এবং উজ্জ্বল) */
+        /* পুরো স্ক্রিন কালো এবং মহাকাশের মতো */
         body, html {
             margin: 0;
             padding: 0;
+            width: 100%;
             height: 100%;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(180deg, #ffffff 0%, #e0f7fa 100%);
             overflow: hidden;
-            color: #333;
+            background-color: #000;
+            font-family: sans-serif;
         }
 
-        /* ২. বাংলাদেশের মাটি (১০ কিলো স্কয়ার এলাকা) */
+        /* লোডিং স্ক্রিন */
+        #loading-screen {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            color: #00ffcc;
+        }
+
+        .loader {
+            border: 5px solid #333;
+            border-top: 5px solid #00ffcc;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* পৃথিবী এবং আকাশের মূল এরিয়া */
+        #world-container {
+            width: 100vw;
+            height: 100vh;
+            perspective: 1000px;
+            display: none; /* শুরুতে লুকানো থাকবে */
+        }
+
+        /* মাটি এবং আকাশ (৩ডি ফিল তৈরি করতে) */
         #ground {
             position: absolute;
-            bottom: 0;
+            width: 5000px;
+            height: 5000px;
+            background: #4d3319; /* মাটির রঙ */
+            transform: rotateX(90deg) translateZ(-500px);
+            left: -2000px;
+            top: -2000px;
+        }
+
+        #sky {
+            position: absolute;
             width: 100%;
-            height: 60%;
-            background-color: #8d6e63; /* মাটির কালার */
-            border-top: 5px solid #4caf50;
-            box-shadow: 0px -20px 50px rgba(0,0,0,0.1);
-        }
-
-        /* ৩. ভিআইপি রোড (একদান্ত বাজার থেকে বাড়ির পথ) */
-        .road {
-            position: absolute;
-            bottom: 10%;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: #333;
-            border-top: 4px solid #ffd700; /* গোল্ডেন বর্ডার */
-            border-bottom: 4px solid #ffd700;
-        }
-
-        /* ৪. স্মার্ট নিয়ন লাইট (গাড়ি আসলে জ্বলে উঠবে) */
-        .neon-light {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 20px #00f2ff, 0 0 40px #00f2ff;
-            animation: glow 1.5s infinite alternate;
-        }
-
-        @keyframes glow {
-            from { opacity: 0.3; }
-            to { opacity: 1; }
-        }
-
-        /* ৫. ডেলিভারি ট্র্যাকিং কার (গাড়ির মুভমেন্ট) */
-        .delivery-car {
-            position: absolute;
-            bottom: 30px;
-            left: -50px;
-            width: 40px;
-            height: 25px;
-            background: #ff5722;
-            border-radius: 5px;
-            box-shadow: 0 0 15px #ff5722;
-            animation: moveCar 10s linear infinite;
-        }
-
-        @keyframes moveCar {
-            0% { left: 0%; }
-            100% { left: 100%; }
-        }
-
-        /* ৬. কন্ট্রোল সেন্টার এবং ডিটেইলস প্যানেল */
-        #control-panel {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid #00f2ff;
-            width: 300px;
-        }
-
-        h2 { margin: 0; color: #007bb5; font-size: 22px; }
-        .status { color: #ff5722; font-weight: bold; }
-
-        /* ৭. সেই ছোট মিষ্টি ব্যাক বাটন (ডান কোণায়) */
-        .back-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: #ff5252;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            color: white;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(255,0,0,0.5);
+            height: 100%;
+            background: linear-gradient(to bottom, #001133, #87CEEB); /* মহাকাশ থেকে আকাশ */
         }
     </style>
 </head>
 <body>
 
-    <div id="ground"></div>
-    <div class="road"></div>
-    
-    <div class="delivery-car"></div>
-    
-    <div class="neon-light" style="bottom: 120px; left: 20%;"></div>
-    <div class="neon-light" style="bottom: 120px; left: 50%;"></div>
-    <div class="neon-light" style="bottom: 120px; left: 80%;"></div>
-
-    <div id="control-panel">
-        <h2>NI GLOBAL PANEL</h2>
-        <p><strong>একদান্ত বাজার ট্র্যাকিং</strong></p>
-        <p>গাড়ি নং: <span class="status">BD-2026</span></p>
-        <p>পণ্য: স্মার্ট হোম কিট</p>
-        <p>দূরত্ব: ২ কি.মি. বাকি</p>
-        <hr>
-        <p style="font-size: 12px;">২০ কোটি মানুষের ডাটাবেস চালু আছে...</p>
+    <div id="loading-screen">
+        <div class="loader"></div>
+        <p>মহাকাশ থেকে পৃথিবীতে নামছে... অপেক্ষা করুন</p>
     </div>
 
-    <div class="back-btn">×</div>
+    <div id="world-container">
+        <div id="sky"></div>
+        <div id="ground"></div>
+    </div>
+
+    <script>
+        // ৫ সেকেন্ড পর লোডিং শেষ হয়ে পৃথিবী দেখা যাবে
+        setTimeout(function() {
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('world-container').style.display = 'block';
+        }, 5000);
+    </script>
 
 </body>
 </html>
