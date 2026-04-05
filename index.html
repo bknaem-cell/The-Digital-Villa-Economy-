@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDV Project Loading</title>
+    <title>TDV Digital Market</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: #0a0a0a;
             overflow: hidden;
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        /* লোডিং স্ক্রিন */
+        /* ১. লোডিং স্ক্রিন */
         #loading-screen {
             position: fixed;
             width: 100%;
@@ -23,36 +23,31 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 100;
-            transition: opacity 1s ease-out;
+            z-index: 1000;
         }
 
-        /* প্রোফাইল প্যানেল */
         .profile-panel {
             width: 80px;
             height: 80px;
-            background: cyan;
+            background: rgba(0, 255, 255, 0.2);
             border-radius: 50%;
             margin-bottom: 20px;
-            border: 3px solid #fff;
+            border: 2px solid cyan;
             box-shadow: 0 0 15px cyan;
         }
 
-        /* লোডিং বক্স */
         .loading-box {
             width: 250px;
-            height: 20px;
-            border: 2px solid cyan;
-            border-radius: 10px;
+            height: 10px;
+            border: 1px solid cyan;
+            border-radius: 5px;
             overflow: hidden;
-            position: relative;
         }
 
         .loading-bar {
             width: 0%;
             height: 100%;
             background: cyan;
-            box-shadow: 0 0 10px cyan;
             animation: loadProgress 3s linear forwards;
         }
 
@@ -60,7 +55,7 @@
             to { width: 100%; }
         }
 
-        /* মূল দৃশ্য (ম্যাপ ও আকাশ) */
+        /* ২. মূল ম্যাপ ও আকাশ */
         #main-content {
             display: none;
             width: 100%;
@@ -69,38 +64,67 @@
             position: relative;
         }
 
-        /* সূর্য ও চাঁদ */
-        .sun {
-            width: 80px;
-            height: 80px;
-            background: yellow;
-            border-radius: 50%;
-            position: absolute;
-            top: 50px;
-            left: 50px;
-            box-shadow: 0 0 50px yellow;
-        }
+        .sun { width: 60px; height: 60px; background: #ffd700; border-radius: 50%; position: absolute; top: 40px; left: 40px; box-shadow: 0 0 40px #ffd700; }
+        .moon { width: 40px; height: 40px; background: #fdfdfd; border-radius: 50%; position: absolute; top: 50px; right: 40px; box-shadow: 0 0 20px white; }
 
-        .moon {
-            width: 60px;
-            height: 60px;
-            background: #ddd;
-            border-radius: 50%;
-            position: absolute;
-            top: 60px;
-            right: 50px;
-            box-shadow: 0 0 30px white;
-        }
-
-        /* মাটি */
         .ground {
             width: 100%;
-            height: 150px;
-            background: #3d2b1f;
+            height: 200px;
+            background: #2e1a0a;
             position: absolute;
             bottom: 0;
-            border-top: 5px solid #228b22;
+            border-top: 8px solid #1a4a1a;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 20px;
+            gap: 20px;
         }
+
+        /* ৩. দোকানের ডিজাইন (গ্লাস ডিজাইন) */
+        .shop {
+            width: 120px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        /* ৪. দোকানদার রেজিস্ট্রেশন ফর্ম */
+        #shop-form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 30px;
+            border: 2px solid cyan;
+            border-radius: 15px;
+            display: none;
+            z-index: 500;
+            text-align: center;
+            color: white;
+        }
+
+        input, select, button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button { background: cyan; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -110,25 +134,56 @@
         <div class="loading-box">
             <div class="loading-bar"></div>
         </div>
-        <p style="color: cyan; margin-top: 10px;">প্রবেশ করা হচ্ছে...</p>
+        <p style="color: cyan; margin-top: 15px;">সিস্টেম লোড হচ্ছে...</p>
+    </div>
+
+    <div id="shop-form">
+        <h3>দোকানদার হিসেবে যোগ দিন</h3>
+        <input type="text" id="shopName" placeholder="আপনার দোকানের নাম">
+        <select id="shopType">
+            <option value="grocery">মুদি দোকান</option>
+            <option value="clothing">কাপড়ের দোকান</option>
+            <option value="food">খাবারের দোকান</option>
+        </select>
+        <button onclick="createShop()">দোকান খুলুন</button>
     </div>
 
     <div id="main-content">
         <div class="sun"></div>
         <div class="moon"></div>
-        <div class="ground"></div>
-        <h1 style="color: white; text-align: center; margin-top: 200px;">আমাদের ম্যাপ</h1>
+        <div class="ground" id="market-ground">
+            </div>
     </div>
 
     <script>
-        // ৩ সেকেন্ড পর লোডিং বন্ধ করে ম্যাপ দেখানোর স্ক্রিপ্ট
+        // ৩ সেকেন্ড পর লোডিং শেষ হওয়া
         setTimeout(() => {
-            document.getElementById('loading-screen').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('loading-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-            }, 1000);
+            document.getElementById('loading-screen').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+            document.getElementById('shop-form').style.display = 'block';
         }, 3000);
+
+        // নতুন দোকান তৈরি করার ফাংশন
+        function createShop() {
+            const name = document.getElementById('shopName').value;
+            const type = document.getElementById('shopType').value;
+
+            if(name === "") {
+                alert("দোকানের নাম দিন");
+                return;
+            }
+
+            // মাটির ওপর নতুন দোকান বসানো
+            const ground = document.getElementById('market-ground');
+            const newShop = document.createElement('div');
+            newShop.className = 'shop';
+            newShop.innerHTML = `<strong>${name}</strong><br><small>${type}</small><br><button style="font-size:10px; padding:2px; margin-top:5px;">পণ্য দেখুন</button>`;
+            
+            ground.appendChild(newShop);
+
+            // ফর্মটি লুকিয়ে ফেলা
+            document.getElementById('shop-form').style.display = 'none';
+        }
     </script>
 
 </body>
