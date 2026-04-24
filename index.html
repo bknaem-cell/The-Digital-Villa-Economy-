@@ -3,140 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naeem 18 - Advanced Digital World</title>
+    <title>Naeem 18 - Secure System</title>
     <style>
-        :root { --neon: #00ffcc; --bg: #050505; }
-        body { margin: 0; background: var(--bg); color: var(--neon); font-family: 'Arial', sans-serif; overflow: hidden; }
+        :root { --neon: #00ffcc; --gold: #ffcc00; }
+        body { margin: 0; background: #000; color: var(--neon); font-family: 'Segoe UI', sans-serif; overflow: hidden; }
         
-        /* হাই-টেক ম্যাপ ইন্টারফেস */
-        #world-container { width: 100vw; height: 100vh; position: relative; display: flex; flex-direction: column; }
-        
-        .map-header { padding: 15px; text-align: center; border-bottom: 1px solid var(--neon); background: rgba(0,0,0,0.8); }
+        /* প্রোফাইল কার্ড */
+        .user-id-card {
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid var(--neon);
+            padding: 10px; margin: 10px;
+            border-radius: 10px; font-size: 14px;
+            display: flex; justify-content: space-between;
+        }
 
-        /* ডিজিটাল গ্রিড ম্যাপ */
         #main-map {
-            flex-grow: 1; position: relative;
-            background-image: linear-gradient(var(--neon) 1px, transparent 1px), 
-                              linear-gradient(90deg, var(--neon) 1px, transparent 1px);
-            background-size: 40px 40px;
-            background-color: #000;
-            perspective: 1000px;
-            overflow: scroll;
+            width: 100vw; height: 60vh;
+            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
+            background-size: 30px 30px;
+            position: relative; overflow: auto;
+            border-bottom: 2px solid var(--neon);
         }
 
-        .digital-ground {
-            width: 2000px; height: 2000px;
-            position: absolute; transform: rotateX(20deg);
-            transform-origin: top;
-        }
-
-        /* ঘরবাড়ি বা বিল্ডিং এর ডিজাইন */
-        .building {
-            position: absolute; width: 40px; height: 40px;
-            background: var(--neon); box-shadow: 0 0 15px var(--neon);
-            transition: 0.3s; cursor: pointer;
-        }
-        .two-story { height: 80px; background: #00ccff; box-shadow: 0 0 20px #00ccff; }
-
-        /* কন্ট্রোল প্যানেল */
-        .dock {
-            position: fixed; bottom: 0; width: 100%;
-            background: #111; padding: 20px;
-            display: flex; justify-content: space-around;
-            border-top: 2px solid var(--neon);
-        }
-
-        .btn {
-            background: transparent; border: 2px solid var(--neon);
-            color: var(--neon); padding: 10px 20px; cursor: pointer;
-            text-transform: uppercase; font-weight: bold;
-        }
-
-        /* জিনিয়া এআই ভিডিও কনসোলে সিলেকশন */
-        #ai-console {
-            display: none; position: fixed; top: 20%; left: 10%;
-            width: 80%; background: rgba(0,0,0,0.95);
-            border: 2px solid var(--neon); padding: 20px; z-index: 1000;
-            box-shadow: 0 0 50px rgba(0,255,204,0.3);
-        }
-
-        .preview-box { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
-        .option { border: 1px solid #555; padding: 10px; cursor: pointer; text-align: center; width: 100px; }
-        .option:hover { border-color: var(--neon); background: rgba(0,255,204,0.1); }
-    </style>
-</head>
-<body>
-
-<div id="world-container">
-    <div class="map-header">
-        <h2 id="user-title">নাঈম ১৮: ডিজিটাল ওয়ার্ল্ড কনসোল</h2>
-    </div>
-
-    <div id="main-map">
-        <div class="digital-ground" id="ground"></div>
-    </div>
-
-    <div id="ai-console">
-        <h3 id="ai-message">জিনিয়া: নাঈম, আপনি কোন ধরনের স্থাপনা তৈরি করতে চান?</h3>
-        <div class="preview-box">
-            <div class="option" onclick="construct('1')">
-                <div style="font-size: 30px;">🏠</div>
-                <p>১ তলা</p>
-            </div>
-            <div class="option" onclick="construct('2')">
-                <div style="font-size: 30px;">🏢</div>
-                <p>২ তলা</p>
-            </div>
-        </div>
-        <button onclick="closeConsole()" style="margin-top:20px; background: red; color: white; border: none; padding: 10px;">বাতিল</button>
-    </div>
-
-    <div class="dock">
-        <button class="btn" onclick="openConsole()">নির্মাণ শুরু করুন</button>
-        <button class="btn" onclick="clearMap()">ম্যাপ ক্লিয়ার</button>
-    </div>
-</div>
-
-<script>
-    const ground = document.getElementById('ground');
-    const consoleBox = document.getElementById('ai-console');
-
-    function openConsole() {
-        consoleBox.style.display = 'block';
-        document.getElementById('ai-message').innerText = "জিনিয়া: নাঈম, ডিজাইন বেছে নিন। আমি তৈরি করতে প্রস্তুত।";
-    }
-
-    function closeConsole() {
-        consoleBox.style.display = 'none';
-    }
-
-    function construct(type) {
-        const build = document.createElement('div');
-        build.className = 'building';
-        if(type === '2') build.classList.add('two-story');
-        
-        // ম্যাপের ওপর ঘর বসানো (র্যান্ডম পজিশন কিন্তু গ্রিড মেনে)
-        const x = Math.floor(Math.random() * 20) * 50;
-        const y = Math.floor(Math.random() * 20) * 50;
-        
-        build.style.left = x + 'px';
-        build.style.top = y + 'px';
-        
-        build.onclick = function() {
-            alert("এই স্থাপনাটি নাঈম ১৮ প্রজেক্টের অংশ।");
-        };
-
-        ground.appendChild(build);
-        consoleBox.style.display = 'none';
-        alert("জিনিয়া: নাঈম, আপনার নির্দেশ মতো ঘরটি তৈরি করা হলো।");
-    }
-
-    function clearMap() {
-        if(confirm("আপনি কি নিশ্চিত যে পুরো ম্যাপ মুছে ফেলবেন?")) {
-            ground.innerHTML = '';
-        }
-    }
-</script>
-
-</body>
-</html>
+        /* ঘরবাড়ি সেভ হওয়ার পর যেমন দেখাবে */
+        .saved-building {
+            position: absolute; width: 40px;
+            background: linear-gradient
