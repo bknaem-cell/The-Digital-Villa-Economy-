@@ -3,130 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDV - মাস্টার কন্ট্রোল প্যানেল</title>
+    <title>Naeem 18 - Advanced Digital World</title>
     <style>
-        :root {
-            --neon-cyan: #00f2ff;
-            --dark-bg: #0a0a0a;
-            --glass-bg: rgba(255, 255, 255, 0.1);
+        :root { --neon: #00ffcc; --bg: #050505; }
+        body { margin: 0; background: var(--bg); color: var(--neon); font-family: 'Arial', sans-serif; overflow: hidden; }
+        
+        /* হাই-টেক ম্যাপ ইন্টারফেস */
+        #world-container { width: 100vw; height: 100vh; position: relative; display: flex; flex-direction: column; }
+        
+        .map-header { padding: 15px; text-align: center; border-bottom: 1px solid var(--neon); background: rgba(0,0,0,0.8); }
+
+        /* ডিজিটাল গ্রিড ম্যাপ */
+        #main-map {
+            flex-grow: 1; position: relative;
+            background-image: linear-gradient(var(--neon) 1px, transparent 1px), 
+                              linear-gradient(90deg, var(--neon) 1px, transparent 1px);
+            background-size: 40px 40px;
+            background-color: #000;
+            perspective: 1000px;
+            overflow: scroll;
         }
 
-        body {
-            background-color: var(--dark-bg);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+        .digital-ground {
+            width: 2000px; height: 2000px;
+            position: absolute; transform: rotateX(20deg);
+            transform-origin: top;
         }
 
-        .header {
-            text-align: center;
-            padding: 20px;
-            border-bottom: 2px solid var(--neon-cyan);
-            width: 100%;
-            text-shadow: 0 0 10px var(--neon-cyan);
+        /* ঘরবাড়ি বা বিল্ডিং এর ডিজাইন */
+        .building {
+            position: absolute; width: 40px; height: 40px;
+            background: var(--neon); box-shadow: 0 0 15px var(--neon);
+            transition: 0.3s; cursor: pointer;
+        }
+        .two-story { height: 80px; background: #00ccff; box-shadow: 0 0 20px #00ccff; }
+
+        /* কন্ট্রোল প্যানেল */
+        .dock {
+            position: fixed; bottom: 0; width: 100%;
+            background: #111; padding: 20px;
+            display: flex; justify-content: space-around;
+            border-top: 2px solid var(--neon);
         }
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            width: 90%;
+        .btn {
+            background: transparent; border: 2px solid var(--neon);
+            color: var(--neon); padding: 10px 20px; cursor: pointer;
+            text-transform: uppercase; font-weight: bold;
         }
 
-        .card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
+        /* জিনিয়া এআই ভিডিও কনসোলে সিলেকশন */
+        #ai-console {
+            display: none; position: fixed; top: 20%; left: 10%;
+            width: 80%; background: rgba(0,0,0,0.95);
+            border: 2px solid var(--neon); padding: 20px; z-index: 1000;
+            box-shadow: 0 0 50px rgba(0,255,204,0.3);
         }
 
-        .timer-display {
-            font-size: 2.5rem;
-            color: var(--neon-cyan);
-            margin: 10px 0;
-        }
-
-        button {
-            background: transparent;
-            border: 2px solid var(--neon-cyan);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        button:hover {
-            background: var(--neon-cyan);
-            color: black;
-            box-shadow: 0 0 15px var(--neon-cyan);
-        }
-
-        .status-light {
-            width: 15px;
-            height: 15px;
-            background: gray;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 10px;
-        }
-
-        .active { background: #00ff00; box-shadow: 0 0 10px #00ff00; }
+        .preview-box { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        .option { border: 1px solid #555; padding: 10px; cursor: pointer; text-align: center; width: 100px; }
+        .option:hover { border-color: var(--neon); background: rgba(0,255,204,0.1); }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h1>THE DIGITAL VILLA (TDV) ECONOMY</h1>
-        <p>সিস্টেম কোড: নাঈম ১৮ | জনসংখ্যা লক্ষ্য: ২৫ কোটি</p>
+<div id="world-container">
+    <div class="map-header">
+        <h2 id="user-title">নাঈম ১৮: ডিজিটাল ওয়ার্ল্ড কনসোল</h2>
     </div>
 
-    <div class="container">
-        <div class="card">
-            <h2>আজকের ডিউটি</h2>
-            <div class="status-light" id="status"></div> <span>অফলাইন</span>
-            <div class="timer-display" id="timer">03:00:00</div>
-            <button onclick="startWork()">কাজ শুরু করুন</button>
-            <p>লক্ষ্য: ৩-৫ ঘণ্টা কাজ সম্পন্ন করা</p>
-        </div>
-
-        <div class="card">
-            <h2>প্রয়োজনীয় সেক্টর</h2>
-            <ul style="list-style: none; padding: 0; text-align: left;">
-                <li>🍞 বেকারি ও খাদ্য: <span style="color:var(--neon-cyan)">সক্রিয়</span></li>
-                <li>👕 গার্মেন্টস (১০ তলা ইউনিট): <span style="color:var(--neon-cyan)">সক্রিয়</span></li>
-                <li>🌾 কৃষি ও মাঠ: <span style="color:var(--neon-cyan)">সক্রিয়</span></li>
-            </ul>
-        </div>
-
-        <div class="card">
-            <h2>ব্যক্তিগত প্রোফাইল</h2>
-            <p>নাম: নাঈম ইব্রাহিম</p>
-            <p>আইডি নং: ৯১৮-বিডি</p>
-            <p>অর্জন: ১০০% সুবিধা প্রাপ্ত</p>
-            <button>সুবিধা গ্রহণ করুন</button>
-        </div>
+    <div id="main-map">
+        <div class="digital-ground" id="ground"></div>
     </div>
 
-    <script>
-        let working = false;
-        function startWork() {
-            if(!working) {
-                working = true;
-                document.getElementById('status').classList.add('active');
-                alert("আপনার ৩ ঘণ্টার কাজ শুরু হয়েছে। শুভ কামনা!");
-            } else {
-                alert("আপনি অলরেডি কাজে আছেন!");
-            }
+    <div id="ai-console">
+        <h3 id="ai-message">জিনিয়া: নাঈম, আপনি কোন ধরনের স্থাপনা তৈরি করতে চান?</h3>
+        <div class="preview-box">
+            <div class="option" onclick="construct('1')">
+                <div style="font-size: 30px;">🏠</div>
+                <p>১ তলা</p>
+            </div>
+            <div class="option" onclick="construct('2')">
+                <div style="font-size: 30px;">🏢</div>
+                <p>২ তলা</p>
+            </div>
+        </div>
+        <button onclick="closeConsole()" style="margin-top:20px; background: red; color: white; border: none; padding: 10px;">বাতিল</button>
+    </div>
+
+    <div class="dock">
+        <button class="btn" onclick="openConsole()">নির্মাণ শুরু করুন</button>
+        <button class="btn" onclick="clearMap()">ম্যাপ ক্লিয়ার</button>
+    </div>
+</div>
+
+<script>
+    const ground = document.getElementById('ground');
+    const consoleBox = document.getElementById('ai-console');
+
+    function openConsole() {
+        consoleBox.style.display = 'block';
+        document.getElementById('ai-message').innerText = "জিনিয়া: নাঈম, ডিজাইন বেছে নিন। আমি তৈরি করতে প্রস্তুত।";
+    }
+
+    function closeConsole() {
+        consoleBox.style.display = 'none';
+    }
+
+    function construct(type) {
+        const build = document.createElement('div');
+        build.className = 'building';
+        if(type === '2') build.classList.add('two-story');
+        
+        // ম্যাপের ওপর ঘর বসানো (র্যান্ডম পজিশন কিন্তু গ্রিড মেনে)
+        const x = Math.floor(Math.random() * 20) * 50;
+        const y = Math.floor(Math.random() * 20) * 50;
+        
+        build.style.left = x + 'px';
+        build.style.top = y + 'px';
+        
+        build.onclick = function() {
+            alert("এই স্থাপনাটি নাঈম ১৮ প্রজেক্টের অংশ।");
+        };
+
+        ground.appendChild(build);
+        consoleBox.style.display = 'none';
+        alert("জিনিয়া: নাঈম, আপনার নির্দেশ মতো ঘরটি তৈরি করা হলো।");
+    }
+
+    function clearMap() {
+        if(confirm("আপনি কি নিশ্চিত যে পুরো ম্যাপ মুছে ফেলবেন?")) {
+            ground.innerHTML = '';
         }
-    </script>
+    }
+</script>
 
 </body>
 </html>
