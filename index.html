@@ -3,120 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDV Global Map Grid</title>
+    <title>TDV Global Economy - Job Specialized Map</title>
     <style>
-        /* আপনার প্রিয় নিয়ন গ্রিন এবং সায়ান ডিজাইন */
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #050505;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: #050505; color: #39FF14;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
-            font-family: sans-serif;
+        }
+
+        /* অটো রোটেশন কন্টেইনার */
+        #map-wrapper {
+            transition: transform 0.2s ease-out;
+            display: flex; justify-content: center; align-items: center;
         }
 
         .map-container {
             position: relative;
-            width: 90vw;
-            height: 90vw;
-            max-width: 600px;
-            max-height: 600px;
+            width: 90vw; height: 90vw; max-width: 500px; max-height: 500px;
+            display: grid; grid-template-columns: repeat(10, 1fr);
             border: 2px solid #00ffcc;
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
-            grid-template-rows: repeat(10, 1fr);
-            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
         }
 
         .tile {
-            border: 1px solid rgba(57, 255, 20, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
+            border: 1px solid rgba(0, 255, 204, 0.1);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; transition: 0.3s;
         }
 
-        .tile-number {
-            color: #39FF14;
-            font-size: 8px;
-            opacity: 0.6;
-        }
+        .tile:hover { background: rgba(57, 255, 20, 0.15); }
 
-        /* মাঝখানের ফাঁকা জায়গা ও মানুষের প্রতীক */
+        /* পেশা ভিত্তিক আইকন ও নম্বর */
+        .job-icon { font-size: 14px; margin-bottom: 2px; }
+        .tile-number { font-size: 8px; opacity: 0.7; }
+
+        /* মাঝখানের কেন্দ্রবিন্দু */
         .center-circle {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: rgba(5, 5, 5, 0.9);
-            border: 3px solid #00ffcc;
-            border-radius: 50%;
-            z-index: 10;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 0 30px #00ffcc;
-        }
-
-        .human-symbol {
-            font-size: 40px;
-            color: #ffffff;
-            text-shadow: 0 0 10px #00ffcc;
-        }
-
-        /* রাস্তার মতো সোজা লাইন ইফেক্ট */
-        .road-line-v {
-            position: absolute;
-            width: 2px;
-            height: 100%;
-            background: rgba(0, 255, 204, 0.4);
-            left: 50%;
-            transform: translateX(-50%);
-            pointer-events: none;
-        }
-        
-        .road-line-h {
-            position: absolute;
-            height: 2px;
-            width: 100%;
-            background: rgba(0, 255, 204, 0.4);
-            top: 50%;
-            transform: translateY(-50%);
-            pointer-events: none;
+            width: 60px; height: 60px;
+            background: #050505; border: 3px solid #00ffcc;
+            border-radius: 50%; z-index: 100;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 0 20px #00ffcc;
         }
     </style>
 </head>
 <body>
 
-    <div class="map-container" id="grid">
-        <div class="center-circle">
-            <div class="human-symbol">👤</div>
+    <div id="status">দিক: স্থির (পশ্চিম ফোকাস)</div>
+
+    <div id="map-wrapper">
+        <div class="map-container" id="grid">
+            <div class="center-circle">👤</div>
         </div>
-        
-        <div class="road-line-v"></div>
-        <div class="road-line-h"></div>
     </div>
 
     <script>
         const grid = document.getElementById('grid');
-        // ১০০টি স্কয়ার তৈরি করার লজিক
+        const jobs = ['🌾', '🛠️', '👕', '🚚', '🩺', '⚡']; // কৃষক, টেকনিশিয়ান, দর্জি, ড্রাইভার, ডাক্তার, ইঞ্জিনিয়ার
+
         for (let i = 1; i <= 100; i++) {
             const tile = document.createElement('div');
             tile.className = 'tile';
             
-            const number = document.createElement('span');
-            number.className = 'tile-number';
-            number.innerText = i;
+            // দৈবচয়নভাবে পেশা বণ্টন (যাতে বোঝা যায় একেক জন একেক কাজ করছে)
+            const randomJob = jobs[Math.floor(Math.random() * jobs.length)];
             
-            tile.appendChild(number);
+            tile.innerHTML = `
+                <span class="job-icon">${randomJob}</span>
+                <span class="tile-number">${i}</span>
+            `;
             grid.appendChild(tile);
         }
+
+        // সেন্সর ভিত্তিক অটো-রোটেশন লজিক
+        window.addEventListener('deviceorientation', function(event) {
+            const heading = event.alpha; // ফোনের দিক (০-৩৬০ ডিগ্রি)
+            const wrapper = document.getElementById('map-wrapper');
+            if (heading !== null) {
+                // ম্যাপটিকে সবসময় উত্তর/পশ্চিম অনুযায়ী স্থির রাখার জন্য রোটেশন
+                wrapper.style.transform = `rotate(${-heading}deg)`;
+                document.getElementById('status').innerText = `ম্যাপ অটো-রুটেট হচ্ছে: ${Math.round(heading)}°`;
+            }
+        });
     </script>
 </body>
 </html>
