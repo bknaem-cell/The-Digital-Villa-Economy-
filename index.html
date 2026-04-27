@@ -3,29 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naeem 18 - Secure System</title>
+    <title>TDV Global Map Grid</title>
     <style>
-        :root { --neon: #00ffcc; --gold: #ffcc00; }
-        body { margin: 0; background: #000; color: var(--neon); font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        /* আপনার প্রিয় নিয়ন গ্রিন এবং সায়ান ডিজাইন */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #050505;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
+
+        .map-container {
+            position: relative;
+            width: 90vw;
+            height: 90vw;
+            max-width: 600px;
+            max-height: 600px;
+            border: 2px solid #00ffcc;
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: repeat(10, 1fr);
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.2);
+        }
+
+        .tile {
+            border: 1px solid rgba(57, 255, 20, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .tile-number {
+            color: #39FF14;
+            font-size: 8px;
+            opacity: 0.6;
+        }
+
+        /* মাঝখানের ফাঁকা জায়গা ও মানুষের প্রতীক */
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: rgba(5, 5, 5, 0.9);
+            border: 3px solid #00ffcc;
+            border-radius: 50%;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 30px #00ffcc;
+        }
+
+        .human-symbol {
+            font-size: 40px;
+            color: #ffffff;
+            text-shadow: 0 0 10px #00ffcc;
+        }
+
+        /* রাস্তার মতো সোজা লাইন ইফেক্ট */
+        .road-line-v {
+            position: absolute;
+            width: 2px;
+            height: 100%;
+            background: rgba(0, 255, 204, 0.4);
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
         
-        /* প্রোফাইল কার্ড */
-        .user-id-card {
-            background: rgba(0, 255, 204, 0.1);
-            border: 1px solid var(--neon);
-            padding: 10px; margin: 10px;
-            border-radius: 10px; font-size: 14px;
-            display: flex; justify-content: space-between;
+        .road-line-h {
+            position: absolute;
+            height: 2px;
+            width: 100%;
+            background: rgba(0, 255, 204, 0.4);
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
         }
+    </style>
+</head>
+<body>
 
-        #main-map {
-            width: 100vw; height: 60vh;
-            background-image: radial-gradient(circle, #1a1a1a 1px, transparent 1px);
-            background-size: 30px 30px;
-            position: relative; overflow: auto;
-            border-bottom: 2px solid var(--neon);
+    <div class="map-container" id="grid">
+        <div class="center-circle">
+            <div class="human-symbol">👤</div>
+        </div>
+        
+        <div class="road-line-v"></div>
+        <div class="road-line-h"></div>
+    </div>
+
+    <script>
+        const grid = document.getElementById('grid');
+        // ১০০টি স্কয়ার তৈরি করার লজিক
+        for (let i = 1; i <= 100; i++) {
+            const tile = document.createElement('div');
+            tile.className = 'tile';
+            
+            const number = document.createElement('span');
+            number.className = 'tile-number';
+            number.innerText = i;
+            
+            tile.appendChild(number);
+            grid.appendChild(tile);
         }
-
-        /* ঘরবাড়ি সেভ হওয়ার পর যেমন দেখাবে */
-        .saved-building {
-            position: absolute; width: 40px;
-            background: linear-gradient
+    </script>
+</body>
+</html>
