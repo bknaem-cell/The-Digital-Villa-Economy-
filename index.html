@@ -3,92 +3,317 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDV Global Economy - Job Specialized Map</title>
+    <title>TDV - The Digital Villa Economy</title>
     <style>
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: #050505; color: #39FF14;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        /* মূল ব্যাকগ্রাউন্ড ও সেটিংস */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
         }
 
-        /* অটো রোটেশন কন্টেইনার */
-        #map-wrapper {
-            transition: transform 0.2s ease-out;
-            display: flex; justify-content: center; align-items: center;
+        body {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .map-container {
+        /* মোবাইল স্ক্রিন সাইজ */
+        .phone-screen {
+            width: 100%;
+            max-width: 410px;
+            height: 90vh;
+            background: rgba(30, 41, 59, 0.7);
+            border: 2px solid #38bdf8;
+            border-radius: 25px;
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+            overflow-y: auto;
             position: relative;
-            width: 90vw; height: 90vw; max-width: 500px; max-height: 500px;
-            display: grid; grid-template-columns: repeat(10, 1fr);
-            border: 2px solid #00ffcc;
-            box-shadow: 0 0 30px rgba(0, 255, 204, 0.3);
+            padding: 20px;
         }
 
-        .tile {
-            border: 1px solid rgba(0, 255, 204, 0.1);
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.3s;
+        /* ১. লোডিং পেজ (A-1) */
+        #page-a1 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
         }
 
-        .tile:hover { background: rgba(57, 255, 20, 0.15); }
+        .logo-zone {
+            font-size: 42px;
+            font-weight: bold;
+            color: #38bdf8;
+            text-shadow: 0 0 15px rgba(56, 189, 248, 0.7);
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
 
-        /* পেশা ভিত্তিক আইকন ও নম্বর */
-        .job-icon { font-size: 14px; margin-bottom: 2px; }
-        .tile-number { font-size: 8px; opacity: 0.7; }
+        .sub-logo {
+            font-size: 16px;
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
 
-        /* মাঝখানের কেন্দ্রবিন্দু */
-        .center-circle {
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px; height: 60px;
-            background: #050505; border: 3px solid #00ffcc;
-            border-radius: 50%; z-index: 100;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 0 20px #00ffcc;
+        /* খাতার বৃত্তাকার ম্যাপের মতো লোডার */
+        .circle-loader {
+            width: 120px;
+            height: 120px;
+            border: 4px dashed #38bdf8;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: rotate 6s linear infinite;
+            margin-bottom: 50px;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .circle-inner {
+            width: 80px;
+            height: 80px;
+            border: 3px solid #f43f5e;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .enter-btn {
+            background: rgba(56, 189, 248, 0.2);
+            border: 2px solid #38bdf8;
+            color: #fff;
+            padding: 12px 35px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            transition: 0.3s;
+        }
+
+        .enter-btn:hover {
+            background: #38bdf8;
+            color: #000;
+        }
+
+        /* ২. মূল মেনু ও কন্ট্রোল পেজ (A-2) */
+        #page-a2 {
+            display: none;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 20px;
+            color: #38bdf8;
+            margin-bottom: 25px;
+            border-bottom: 1px solid rgba(56, 189, 248, 0.3);
+            padding-bottom: 10px;
+        }
+
+        /* সিরিয়াল মেনু গ্রিড (1A, PIN, LOG) */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .menu-card:hover {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .serial-tag {
+            background: #f43f5e;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .menu-text {
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* খাতার ডায়মন্ড/রম্বস শেপের ডিজাইন */
+        .diamond-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .diamond-shape {
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: 2px solid #38bdf8;
+            transform: rotate(45deg);
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        .diamond-shape.active {
+            background: #38bdf8;
+        }
+
+        /* ৩. পিন এন্ট্রি সেকশন */
+        .pin-section {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px dashed #f43f5e;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .pin-box-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .pin-box {
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #94a3b8;
+            border-radius: 5px;
+            text-align: center;
+            color: #fff;
+            font-size: 18px;
+        }
+
+        /* বটম বাটন (OK এবং NO) */
+        .bottom-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            width: 45%;
+            padding: 10px;
+            border: 1px solid #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nav-btn.ok {
+            border-color: #10b981;
+            color: #10b981;
+        }
+
+        .nav-btn.no {
+            border-color: #f43f5e;
+            color: #f43f5e;
         }
     </style>
 </head>
 <body>
 
-    <div id="status">দিক: স্থির (পশ্চিম ফোকাস)</div>
+    <div class="phone-screen">
 
-    <div id="map-wrapper">
-        <div class="map-container" id="grid">
-            <div class="center-circle">👤</div>
+        <div id="page-a1">
+            <div class="logo-zone">TDV</div>
+            <div class="sub-logo">The Digital Villa</div>
+            
+            <div class="circle-loader">
+                <div class="circle-inner">MAP</div>
+            </div>
+
+            <button class="enter-btn" onclick="goToMenu()">প্রবেশ করুন</button>
         </div>
+
+        <div id="page-a2">
+            <div class="page-title">কন্ট্রোল প্যানেল (A-2)</div>
+            
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <span class="menu-text">সাইন আপ / নতুন মেম্বার</span>
+                    <span class="serial-tag">1A</span>
+                </div>
+                
+                <div class="menu-card">
+                    <span class="menu-text">সিকিউরিটি পিন কোড</span>
+                    <span class="serial-tag">PIN</span>
+                </div>
+
+                <div class="menu-card">
+                    <span class="menu-text">মেম্বার লগইন গেট</span>
+                    <span class="serial-tag">LOG</span>
+                </div>
+            </div>
+
+            <div class="pin-section">
+                <div style="font-size: 14px; color: #94a3b8;">সিকিউরিটি পিন কোড দিন</div>
+                <div class="pin-box-container">
+                    <input type="text" class="pin-box" value="*" disabled>
+                    <input type="text" class="pin-box" value="*" disabled>
+                    <input type="text" class="pin-box" value="*" disabled>
+                    <input type="text" class="pin-box" value="*" disabled>
+                    <input type="text" class="pin-box" value="*" disabled>
+                    <input type="text" class="pin-box" value="*" disabled>
+                </div>
+            </div>
+
+            <div class="diamond-container">
+                <div class="diamond-shape active"></div>
+                <div class="diamond-shape"></div>
+                <div class="diamond-shape"></div>
+                <div class="diamond-shape"></div>
+            </div>
+
+            <div class="bottom-nav">
+                <button class="nav-btn no" onclick="goToLoading()">NO</button>
+                <button class="nav-btn ok">OK</button>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        const grid = document.getElementById('grid');
-        const jobs = ['🌾', '🛠️', '👕', '🚚', '🩺', '⚡']; // কৃষক, টেকনিশিয়ান, দর্জি, ড্রাইভার, ডাক্তার, ইঞ্জিনিয়ার
-
-        for (let i = 1; i <= 100; i++) {
-            const tile = document.createElement('div');
-            tile.className = 'tile';
-            
-            // দৈবচয়নভাবে পেশা বণ্টন (যাতে বোঝা যায় একেক জন একেক কাজ করছে)
-            const randomJob = jobs[Math.floor(Math.random() * jobs.length)];
-            
-            tile.innerHTML = `
-                <span class="job-icon">${randomJob}</span>
-                <span class="tile-number">${i}</span>
-            `;
-            grid.appendChild(tile);
+        function goToMenu() {
+            document.getElementById('page-a1').style.display = 'none';
+            document.getElementById('page-a2').style.display = 'block';
         }
 
-        // সেন্সর ভিত্তিক অটো-রোটেশন লজিক
-        window.addEventListener('deviceorientation', function(event) {
-            const heading = event.alpha; // ফোনের দিক (০-৩৬০ ডিগ্রি)
-            const wrapper = document.getElementById('map-wrapper');
-            if (heading !== null) {
-                // ম্যাপটিকে সবসময় উত্তর/পশ্চিম অনুযায়ী স্থির রাখার জন্য রোটেশন
-                wrapper.style.transform = `rotate(${-heading}deg)`;
-                document.getElementById('status').innerText = `ম্যাপ অটো-রুটেট হচ্ছে: ${Math.round(heading)}°`;
-            }
-        });
+        function goToLoading() {
+            document.getElementById('page-a2').style.display = 'none';
+            document.getElementById('page-a1').style.display = 'flex';
+        }
     </script>
+
 </body>
 </html>
