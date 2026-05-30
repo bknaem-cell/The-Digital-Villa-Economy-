@@ -2,318 +2,108 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TDV - The Digital Villa Economy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
+    <title>NAYEM 18 - SUPREME MASTER v5.0</title>
     <style>
-        /* মূল ব্যাকগ্রাউন্ড ও সেটিংস */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #0f172a, #1e293b);
-            color: #ffffff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* মোবাইল স্ক্রিন সাইজ */
-        .phone-screen {
-            width: 100%;
-            max-width: 410px;
-            height: 90vh;
-            background: rgba(30, 41, 59, 0.7);
-            border: 2px solid #38bdf8;
-            border-radius: 25px;
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
-            overflow-y: auto;
-            position: relative;
-            padding: 20px;
-        }
-
-        /* ১. লোডিং পেজ (A-1) */
-        #page-a1 {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            text-align: center;
-        }
-
-        .logo-zone {
-            font-size: 42px;
-            font-weight: bold;
-            color: #38bdf8;
-            text-shadow: 0 0 15px rgba(56, 189, 248, 0.7);
-            letter-spacing: 2px;
-            margin-bottom: 10px;
-        }
-
-        .sub-logo {
-            font-size: 16px;
-            color: #94a3b8;
-            margin-bottom: 40px;
-        }
-
-        /* খাতার বৃত্তাকার ম্যাপের মতো লোডার */
-        .circle-loader {
-            width: 120px;
-            height: 120px;
-            border: 4px dashed #38bdf8;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: rotate 6s linear infinite;
-            margin-bottom: 50px;
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
-        }
-
-        .circle-inner {
-            width: 80px;
-            height: 80px;
-            border: 3px solid #f43f5e;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-weight: bold;
+        :root { --neon: #00ffff; --gold: #d4af37; --bg: #00050a; }
+        body { margin: 0; background: var(--bg); color: var(--neon); font-family: 'Orbitron', sans-serif; overflow: hidden; height: 100vh; }
+        
+        /* উন্নত গ্লোয়িং টাইটেল স্টাইল */
+        .section-title {
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            border-left: 4px solid var(--gold);
+            padding: 8px;
             font-size: 14px;
-        }
-
-        @keyframes rotate {
-            100% { transform: rotate(360deg); }
-        }
-
-        .enter-btn {
-            background: rgba(56, 189, 248, 0.2);
-            border: 2px solid #38bdf8;
+            letter-spacing: 3px;
+            text-transform: uppercase;
             color: #fff;
-            padding: 12px 35px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-            transition: 0.3s;
-        }
-
-        .enter-btn:hover {
-            background: #38bdf8;
-            color: #000;
-        }
-
-        /* ২. মূল মেনু ও কন্ট্রোল পেজ (A-2) */
-        #page-a2 {
-            display: none;
-        }
-
-        .page-title {
+            text-shadow: 0 0 10px var(--neon);
+            margin-bottom: 15px;
             text-align: center;
-            font-size: 20px;
-            color: #38bdf8;
-            margin-bottom: 25px;
-            border-bottom: 1px solid rgba(56, 189, 248, 0.3);
-            padding-bottom: 10px;
         }
 
-        /* সিরিয়াল মেনু গ্রিড (1A, PIN, LOG) */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
+        .container { display: flex; height: 100vh; padding: 15px; box-sizing: border-box; gap: 15px; }
 
-        .menu-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        /* প্যানেল ডিজাইন */
+        .glass-box { 
+            background: rgba(1, 15, 25, 0.9); 
+            border: 1px solid rgba(212, 175, 55, 0.4); 
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
             padding: 15px;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        }
+
+        .sidebar { width: 25%; display: flex; flex-direction: column; }
+        .center { flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+
+        /* মেনু ও বাটন স্টাইল */
+        .nav-item {
+            border: 1px solid var(--neon);
+            padding: 10px;
+            margin: 5px 0;
+            text-align: center;
+            font-size: 12px;
             cursor: pointer;
             transition: 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
         }
+        .nav-item:hover { background: var(--neon); color: #000; box-shadow: 0 0 20px var(--neon); }
 
-        .menu-card:hover {
-            border-color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
-        }
+        /* ক্লক ও আইডি */
+        .id-header { color: var(--gold); font-size: 20px; letter-spacing: 8px; margin-top: 10px; }
+        .live-clock { font-size: 30px; margin: 10px 0; color: #fff; text-shadow: 0 0 15px var(--neon); }
 
-        .serial-tag {
-            background: #f43f5e;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .menu-text {
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        /* খাতার ডায়মন্ড/রম্বস শেপের ডিজাইন */
-        .diamond-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
-        }
-
-        .diamond-shape {
-            width: 30px;
-            height: 30px;
-            background: transparent;
-            border: 2px solid #38bdf8;
-            transform: rotate(45deg);
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
-        }
-
-        .diamond-shape.active {
-            background: #38bdf8;
-        }
-
-        /* ৩. পিন এন্ট্রি সেকশন */
-        .pin-section {
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px dashed #f43f5e;
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .pin-box-container {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin: 15px 0;
-        }
-
-        .pin-box {
-            width: 35px;
-            height: 35px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid #94a3b8;
-            border-radius: 5px;
-            text-align: center;
-            color: #fff;
-            font-size: 18px;
-        }
-
-        /* বটম বাটন (OK এবং NO) */
-        .bottom-nav {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-
-        .nav-btn {
-            width: 45%;
-            padding: 10px;
-            border: 1px solid #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
-            color: #fff;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .nav-btn.ok {
-            border-color: #10b981;
-            color: #10b981;
-        }
-
-        .nav-btn.no {
-            border-color: #f43f5e;
-            color: #f43f5e;
-        }
     </style>
 </head>
 <body>
 
-    <div class="phone-screen">
-
-        <div id="page-a1">
-            <div class="logo-zone">TDV</div>
-            <div class="sub-logo">The Digital Villa</div>
-            
-            <div class="circle-loader">
-                <div class="circle-inner">MAP</div>
-            </div>
-
-            <button class="enter-btn" onclick="goToMenu()">প্রবেশ করুন</button>
+<div class="container">
+    <div class="sidebar glass-box">
+        <div class="section-title">RESOURCE MONITOR</div>
+        <div style="text-align: center; margin: 20px 0;">
+            <div style="font-size: 10px; color: var(--gold);">NJ GOLD RESERVE</div>
+            <div style="font-size: 24px; font-weight: bold;">1,000,000,000,000</div>
         </div>
-
-        <div id="page-a2">
-            <div class="page-title">কন্ট্রোল প্যানেল (A-2)</div>
-            
-            <div class="menu-grid">
-                <div class="menu-card">
-                    <span class="menu-text">সাইন আপ / নতুন মেম্বার</span>
-                    <span class="serial-tag">1A</span>
-                </div>
-                
-                <div class="menu-card">
-                    <span class="menu-text">সিকিউরিটি পিন কোড</span>
-                    <span class="serial-tag">PIN</span>
-                </div>
-
-                <div class="menu-card">
-                    <span class="menu-text">মেম্বার লগইন গেট</span>
-                    <span class="serial-tag">LOG</span>
-                </div>
-            </div>
-
-            <div class="pin-section">
-                <div style="font-size: 14px; color: #94a3b8;">সিকিউরিটি পিন কোড দিন</div>
-                <div class="pin-box-container">
-                    <input type="text" class="pin-box" value="*" disabled>
-                    <input type="text" class="pin-box" value="*" disabled>
-                    <input type="text" class="pin-box" value="*" disabled>
-                    <input type="text" class="pin-box" value="*" disabled>
-                    <input type="text" class="pin-box" value="*" disabled>
-                    <input type="text" class="pin-box" value="*" disabled>
-                </div>
-            </div>
-
-            <div class="diamond-container">
-                <div class="diamond-shape active"></div>
-                <div class="diamond-shape"></div>
-                <div class="diamond-shape"></div>
-                <div class="diamond-shape"></div>
-            </div>
-
-            <div class="bottom-nav">
-                <button class="nav-btn no" onclick="goToLoading()">NO</button>
-                <button class="nav-btn ok">OK</button>
-            </div>
-        </div>
-
+        <div class="nav-item">GLOBAL CONNECTIVITY</div>
+        <div class="nav-item">DECENTRALIZED NET</div>
+        <div class="nav-item">AI INTEGRATION</div>
     </div>
 
-    <script>
-        function goToMenu() {
-            document.getElementById('page-a1').style.display = 'none';
-            document.getElementById('page-a2').style.display = 'block';
-        }
+    <div class="center">
+        <div class="id-header">NAYEM IBRAHIM</div>
+        <div style="font-size: 10px; color: var(--neon);">SUPREME MASTER - MISSION 18</div>
+        <div class="live-clock" id="timer">00:00:00</div>
+        
+        <div style="width: 100%; height: 50%; border: 1px solid var(--neon); position: relative; background: radial-gradient(circle, #001a25, #000);">
+            <div style="position: absolute; top: 10px; left: 10px; font-size: 9px;">10KM SQ HQ RADAR</div>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--gold); font-size: 40px;">🛡️</div>
+        </div>
+        
+        <div style="margin-top: 20px; text-align: center; color: var(--gold); font-size: 11px;">
+            পুরো বিশ্ব পরিবর্তন এখান থেকে শুরু
+        </div>
+    </div>
 
-        function goToLoading() {
-            document.getElementById('page-a2').style.display = 'none';
-            document.getElementById('page-a1').style.display = 'flex';
-        }
-    </script>
+    <div class="sidebar glass-box">
+        <div class="section-title">SYSTEM COMMAND</div>
+        <div class="nav-item">CLOTHING VAULT</div>
+        <div class="nav-item">SATHI TRACKER</div>
+        <div class="nav-item">FARMING UNIT</div>
+        
+        <div style="margin-top: auto; padding: 10px; background: rgba(255,0,0,0.1); border: 1px solid #f00; border-radius: 5px;">
+            <div style="font-size: 9px; color: #f00; text-align: center; margin-bottom: 5px;">ULTIMATE SECURITY</div>
+            <button style="width: 100%; padding: 10px; background: #f00; border: none; color: #fff; font-weight: bold; cursor: pointer;">KILL SWITCH</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('timer').innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateTime, 1000);
+</script>
 
 </body>
 </html>
