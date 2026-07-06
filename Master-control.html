@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, orientation=landscape">
+    <title>NAYEM 18 - SUPREME MASTER v5.0</title>
+    <style>
+        :root { --neon: #00ffff; --gold: #d4af37; --bg: #00050a; }
+        body { margin: 0; background: var(--bg); color: var(--neon); font-family: 'Orbitron', sans-serif; overflow: hidden; height: 100vh; }
+        
+        /* উন্নত গ্লোয়িং টাইটেল স্টাইল */
+        .section-title {
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+            border-left: 4px solid var(--gold);
+            padding: 8px;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px var(--neon);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .container { display: flex; height: 100vh; padding: 15px; box-sizing: border-box; gap: 15px; }
+
+        /* প্যানেল ডিজাইন */
+        .glass-box { 
+            background: rgba(1, 15, 25, 0.9); 
+            border: 1px solid rgba(212, 175, 55, 0.4); 
+            box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .sidebar { width: 25%; display: flex; flex-direction: column; }
+        .center { flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+
+        /* মেনু ও বাটন স্টাইল */
+        .nav-item {
+            border: 1px solid var(--neon);
+            padding: 10px;
+            margin: 5px 0;
+            text-align: center;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+        }
+        .nav-item:hover { background: var(--neon); color: #000; box-shadow: 0 0 20px var(--neon); }
+
+        /* ক্লক ও আইডি */
+        .id-header { color: var(--gold); font-size: 20px; letter-spacing: 8px; margin-top: 10px; }
+        .live-clock { font-size: 30px; margin: 10px 0; color: #fff; text-shadow: 0 0 15px var(--neon); }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="sidebar glass-box">
+        <div class="section-title">RESOURCE MONITOR</div>
+        <div style="text-align: center; margin: 20px 0;">
+            <div style="font-size: 10px; color: var(--gold);">NJ GOLD RESERVE</div>
+            <div style="font-size: 24px; font-weight: bold;">1,000,000,000,000</div>
+        </div>
+        <div class="nav-item">GLOBAL CONNECTIVITY</div>
+        <div class="nav-item">DECENTRALIZED NET</div>
+        <div class="nav-item">AI INTEGRATION</div>
+    </div>
+
+    <div class="center">
+        <div class="id-header">NAYEM IBRAHIM</div>
+        <div style="font-size: 10px; color: var(--neon);">SUPREME MASTER - MISSION 18</div>
+        <div class="live-clock" id="timer">00:00:00</div>
+        
+        <div style="width: 100%; height: 50%; border: 1px solid var(--neon); position: relative; background: radial-gradient(circle, #001a25, #000);">
+            <div style="position: absolute; top: 10px; left: 10px; font-size: 9px;">10KM SQ HQ RADAR</div>
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--gold); font-size: 40px;">🛡️</div>
+        </div>
+        
+        <div style="margin-top: 20px; text-align: center; color: var(--gold); font-size: 11px;">
+            পুরো বিশ্ব পরিবর্তন এখান থেকে শুরু
+        </div>
+    </div>
+
+    <div class="sidebar glass-box">
+        <div class="section-title">SYSTEM COMMAND</div>
+        <div class="nav-item">CLOTHING VAULT</div>
+        <div class="nav-item">SATHI TRACKER</div>
+        <div class="nav-item">FARMING UNIT</div>
+        
+        <div style="margin-top: auto; padding: 10px; background: rgba(255,0,0,0.1); border: 1px solid #f00; border-radius: 5px;">
+            <div style="font-size: 9px; color: #f00; text-align: center; margin-bottom: 5px;">ULTIMATE SECURITY</div>
+            <button style="width: 100%; padding: 10px; background: #f00; border: none; color: #fff; font-weight: bold; cursor: pointer;">KILL SWITCH</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('timer').innerText = now.toLocaleTimeString();
+    }
+    setInterval(updateTime, 1000);
+</script>
+
+</body>
+</html>
